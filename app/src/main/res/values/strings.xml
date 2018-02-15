@@ -17,4 +17,6 @@
     <string name="label_agenda">Event Agenda</string>
     <string name="label_speakers">Speakers</string>
     <string name="screen_label_event_QR">Event QR Code</string>
+    <string name="openDrawer">Drawer opened</string>
+    <string name="closeDrawer">Drawer Closed</string>
 </resources>
