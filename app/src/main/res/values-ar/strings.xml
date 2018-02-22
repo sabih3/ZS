@@ -20,5 +20,12 @@
     <string name="screen_label_event_QR">Event QR Code</string>
     <string name="openDrawer">Drawer opened</string>
     <string name="closeDrawer">Drawer Closed</string>
+    <string name="validation_email_format">Please provide a valid email</string>
+    <string name="hint_user_name">login</string>
+    <string name="hint_password">password</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="sign_in">Login</string>
+    <string name="label_register_ask">Don\'t have an account ?</string>
+    <string name="label_register_now">Register now</string>
 
 </resources>

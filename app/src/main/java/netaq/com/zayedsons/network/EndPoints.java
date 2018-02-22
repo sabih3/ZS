@@ -5,7 +5,7 @@ package netaq.com.zayedsons.network;
  */
 
 public class EndPoints {
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "https://api.myjson.com/bins/";
 
     public static final String UPCOMING_EVENT_LIST = "";
     public static final String MY_EVENT_LIST = "";
@@ -13,4 +13,5 @@ public class EndPoints {
 
     public static final String EVENT_QR = "";
 
+    public static final String CITIES = "1ghaex";
 }

@@ -77,7 +77,7 @@ public class EventMainFragment extends Fragment {
         fragmentList.add(finishedEvents);
 
         FragmentAdapter adapter = new FragmentAdapter(getContext(),getActivity().getSupportFragmentManager(),
-                                  fragmentList);
+                                                     fragmentList);
 
         viewPager.setAdapter(adapter);
 

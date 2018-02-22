@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:layout_margin="10dp"
+    android:padding="20dp">
+
+    <ScrollView
+        android:id="@+id/register_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="60dp"
+        android:scrollbars="none"
+        android:padding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/circle_maroon_solid"
+                    android:src="@drawable/ic_person_white_24px"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/edit_photo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="4dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/circle_white_solid"
+                    android:src="@drawable/ic_camera"
+                    />
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextInputTheme">
+                <EditText
+                    android:id="@+id/field_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:hint="Email - will be your username"
+                    android:maxLines="1"
+                    android:layoutDirection="ltr"
+                    android:textColor="@android:color/black" />
+            </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimaryDark"
+                    app:errorEnabled="true"
+                    android:theme="@style/TextInputTheme">
+                    <EditText
+                        android:id="@+id/field_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_retype_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimaryDark"
+                    app:errorEnabled="true"
+                    android:theme="@style/TextInputTheme">
+                    <EditText
+                        android:id="@+id/field_retype_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                android:theme="@style/TextInputTheme">
+                <EditText
+                    android:id="@+id/field_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_father_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                android:theme="@style/TextInputTheme">
+                <EditText
+                    android:id="@+id/field_father_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Fathers Name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/gender_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Gender"
+                android:textSize="16sp"
+                android:textColor="@color/lightGrey"
+                 />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:layout_below="@id/gender_title">
+
+                    <RelativeLayout
+                        android:id="@+id/gender_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="30dp"
+                        android:paddingStart="30dp"
+                        android:paddingRight="30dp"
+                        android:paddingEnd="30dp">
+                        <Button
+                            android:id="@+id/btn_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            android:background="@drawable/shape_hollow_btn"
+                            android:textColor="@color/maroonish"/>
+
+                        <Button
+                            android:id="@+id/btn_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Female"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/shape_hollow_btn"
+                            android:textColor="@color/maroonish"/>
+                    </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    app:ccp_defaultNameCode="US"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_autoFormatNumber="true"
+                    />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/ccp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:theme="@style/TextInputTheme">
+                    <EditText
+                        android:id="@+id/field_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Phone"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:layoutDirection="ltr"
+                        android:textColor="@android:color/black" />
+                </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                android:theme="@style/TextInputTheme">
+                <EditText
+                    android:id="@+id/field_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="DOB - dd/mm/yyyy"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:layoutDirection="ltr"
+                    android:textColor="@android:color/black"
+                    android:backgroundTint="@color/lightGrey"
+                    android:drawableRight="@drawable/ic_date_black_24px"
+                    android:drawableEnd="@drawable/ic_date_black_24px"/>
+            </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/maroonishButtonStyle"
+        android:layout_alignParentBottom="true"
+        android:text="Next"/>
+</RelativeLayout>

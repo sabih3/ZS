@@ -21,7 +21,8 @@ public class ScreenSplash extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                NavigationController.showMainActivity(ScreenSplash.this);
+                NavigationController.showLoginScreen(ScreenSplash.this);
+
                 ScreenSplash.this.finish();
             }
         },3000);
