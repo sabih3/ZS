@@ -13,5 +13,5 @@ public class EndPoints {
 
     public static final String EVENT_QR = "";
 
-    public static final String CITIES = "1ghaex";
+    public static final String CITIES = "r7adt";
 }

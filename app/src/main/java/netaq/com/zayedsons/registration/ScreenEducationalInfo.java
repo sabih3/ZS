@@ -6,11 +6,13 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatMultiAutoCompleteTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.R.layout.simple_dropdown_item_1line;
+import static android.R.layout.simple_list_item_1;
 
 
 public class ScreenEducationalInfo extends Fragment implements Validator.ValidationListener {
@@ -166,7 +170,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         @Override
         public void afterTextChanged(Editable editable) {
             String query = fieldCity.getText().toString();
-            if(query.length() > 3){
+            if(query.length() >= 3){
                 //issue a background call with query
                 // get the names
                 //and set the adapter
@@ -186,11 +190,23 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
                     if(response.body()!=null){
                         Cities body = response.body();
 
-                        List<String> cities = body.cities;
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                                simple_dropdown_item_1line, cities);
+                        ArrayList<Cities.City> cities = body.getCities();
+                        ArrayAdapter<Cities.City> adapter =
+                        new ArrayAdapter<Cities.City>(getContext(),
+                                R.layout.row_city_name,cities);
 
+//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+//                                simple_dropdown_item_1line, cities.toArray());
+//                        CityAdapter cityAdapter = new CityAdapter(getContext(),cities);
+                        //fieldCity.setAdapter(cityAdapter);
                         fieldCity.setAdapter(adapter);
+
+                        fieldCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            }
+                        });
                     }
                 }
 
