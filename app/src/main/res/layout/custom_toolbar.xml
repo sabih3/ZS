@@ -5,6 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:titleTextColor="@color/textColorPrimary">
+    app:titleTextColor="@color/textColorPrimary"
+    app:layout_scrollFlags="enterAlways">
 
 </android.support.v7.widget.Toolbar>
