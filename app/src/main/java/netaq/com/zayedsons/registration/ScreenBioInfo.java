@@ -13,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,14 +75,26 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     @NotEmpty
     @BindView(R.id.field_retype_pwd)EditText fieldRetypePwd;
 
-    @BindView(R.id.layout_name)TextInputLayout layoutName;
 
+
+    /************* Names Fields & Layouts Start**********/
+    @BindView(R.id.layout_name)TextInputLayout layoutFirstName;
+    @NotEmpty
+    @BindView(R.id.field_name)EditText fieldFirstName;
+
+
+    @BindView(R.id.layout_father_name)TextInputLayout layoutFatherName;
 
     @NotEmpty
-    @BindView(R.id.field_name)EditText fieldName;
+    @BindView(R.id.field_father_name)EditText fieldFatherName;
 
-    @BindView(R.id.layout_phone)TextInputLayout layout_phone;
+    @BindView(R.id.field_middle_name) EditText fieldMiddleName;
+    @BindView(R.id.layout_middle_name)TextInputLayout layout_middle_name;
 
+    @NotEmpty
+    @BindView(R.id.field_last_name)EditText fieldLastName;
+    @BindView(R.id.layout_last_name)TextInputLayout layout_lastName;
+    /***********Names Fields and Layout end*********/
 
     @NotEmpty
     @BindView(R.id.field_phone)EditText fieldPhone;
@@ -99,13 +109,10 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     @BindView(R.id.btn_male)Button genderMale;
     @BindView(R.id.btn_female)Button genderFemale;
 
-    @BindView(R.id.layout_father_name)TextInputLayout layoutFatherName;
-
-
-    @NotEmpty
-    @BindView(R.id.field_father_name)EditText fieldFatherName;
+    @BindView(R.id.layout_phone)TextInputLayout layout_phone;
 
     @BindView(R.id.ccp)CountryCodePicker countryCodePicker;
+
     private Validator validator;
 
     public ScreenBioInfo() {
@@ -132,8 +139,10 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         nextButton.setOnClickListener(new NextButtonListener());
 
         fieldEmail.addTextChangedListener(new EmailTextChangeListener());
-        fieldName.addTextChangedListener(new NameTextChangeListener());
+        fieldFirstName.addTextChangedListener(new NameTextChangeListener());
         fieldFatherName.addTextChangedListener(new FatherNameTextListener());
+        fieldPwd.addTextChangedListener(new PasswordTextListener());
+        fieldRetypePwd.addTextChangedListener(new ConfirmPwdTextListener());
 
         genderMale.setOnClickListener(new GenderSelectionListener());
         genderFemale.setOnClickListener(new GenderSelectionListener());
@@ -218,14 +227,18 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
                 case R.id.field_name:
                     layout_phone.setErrorEnabled(true);
-                    layoutName.setError("Name is required");
+                    layoutFirstName.setError("Name is required");
                 break;
 
 
                 case R.id.field_father_name:
                     layout_phone.setErrorEnabled(true);
-                    layoutFatherName.setError("Father is required");
+                    layoutFatherName.setError("Father name is required");
                 break;
+
+                case R.id.field_last_name:
+                    //layout_lastName.setErrorEnabled(true);
+                    layout_lastName.setError("Last Name is required");
 
                 case R.id.field_phone:
                     parentScrollView.scrollTo(0,fieldPhone.getBottom());
@@ -249,7 +262,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         public void onClick(View view) {
 
             //Validate the form
-            setDummyValues();
+            //setDummyValues();
             validator.validate(); //OnValidationSuccess
 
 
@@ -264,7 +277,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         fieldEmail.setText("sabih@netaq.com");
         fieldPwd.setText("sabih123");
         fieldRetypePwd.setText("sabih123");
-        fieldName.setText("Sabih");
+        fieldFirstName.setText("Sabih");
         fieldFatherName.setText("Ahmed");
         fieldPhone.setText("123456789");
     }
@@ -300,7 +313,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            layoutName.setError(null);
+            layoutFirstName.setError(null);
         }
 
         @Override
@@ -380,5 +393,58 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     }
 
 
+    private class ConfirmPwdTextListener implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String confirmPwdText = charSequence.toString();
+            String pwdText = fieldPwd.getText().toString();
+
+            if(!confirmPwdText.isEmpty()){
+                if(!confirmPwdText.equals(pwdText)){
+                    layoutRetypePwd.setError("Passwords do not match");
+                }else{
+                    layoutRetypePwd.setError("");
+                }
+            }else{
+                layoutRetypePwd.setError("");
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    }
+
+    private class PasswordTextListener implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String pwdText = charSequence.toString();
+            String confirmPwdText = fieldRetypePwd.getText().toString();
+
+            if(!confirmPwdText.isEmpty()){
+
+                if(pwdText.equals(confirmPwdText)){
+                    layoutRetypePwd.setError(null);
+                }
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    }
 }
