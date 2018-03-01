@@ -18,6 +18,7 @@ import netaq.com.zayedsons.adapters.FragmentAdapter;
 import netaq.com.zayedsons.adapters.FragmentContainer;
 import netaq.com.zayedsons.eventbus.OnBackFromEducationInfo;
 import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
+import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
 import netaq.com.zayedsons.utils.CustomPager;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -71,11 +72,18 @@ public class RegistrationActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0,true);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRegisterClick(RegisterButtonEvent registerEvent){
+
+    }
+
     private class NextButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             viewPager.setCurrentItem(1,true);
             Fragment bioInfoFragment = (ScreenBioInfo)adapter.getFragmentAt(0);
+
+
             Fragment educationalInfoFragment = (ScreenEducationalInfo)adapter.getFragmentAt(1);
         }
     }

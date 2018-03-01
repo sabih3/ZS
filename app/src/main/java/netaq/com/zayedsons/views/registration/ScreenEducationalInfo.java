@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.eventbus.OnBackFromEducationInfo;
+import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
 import netaq.com.zayedsons.model.Cities;
 import netaq.com.zayedsons.network.RestClient;
 import retrofit2.Call;
@@ -101,7 +102,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
 
     @Override
     public void onValidationSucceeded() {
-
+        EventBus.getDefault().post(new RegisterButtonEvent());
     }
 
     @Override

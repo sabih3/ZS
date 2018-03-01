@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
 import com.hbb20.CountryCodePicker;
@@ -26,9 +27,11 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,10 +41,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
+import netaq.com.zayedsons.utils.ImageUtils;
 import netaq.com.zayedsons.utils.Utils;
 
 
-public class ScreenBioInfo extends Fragment implements Validator.ValidationListener, CountryCodePicker.OnCountryChangeListener {
+public class ScreenBioInfo extends Fragment implements Validator.ValidationListener,
+             CountryCodePicker.OnCountryChangeListener,BioInfoView {
 
 
     private static final int REQUEST_SELECT_PICTURE = 100;
@@ -115,6 +120,11 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     private Validator validator;
 
+    @BindView(R.id.photoProgress)ProgressBar photoProgress;
+    @BindView(R.id.progress)ProgressBar progress;
+
+    private BioInfoPresenter bioInfoPresenter = new BioInfoPresenter(this);
+
     public ScreenBioInfo() {
         // Required empty public constructor
     }
@@ -133,6 +143,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         return view;
     }
+
 
     private void initViews() {
 
@@ -173,7 +184,13 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         if(requestCode == REQUEST_SELECT_PICTURE && resultCode !=0){
 
             Uri imageURI = data.getData();
-            profilePhoto.setImageURI(imageURI);
+            //profilePhoto.setImageURI(imageURI);
+            try {
+                String encodedString = ImageUtils.getEncodedString(getContext(), imageURI);
+                bioInfoPresenter.uploadProfilePhoto(encodedString);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -239,6 +256,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
                 case R.id.field_last_name:
                     //layout_lastName.setErrorEnabled(true);
                     layout_lastName.setError("Last Name is required");
+                break;
 
                 case R.id.field_phone:
                     parentScrollView.scrollTo(0,fieldPhone.getBottom());
@@ -257,6 +275,40 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         countryCodePicker.getSelectedCountryCodeWithPlus();
     }
 
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void showProgress() {
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progress.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void onPhotoUploaded(String fileURL) {
+
+        Picasso.with(getContext()).load(fileURL).into(profilePhoto);
+        photoProgress.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void showPhotoUploadProgress() {
+        photoProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePhotoUploadProgress() {
+        photoProgress.setVisibility(View.GONE);
+    }
+
     private class NextButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -264,9 +316,6 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             //Validate the form
             setDummyValues();
             validator.validate(); //OnValidationSuccess
-
-
-
 
             //OnValidationError
                 //Show error

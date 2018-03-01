@@ -1,5 +1,7 @@
 package netaq.com.zayedsons.network;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -37,6 +39,7 @@ public class RestClient {
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(EndPoints.BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();

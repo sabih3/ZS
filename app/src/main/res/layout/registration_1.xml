@@ -42,6 +42,12 @@
                     android:background="@drawable/circle_white_solid"
                     android:src="@drawable/ic_camera"
                     />
+                <ProgressBar
+                    android:id="@+id/photoProgress"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -277,4 +283,10 @@
         style="@style/maroonishButtonStyle"
         android:layout_alignParentBottom="true"
         android:text="Next"/>
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>
