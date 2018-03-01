@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/pic_n_name"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/onboard_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/imageView">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome on board"
+                android:textAlignment="center"
+                style="@style/label_heading_bold_maroon"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Just put your Mobile Number"
+                android:textAlignment="center"
+                style="@style/label_heading_maroon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/onboard_layout"
+            android:layout_marginTop="100dp"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="10dp">
+
+            <com.hbb20.CountryCodePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="false"
+                app:ccp_contentColor="@color/textColorPrimary"
+                app:ccp_defaultPhoneCode="971">
+
+            </com.hbb20.CountryCodePicker>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your Mobile Number"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                android:paddingVertical="10dp"
+                android:theme="@style/TextInputTheme"
+                android:textColor="@color/textColorPrimary"
+                android:inputType="phone"
+                />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/city_image"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+</RelativeLayout>

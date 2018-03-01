@@ -34,6 +34,17 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="label_heading_maroon" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/maroonish</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="label_heading_bold_maroon" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/maroonish</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="body_text_style" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorSecondary</item>
         <item name="android:textSize">16sp</item>

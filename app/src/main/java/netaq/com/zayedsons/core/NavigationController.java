@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 
-import netaq.com.zayedsons.MainActivity;
+import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.R;
-import netaq.com.zayedsons.events.EventMainFragment;
-import netaq.com.zayedsons.events.ScreenEventQR;
-import netaq.com.zayedsons.events.event_detail.ScreenEventDetail;
-import netaq.com.zayedsons.login.ScreenLogin;
-import netaq.com.zayedsons.registration.RegistrationActivity;
+import netaq.com.zayedsons.views.QRScanner;
+import netaq.com.zayedsons.views.events.EventMainFragment;
+import netaq.com.zayedsons.views.events.ScreenEventQR;
+import netaq.com.zayedsons.views.events.event_detail.ScreenEventDetail;
+import netaq.com.zayedsons.views.login.ScreenLogin;
+import netaq.com.zayedsons.views.registration.RegistrationActivity;
 
 /**
  * Created by sabih on 08-Feb-18.
@@ -63,5 +64,10 @@ public class NavigationController {
         Intent.createChooser(intent, "Choose your picture");
 
         return intent;
+    }
+
+    public static void showScannerScreen(Context context) {
+        Intent intent = new Intent(context,QRScanner.class);
+        context.startActivity(intent);
     }
 }
