@@ -32,7 +32,9 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
+import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.utils.ImageUtils;
 import netaq.com.zayedsons.utils.Utils;
 
@@ -125,6 +128,9 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     private BioInfoPresenter bioInfoPresenter = new BioInfoPresenter(this);
 
+    private int gender = Constants.GENDER_DEFAULT;
+    private String phone = "";
+
     public ScreenBioInfo() {
         // Required empty public constructor
     }
@@ -164,7 +170,8 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode){
 
             case PERMISSION_REQUEST_STORAGE:
@@ -309,6 +316,42 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         photoProgress.setVisibility(View.GONE);
     }
 
+    private void setDummyValues() {
+        fieldEmail.setText("sabih@netaq.com");
+        fieldPwd.setText("sabih123");
+        fieldRetypePwd.setText("sabih123");
+        fieldFirstName.setText("Sabih");
+        fieldFatherName.setText("Ahmed");
+        fieldPhone.setText("123456789");
+    }
+
+    public void getBioInfoData(){
+       String userID = UUID.randomUUID().toString();
+
+       String firstName = fieldFirstName.getText().toString();
+
+       String fatherName = fieldFatherName.getText().toString();
+
+       String middleName = fieldMiddleName.getText().toString();
+
+       String lastName = fieldLastName.getText().toString();
+
+       String email = fieldEmail.getText().toString();
+
+       String phone = countryCodePicker.getSelectedCountryCodeWithPlus() +
+                      fieldPhone.getText().toString();
+
+       String date = fieldDate.getText().toString();
+
+       HashMap<String,String> valuesMap = new HashMap<>();
+
+
+
+
+    }
+
+    /***** Inner Classes / Interfaces **/
+
     private class NextButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -320,15 +363,6 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             //OnValidationError
                 //Show error
         }
-    }
-
-    private void setDummyValues() {
-        fieldEmail.setText("sabih@netaq.com");
-        fieldPwd.setText("sabih123");
-        fieldRetypePwd.setText("sabih123");
-        fieldFirstName.setText("Sabih");
-        fieldFatherName.setText("Ahmed");
-        fieldPhone.setText("123456789");
     }
 
     private class EmailTextChangeListener implements TextWatcher {
@@ -413,22 +447,24 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
                 case R.id.btn_male:
                     genderMale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_maroon_btn));
-                    //genderMale.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.maroonish));
                     genderMale.setTextColor(ContextCompat.getColor(getContext(),R.color.white));
 
                     genderFemale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_hollow_btn));
-                    //genderFemale.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.lightGrey));
                     genderFemale.setTextColor(ContextCompat.getColor(getContext(),R.color.maroonish));
+
+                    gender = Constants.GENDER_MALE;
+
                 break;
 
                 case R.id.btn_female:
                     genderFemale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_maroon_btn));
-                    //genderFemale.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.maroonish));
                     genderFemale.setTextColor(ContextCompat.getColor(getContext(),R.color.white));
 
                     genderMale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_hollow_btn));
-                    //genderMale.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.lightGrey));
                     genderMale.setTextColor(ContextCompat.getColor(getContext(),R.color.maroonish));
+
+                    gender = Constants.GENDER_FEMALE;
+
                 break;
             }
         }

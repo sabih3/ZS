@@ -21,9 +21,12 @@ import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
 import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
 import netaq.com.zayedsons.utils.CustomPager;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity implements RegistrationView{
 
     private FragmentAdapter adapter;
+    private ScreenBioInfo bioInfoFragment;
+    private ScreenEducationalInfo educationalInfoFragment;
+    private RegistrationPresenter registerPresenter;
 
     @BindView(R.id.pager)CustomPager viewPager;
     @Override
@@ -32,6 +35,9 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         EventBus.getDefault().register(this);
+
+        registerPresenter = new RegistrationPresenter(this,this);
+
         initViews();
     }
 
@@ -58,6 +64,11 @@ public class RegistrationActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.disableScroll(true);
 
+        bioInfoFragment = (ScreenBioInfo)adapter.getFragmentAt(0);
+
+
+        educationalInfoFragment = (ScreenEducationalInfo)adapter.getFragmentAt(1);
+
     }
 
     //Fired from ScreenBioInfo.NextButtonListener
@@ -66,25 +77,46 @@ public class RegistrationActivity extends AppCompatActivity {
             viewPager.setCurrentItem(1,true);
     }
 
-
+    //Fired from EducationInfo
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBackFromEducationalScreen(OnBackFromEducationInfo backEvent){
         viewPager.setCurrentItem(0,true);
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegisterClick(RegisterButtonEvent registerEvent){
 
+        bioInfoFragment.getBioInfoData();
+        educationalInfoFragment.getEducationalData();
+
     }
 
-    private class NextButtonListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            viewPager.setCurrentItem(1,true);
-            Fragment bioInfoFragment = (ScreenBioInfo)adapter.getFragmentAt(0);
+    @Override
+    public void showProgress() {
 
-
-            Fragment educationalInfoFragment = (ScreenEducationalInfo)adapter.getFragmentAt(1);
-        }
     }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void OnRegistrationSuccess() {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+//    private class NextButtonListener implements View.OnClickListener {
+//        @Override
+//        public void onClick(View view) {
+//            viewPager.setCurrentItem(1,true);
+//
+//        }
+//    }
 }

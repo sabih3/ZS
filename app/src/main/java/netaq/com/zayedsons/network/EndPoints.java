@@ -31,6 +31,9 @@ public class EndPoints {
 
     public static final String LOOKUP_CITIES = "api/Lookups/Cities";
 
-    public static final String API_SMS = "https://api.clickatell.com/rest/message/ ";
+    public static final String API_SMS = "https://platform.clickatell.com/messages/ ";
 
+    public static final String ACCOUNT_EXISTENCE = "api/Account/Exists";
+
+    public static final String ACCOUNT_CLICK_A_TELL = "https://api.clickatell.com/rest/message/";;
 }

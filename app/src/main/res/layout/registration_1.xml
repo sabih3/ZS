@@ -68,7 +68,7 @@
                     />
             </android.support.design.widget.TextInputLayout>
 
-
+            <!--Pwd & Confirm Pwd Layout-->
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/layout_pwd"
                     android:layout_width="match_parent"
@@ -76,7 +76,8 @@
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/colorPrimaryDark"
                     app:errorEnabled="true"
-                    android:theme="@style/TextInputTheme">
+                    android:theme="@style/TextInputTheme"
+                    android:visibility="gone">
                     <EditText
                         android:id="@+id/field_pwd"
                         android:layout_width="match_parent"
@@ -95,7 +96,8 @@
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/colorPrimaryDark"
                     app:errorEnabled="true"
-                    android:theme="@style/TextInputTheme">
+                    android:theme="@style/TextInputTheme"
+                    android:visibility="gone">
                     <EditText
                         android:id="@+id/field_retype_pwd"
                         android:layout_width="match_parent"
@@ -106,7 +108,7 @@
                         android:textColor="@color/textColorPrimary"
                         />
                 </android.support.design.widget.TextInputLayout>
-
+            <!--Pwd & Confirm Pwd Layout End-->
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/layout_name"
                 android:layout_width="match_parent"

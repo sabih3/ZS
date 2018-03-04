@@ -137,6 +137,10 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         }
     }
 
+    public void getEducationalData() {
+
+    }
+
     private class RegisterButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
