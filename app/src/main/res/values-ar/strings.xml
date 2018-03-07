@@ -27,5 +27,10 @@
     <string name="sign_in">Login</string>
     <string name="label_register_ask">Don\'t have an account ?</string>
     <string name="label_register_now">Register now</string>
+    <string name="label_otp_msg">Please enter the OTP sent on your number :</string>
+    <string name="snackbar_no_network">Seems you are offline.</string>
+    <string name="action_label_retry">Retry</string>
+    <string name="label_something_went_wrong">Something went wrong this time. Please try again</string>
+    <string name="label_SMS_couldnot_sent">We were unable to deliver OTP on provided number</string>
 
 </resources>

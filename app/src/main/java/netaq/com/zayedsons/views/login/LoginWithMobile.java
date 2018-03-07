@@ -1,5 +1,6 @@
 package netaq.com.zayedsons.views.login;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,22 +10,31 @@ import android.widget.ProgressBar;
 
 import com.hbb20.CountryCodePicker;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
+import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.network.LoginWithMobilePresenter;
-import netaq.com.zayedsons.utils.OTPGenerator;
+import netaq.com.zayedsons.network.model.responses.ResponseRegister;
+import netaq.com.zayedsons.utils.OTPHelper;
+import netaq.com.zayedsons.utils.UIUtils;
 
 public class LoginWithMobile extends AppCompatActivity implements
              CountryCodePicker.OnCountryChangeListener,LoginWithMobilePresenter.LoginMobileView{
 
+    @BindView(R.id.parent_coordinator) CoordinatorLayout coordinatorLayout;
     @BindView(R.id.field_phone)EditText fieldPhone;
     @BindView(R.id.code_picker)CountryCodePicker codePicker;
     @BindView(R.id.btn_proceed)ImageView sendButton;
     @BindView(R.id.progress)ProgressBar progress;
+
     private LoginWithMobilePresenter loginPresenter;
     private String countryCode ="";
-
+    @BindString(R.string.snackbar_no_network) String noNetworkMessage;
+    @BindString(R.string.action_label_retry)String labelRetry;
+    @BindString(R.string.label_something_went_wrong) String defaultErrorMessage;
+    @BindString(R.string.label_SMS_couldnot_sent)String smsCouldnotSent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +55,28 @@ public class LoginWithMobile extends AppCompatActivity implements
     }
 
     @Override
-    public void onSmsSent() {
-
+    public void onSmsSent(ResponseRegister userInfo, String recipient, boolean userExists) {
+        NavigationController.showOTPConfirmScreen(this,userInfo,recipient,userExists);
     }
 
     @Override
     public void onSmsSentFailure() {
+        UIUtils.showSnackBar(coordinatorLayout,smsCouldnotSent);
+    }
 
+    @Override
+    public void onNetworkUnAvailable() {
+        UIUtils.showSnackBar(coordinatorLayout, noNetworkMessage, labelRetry, new UIUtils.SnackBarActionListener() {
+            @Override
+            public void onSnackBarAction() {
+                getValuesAndSendOTP();
+            }
+        });
     }
 
     @Override
     public void onError() {
-
+        UIUtils.showSnackBar(coordinatorLayout,defaultErrorMessage);
     }
 
     @Override
@@ -73,14 +93,26 @@ public class LoginWithMobile extends AppCompatActivity implements
     private class SendButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            String phone = fieldPhone.getText().toString();
-            countryCode = codePicker.getSelectedCountryCodeWithPlus();
-            String phoneWithCode = countryCode + phone;
+//            String phone = fieldPhone.getText().toString();
+//            countryCode = codePicker.getSelectedCountryCodeWithPlus();
+//            String phoneWithCode = countryCode + phone;
+//
+//            int OTP = OTPHelper.getNewOTP();
+//
+//            loginPresenter.sendOTP(phoneWithCode,OTP);
 
-            int OTP = OTPGenerator.generateRandomNumber();
-
-            loginPresenter.sendOTP(phoneWithCode,OTP);
+            getValuesAndSendOTP();
 
         }
+    }
+
+    private void getValuesAndSendOTP(){
+        String phone = fieldPhone.getText().toString();
+        countryCode = codePicker.getSelectedCountryCodeWithPlus();
+        String phoneWithCode = countryCode + phone;
+
+        int OTP = OTPHelper.getNewOTP();
+
+        loginPresenter.sendOTP(phoneWithCode,OTP);
     }
 }

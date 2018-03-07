@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".core.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCP8OKE8rDdBvw90zzbF5YoT2ZVTIm8-SI" />
@@ -21,30 +21,32 @@
         <activity
             android:name=".views.ScreenSplash"
             android:theme="@style/Theme.FullScreen">
+
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+        <activity
+            android:name=".views.MainActivity"
+            android:windowActionBar="false" />
+        <activity android:name=".views.events.event_detail.ScreenEventDetail" />
+        <activity android:name=".views.events.ScreenEventQR" />
+        <activity android:name=".views.registration.RegistrationActivity" />
+        <activity android:name=".views.login.ScreenLogin" />
+        <activity android:name=".views.QRScanner" />
+        <activity
+            android:name=".views.login.LoginWithMobile"
+            android:theme="@style/Theme.FullScreen">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".views.MainActivity"
-            android:windowActionBar="false" />
-        <activity android:name=".views.events.event_detail.ScreenEventDetail" />
-
-        <activity android:name=".views.events.ScreenEventQR" />
-        <activity android:name=".views.registration.RegistrationActivity"/>
-        <activity android:name=".views.login.ScreenLogin"/>
-        <activity android:name=".views.QRScanner" />
-
-        <activity android:name=".views.login.LoginWithMobile"
-                  android:theme="@style/Theme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".views.ScreenOTP"></activity>
     </application>
 
 </manifest>

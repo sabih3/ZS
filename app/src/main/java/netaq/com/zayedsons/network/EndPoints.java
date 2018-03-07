@@ -13,7 +13,6 @@ public class EndPoints {
 
     public static final String EVENT_QR = "";
 
-    public static final String CITIES = "r7adt";
 
     public static final String GUID = "api/Util/NewGuid";
 

@@ -3,23 +3,25 @@ package netaq.com.zayedsons.views.registration;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.FragmentAdapter;
 import netaq.com.zayedsons.adapters.FragmentContainer;
+import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.OnBackFromEducationInfo;
 import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
 import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
 import netaq.com.zayedsons.utils.CustomPager;
+import netaq.com.zayedsons.utils.UserManager;
 
 public class RegistrationActivity extends AppCompatActivity implements RegistrationView{
 
@@ -28,7 +30,11 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     private ScreenEducationalInfo educationalInfoFragment;
     private RegistrationPresenter registerPresenter;
 
+
     @BindView(R.id.pager)CustomPager viewPager;
+
+    private int OTP;
+    private String recipientNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +44,14 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
         registerPresenter = new RegistrationPresenter(this,this);
 
+        OTP = getIntent().getIntExtra(NavigationController.KEY_OTP,-1);
+        recipientNumber = getIntent().getStringExtra(NavigationController.KEY_RECIPIENT);
         initViews();
     }
 
     private void initViews() {
         ButterKnife.bind(this);
         setUpPager();
-        //nextBtn.setOnClickListener(new NextButtonListener());
     }
 
     private void setUpPager() {
@@ -64,10 +71,10 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
         viewPager.setAdapter(adapter);
         viewPager.disableScroll(true);
 
-        bioInfoFragment = (ScreenBioInfo)adapter.getFragmentAt(0);
+        bioInfoFragment = (ScreenBioInfo)adapter.getItem(0);
 
 
-        educationalInfoFragment = (ScreenEducationalInfo)adapter.getFragmentAt(1);
+        educationalInfoFragment = (ScreenEducationalInfo)adapter.getItem(1);
 
     }
 
@@ -77,18 +84,24 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
             viewPager.setCurrentItem(1,true);
     }
 
-    //Fired from EducationInfo
+    //Fired from Screen EducationInfo
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBackFromEducationalScreen(OnBackFromEducationInfo backEvent){
         viewPager.setCurrentItem(0,true);
     }
 
-
+    //Fired from Screen EducationInfo
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegisterClick(RegisterButtonEvent registerEvent){
+        HashMap<String, Object> bioInfoData = bioInfoFragment.getBioInfoData();
+        HashMap<String, String> educationalData = educationalInfoFragment.getEducationalData();
 
-        bioInfoFragment.getBioInfoData();
-        educationalInfoFragment.getEducationalData();
+        bioInfoData.put("number",recipientNumber);
+        bioInfoData.put("otp",OTP);
+
+        registerPresenter.requestRegisterProfile(bioInfoData,educationalData);
+
+
 
     }
 
@@ -105,18 +118,27 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     @Override
     public void OnRegistrationSuccess() {
 
+        NavigationController.showMainActivity(this);
+    }
+
+    @Override
+    public void onRegistrationError() {
+        //TODO: Handle Registration Error On UI
+    }
+
+    @Override
+    public void onRecordExists(){
+        //TODO: Handle Record Exists on UI
+    }
+
+    @Override
+    public void onNetworkUnAvailable() {
+        //TODO: Handle No Network on Registration
     }
 
     @Override
     public void onError() {
-
+        //TODO: Handle General Error on UI
     }
 
-//    private class NextButtonListener implements View.OnClickListener {
-//        @Override
-//        public void onClick(View view) {
-//            viewPager.setCurrentItem(1,true);
-//
-//        }
-//    }
 }

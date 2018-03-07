@@ -1,104 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="50dp"
-            android:id="@+id/imageView"
-            android:src="@drawable/pic_n_name"
-            android:layout_centerHorizontal="true"
-            android:visibility="visible"/>
-
-        <LinearLayout
-            android:id="@+id/onboard_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/imageView">
+            android:layout_height="match_parent">
 
-            <TextView
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="50dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/pic_n_name"
+                android:layout_centerHorizontal="true"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:id="@+id/onboard_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome on board"
-                android:textAlignment="center"
-                style="@style/label_heading_bold_maroon"/>
+                android:orientation="vertical"
+                android:layout_below="@id/imageView">
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome on board"
+                    android:textAlignment="center"
+                    style="@style/label_heading_bold_maroon"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Just put your Mobile Number"
+                    android:textAlignment="center"
+                    style="@style/label_heading_maroon"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Just put your Mobile Number"
-                android:textAlignment="center"
-                style="@style/label_heading_maroon"/>
-        </LinearLayout>
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="40dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/phone_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/onboard_layout"
+                    android:layout_marginTop="100dp"
+                    android:paddingVertical="10dp">
 
-        <LinearLayout
-            android:id="@+id/phone_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/onboard_layout"
-            android:layout_marginTop="100dp"
-            android:paddingHorizontal="40dp"
-            android:paddingVertical="10dp">
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/code_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_contentColor="@color/textColorPrimary"
+                        app:ccp_defaultPhoneCode="971">
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/code_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:ccp_showFlag="false"
-                app:ccp_showNameCode="false"
-                app:ccp_contentColor="@color/textColorPrimary"
-                app:ccp_defaultPhoneCode="971">
+                    </com.hbb20.CountryCodePicker>
 
-            </com.hbb20.CountryCodePicker>
+                    <EditText
+                        android:id="@+id/field_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter your Mobile Number"
+                        android:layout_gravity="center_vertical"
+                        android:textAlignment="center"
+                        android:paddingVertical="10dp"
+                        android:theme="@style/TextInputTheme"
+                        android:textColor="@color/textColorPrimary"
+                        android:inputType="phone"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/btn_proceed"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_arrow_forward_white"
+                    android:background="@drawable/circle_maroon_solid"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center_horizontal"
+                    />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/field_phone"
+
+
+            <ImageView
+                android:id="@+id/city_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter your Mobile Number"
-                android:layout_gravity="center_vertical"
-                android:textAlignment="center"
-                android:paddingVertical="10dp"
-                android:theme="@style/TextInputTheme"
-                android:textColor="@color/textColorPrimary"
-                android:inputType="phone"
+                android:layout_height="200dp"
+                android:layout_marginBottom="-40dp"
+                android:src="@drawable/city_image"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+
                 />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/btn_proceed"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/phone_layout"
-            app:srcCompat="@drawable/ic_arrow_forward_white"
-            android:background="@drawable/circle_maroon_solid"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="50dp"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="-40dp"
-            android:src="@drawable/city_image"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-
-            />
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

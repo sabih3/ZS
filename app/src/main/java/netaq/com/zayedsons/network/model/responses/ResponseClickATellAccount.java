@@ -1,4 +1,4 @@
-package netaq.com.zayedsons.network.model;
+package netaq.com.zayedsons.network.model.responses;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class ResponseClickATellAccount {
             return message;
         }
 
-        private class Message {
+        public class Message {
 
             public boolean accepted;
             public String to;
@@ -36,6 +36,9 @@ public class ResponseClickATellAccount {
             public String getApiMessageId() {
                 return apiMessageId;
             }
+
+
+
         }
     }
 }

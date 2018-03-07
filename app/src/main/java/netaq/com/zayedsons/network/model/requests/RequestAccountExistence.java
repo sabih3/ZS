@@ -1,10 +1,12 @@
-package netaq.com.zayedsons.network.model;
+package netaq.com.zayedsons.network.model.requests;
+
+import netaq.com.zayedsons.network.model.BaseModel;
 
 /**
  * Created by sabih on 04-Mar-18.
  */
 
-public class RequestAccountExistence extends BaseModel{
+public class RequestAccountExistence extends BaseModel {
 
     public String id;
     public String token;

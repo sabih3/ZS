@@ -2,6 +2,19 @@ package netaq.com.zayedsons.views.registration;
 
 import android.content.Context;
 
+import java.util.HashMap;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import netaq.com.zayedsons.model.AccountInfo;
+import netaq.com.zayedsons.model.Profile;
+import netaq.com.zayedsons.network.Constants;
+import netaq.com.zayedsons.network.RestClient;
+import netaq.com.zayedsons.network.model.requests.RequestRegisterProfile;
+import netaq.com.zayedsons.network.model.responses.ResponseRegister;
+import netaq.com.zayedsons.utils.UserManager;
+
 /**
  * Created by sabih on 18-Feb-18.
  */
@@ -10,10 +23,91 @@ public class RegistrationPresenter {
 
     private Context mContext;
     private RegistrationView viewListener;
-
+    private CompositeDisposable mCompositeDisposable;
 
     public RegistrationPresenter(Context context, RegistrationView registrationView) {
         this.mContext = context;
         this.viewListener = registrationView;
     }
+
+    public void requestRegisterProfile(HashMap<String, Object> bioInfoData,
+                                       HashMap<String, String> educationalData) {
+        mCompositeDisposable = new CompositeDisposable();
+        AccountInfo accountInfo = new AccountInfo();
+
+        accountInfo.setUserID((String)bioInfoData.get("userID"));
+        accountInfo.setUserName((String)bioInfoData.get("number"));
+        accountInfo.setPassword(String.valueOf(bioInfoData.get("otp")));
+        accountInfo.setGender((Integer)bioInfoData.get("gender"));
+        accountInfo.setEmail((String)bioInfoData.get("email"));
+        accountInfo.setUserTypeID(Constants.USER_TYPE_NORMAL);
+
+
+
+        Profile profile = new Profile();
+        profile.setName1((String)bioInfoData.get("name1"));
+        profile.setName2((String)bioInfoData.get("name2"));
+        profile.setName3((String)bioInfoData.get("name3"));
+        profile.setName4((String)bioInfoData.get("name4"));
+        profile.setProfilePic((String)bioInfoData.get("profilePic"));
+        profile.setdOB((String)bioInfoData.get("dob"));
+
+
+        String major = educationalData.get("major");
+        String university = educationalData.get("university");
+        String emiratesID = educationalData.get("emiratesID");
+        String sponsor = educationalData.get("sponsor");
+        String city = educationalData.get("city");
+
+        profile.setCourseMajor(major);
+        profile.setUniversity(university);
+        profile.seteIDNo(emiratesID);
+        profile.setSponsorID("2b99703e-43d7-4138-94e9-56dbf37e0935");
+        profile.setCityID(city);
+
+
+        RequestRegisterProfile registerRequest = new RequestRegisterProfile();
+        registerRequest.setAccountInfo(accountInfo);
+        registerRequest.setProfile(profile);
+
+        registerRequest.setDeviceID("123");
+
+        mCompositeDisposable.add(RestClient.getAdapter().registerProfile(registerRequest)
+                             .observeOn(AndroidSchedulers.mainThread())
+                             .subscribeOn(Schedulers.io())
+                             .subscribe(this::handleResponse,this::handleError));
+
+
+    }
+
+    private void handleResponse(ResponseRegister responseRegister) {
+        viewListener.hideProgress();
+        if(responseRegister.isSuccess()){
+
+            switch (responseRegister.getStatusCode()){
+
+                case 1:
+                    UserManager.setUser(responseRegister);
+                    viewListener.OnRegistrationSuccess();
+                break;
+
+                case 2:
+
+                break;
+
+                case 9:
+                    viewListener.onRecordExists();
+                break;
+
+            }
+
+        }
+    }
+
+
+    private void handleError(Throwable throwable) {
+        viewListener.hideProgress();
+    }
+
+
 }

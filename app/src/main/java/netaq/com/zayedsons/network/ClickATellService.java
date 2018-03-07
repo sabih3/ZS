@@ -1,9 +1,10 @@
-package netaq.com.zayedsons.network.model;
+package netaq.com.zayedsons.network;
 
 
 
 import io.reactivex.Observable;
-import retrofit2.Call;
+import netaq.com.zayedsons.network.model.ClickATellMessageObject;
+import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -18,5 +19,7 @@ public interface ClickATellService {
 
     @POST(".")
     Observable<ResponseClickATellAccount> sendOTP(@Body ClickATellMessageObject messageObject);
+
+
 
 }

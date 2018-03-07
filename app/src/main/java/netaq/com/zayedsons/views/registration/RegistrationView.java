@@ -9,4 +9,7 @@ import netaq.com.zayedsons.views.BaseView;
 public interface RegistrationView extends BaseView{
 
     void OnRegistrationSuccess();
+    void onRegistrationError();
+
+    void onRecordExists();
 }

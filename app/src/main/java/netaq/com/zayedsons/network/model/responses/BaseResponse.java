@@ -1,10 +1,12 @@
-package netaq.com.zayedsons.network.model;
+package netaq.com.zayedsons.network.model.responses;
+
+import java.io.Serializable;
 
 /**
  * Created by sabih on 01-Mar-18.
  */
 
-public class BaseResponse {
+public class BaseResponse implements Serializable{
 
     private boolean Success;
     private int StatusCode = -1 ;

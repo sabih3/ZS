@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
+import netaq.com.zayedsons.utils.UserManager;
 
 public class ScreenSplash extends Activity {
 
@@ -20,7 +21,14 @@ public class ScreenSplash extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                NavigationController.showLoginScreen(ScreenSplash.this);
+
+                if(UserManager.getUser()==null || UserManager.getUser().getAccountInfo()==null ){
+                    NavigationController.showLoginScreen(ScreenSplash.this);
+                }else{
+                    NavigationController.showMainActivity(ScreenSplash.this);
+                }
+
+
 
                 ScreenSplash.this.finish();
             }

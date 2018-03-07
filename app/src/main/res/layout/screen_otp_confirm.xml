@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/pic_n_name"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/onboard_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/imageView">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome on board"
+                android:textAlignment="center"
+                style="@style/label_heading_bold_maroon"/>
+
+            <TextView
+                android:id="@+id/label_otp_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please enter the OTP sent on : +971544741150"
+                android:textAlignment="center"
+                android:paddingHorizontal="10dp"
+                style="@style/label_heading_maroon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phone_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/onboard_layout"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="25dp"
+            android:layout_centerVertical="true">
+
+            <EditText
+                android:id="@+id/field_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="80dp"
+                android:hint="OTP"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                android:paddingVertical="10dp"
+                android:theme="@style/TextInputTheme"
+                android:textColor="@color/textColorPrimary"
+                android:inputType="number"
+                android:maxLength="4"/>
+            <Button
+                android:id="@+id/btn_confirm_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                style="@style/maroonishButtonStyle"
+                android:text="Confirm"/>
+
+            <TextView
+                android:id="@+id/tv_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30 secs to Resend the Code"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
+                style="@style/label_heading" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="-40dp"
+            android:src="@drawable/city_image"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+
+            />
+    </RelativeLayout>
+</RelativeLayout>

@@ -26,5 +26,6 @@
         android:text="2"
         android:textColor="@color/white"
         android:gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
         />
 </RelativeLayout>

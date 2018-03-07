@@ -131,6 +131,9 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     private int gender = Constants.GENDER_DEFAULT;
     private String phone = "";
 
+    private String userID ;
+    private String profilePicURL = "";
+
     public ScreenBioInfo() {
         // Required empty public constructor
     }
@@ -145,7 +148,11 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         validator.setValidationListener(this);
 
         unbinder = ButterKnife.bind(this, view);
+
+        userID = UUID.randomUUID().toString();
+
         initViews();
+
 
         return view;
     }
@@ -194,7 +201,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             //profilePhoto.setImageURI(imageURI);
             try {
                 String encodedString = ImageUtils.getEncodedString(getContext(), imageURI);
-                bioInfoPresenter.uploadProfilePhoto(encodedString);
+                bioInfoPresenter.uploadProfilePhoto(userID,encodedString);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -283,6 +290,11 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     }
 
     @Override
+    public void onNetworkUnAvailable() {
+        //TODO: Handle No network in Photo Upload
+    }
+
+    @Override
     public void onError() {
 
     }
@@ -300,7 +312,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     @Override
     public void onPhotoUploaded(String fileURL) {
-
+        profilePicURL = fileURL;
         Picasso.with(getContext()).load(fileURL).into(profilePhoto);
         photoProgress.setVisibility(View.GONE);
 
@@ -325,8 +337,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         fieldPhone.setText("123456789");
     }
 
-    public void getBioInfoData(){
-       String userID = UUID.randomUUID().toString();
+    public HashMap<String, Object> getBioInfoData(){
 
        String firstName = fieldFirstName.getText().toString();
 
@@ -338,14 +349,21 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
        String email = fieldEmail.getText().toString();
 
-       String phone = countryCodePicker.getSelectedCountryCodeWithPlus() +
-                      fieldPhone.getText().toString();
-
        String date = fieldDate.getText().toString();
 
-       HashMap<String,String> valuesMap = new HashMap<>();
 
+        HashMap<String,Object> valuesMap = new HashMap<>();
 
+        valuesMap.put("userID",userID);
+        valuesMap.put("gender",gender);
+        valuesMap.put("email",email);
+        valuesMap.put("name1",firstName);
+        valuesMap.put("name2",fatherName);
+        valuesMap.put("name3",middleName);
+        valuesMap.put("name4",lastName);
+        valuesMap.put("profilePic",profilePicURL);
+        valuesMap.put("dob",date);
+        return valuesMap;
 
 
     }
@@ -357,7 +375,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         public void onClick(View view) {
 
             //Validate the form
-            setDummyValues();
+            //setDummyValues();
             validator.validate(); //OnValidationSuccess
 
             //OnValidationError

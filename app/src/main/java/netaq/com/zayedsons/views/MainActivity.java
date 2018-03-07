@@ -1,5 +1,6 @@
 package netaq.com.zayedsons.views;
 
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -11,16 +12,22 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.NavDrawerAdapter;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.utils.AppConfig;
+import netaq.com.zayedsons.utils.UIUtils;
+import netaq.com.zayedsons.utils.UserManager;
 
 public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.onItemClickListener{
 
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
     @BindView(R.id.navigation_view)NavigationView navigationView;
     @BindView(R.id.nav_drawer_list)RecyclerView drawerList;
 
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +83,26 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
 
         actionBarDrawerToggle.syncState();
 
+        setDrawerHeader();
+
         setDrawerList();
+
+
+    }
+
+    private void setDrawerHeader() {
+        //View headerView = navigationView.getHeaderView(0);
+
+        CircleImageView drawerProfilePhoto = findViewById(R.id.drawer_profile_image);
+        TextView personName = findViewById(R.id.drawer_tv_person_name);
+
+        try {
+            Picasso.with(this).load(UserManager.getUser().getProfile().getProfilePic()).into(drawerProfilePhoto);
+        }catch (Exception exc){
+
+        }
+
+        personName.setText(UserManager.getUser().getProfile().getFullName());
     }
 
     private void setDrawerList() {
@@ -104,8 +131,39 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
 
             case 2:
                 drawerLayout.closeDrawers();
-                NavigationController.showScannerScreen(MainActivity.this);
+                //NavigationController.showScannerScreen(MainActivity.this);
+
+            break;
+
+            case 3:
+                drawerLayout.closeDrawers();
+
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handleLogout();
+                    }
+                },300);
+
             break;
         }
+    }
+
+    private void handleLogout() {
+        UIUtils.showMessageDialog(MainActivity.this,
+                "Are you sure of logging out?", "Yes", "No",
+                new UIUtils.DialogButtonListener() {
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        UserManager.clearUserData();
+                        NavigationController.showLoginScreen(MainActivity.this);
+                    }
+
+                    @Override
+                    public void onNegativeButtonClicked() {
+
+                    }
+                });
     }
 }

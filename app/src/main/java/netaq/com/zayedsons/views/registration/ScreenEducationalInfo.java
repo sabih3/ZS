@@ -24,6 +24,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,8 +33,10 @@ import butterknife.Unbinder;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.eventbus.OnBackFromEducationInfo;
 import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
-import netaq.com.zayedsons.model.Cities;
+import netaq.com.zayedsons.model.Lookup;
+import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.RestClient;
+import netaq.com.zayedsons.network.model.requests.RequestLookup;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,8 +67,11 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     @NotEmpty
     @BindView(R.id.field_sponsor)AppCompatEditText fieldSponsor;
 
+    @BindView(R.id.field_emirates_id)AppCompatEditText fieldEmiratesID;
 
     private Validator validator;
+    private List<Lookup.Lookups> cities = new ArrayList<>();
+    private String selectedCityID = "";
     public ScreenEducationalInfo() {
         // Required empty public constructor
     }
@@ -85,9 +91,10 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     }
 
     private void initViews() {
+        unbinder = ButterKnife.bind(this, view);
+
         validator = new Validator(this);
         validator.setValidationListener(this);
-        unbinder = ButterKnife.bind(this, view);
         registerButton.setOnClickListener(new RegisterButtonListener());
         backButton.setOnClickListener(new BackButtonListener());
         backLayout.setOnClickListener(new BackButtonListener());
@@ -137,8 +144,20 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         }
     }
 
-    public void getEducationalData() {
+    public HashMap<String, String> getEducationalData() {
+        String major = fieldMajor.getText().toString();
+        String university = fieldUniversity.getText().toString();
+        String emiratesID = fieldEmiratesID.getText().toString();
+        String sponsor = fieldSponsor.getText().toString();
 
+        HashMap<String,String> valuesMap = new HashMap<>();
+        valuesMap.put("major",major);
+        valuesMap.put("university",university);
+        valuesMap.put("emiratesID",emiratesID);
+        valuesMap.put("sponsor",sponsor);
+        valuesMap.put("city",selectedCityID);
+
+        return valuesMap;
     }
 
     private class RegisterButtonListener implements View.OnClickListener {
@@ -181,18 +200,21 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     }
 
     private void checkQueryFromServer() {
-        Call<Cities> requestCities = RestClient.getAdapter().getCities();
+        RequestLookup requestLookup = new RequestLookup();
+        requestLookup.setForID(Constants.FOR_ID_LOOKUP_COUNTRY);
 
-        requestCities.enqueue(new Callback<Cities>() {
+        Call<Lookup> requestCities = RestClient.getAdapter().getCities(requestLookup);
+
+        requestCities.enqueue(new Callback<Lookup>() {
             @Override
-            public void onResponse(Call<Cities> call, Response<Cities> response) {
+            public void onResponse(Call<Lookup> call, Response<Lookup> response) {
                 if(response.isSuccessful()){
                     if(response.body()!=null){
-                        Cities body = response.body();
+                        Lookup body = response.body();
 
-                        ArrayList<Cities.City> cities = body.getCities();
-                        ArrayAdapter<Cities.City> adapter =
-                        new ArrayAdapter<Cities.City>(getContext(),
+                        cities = body.getLookups();
+                        ArrayAdapter<Lookup.Lookups> adapter =
+                        new ArrayAdapter<>(getContext(),
                                 R.layout.row_city_name,cities);
 
 //                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
@@ -205,6 +227,8 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                                Lookup.Lookups city = cities.get(i);
+                                selectedCityID = city.getID();
                             }
                         });
                     }
@@ -213,7 +237,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
             }
 
             @Override
-            public void onFailure(Call<Cities> call, Throwable t) {
+            public void onFailure(Call<Lookup> call, Throwable t) {
 
             }
         });

@@ -1,4 +1,4 @@
-package netaq.com.zayedsons.network.model;
+package netaq.com.zayedsons.network.model.responses;
 
 import java.util.ArrayList;
 

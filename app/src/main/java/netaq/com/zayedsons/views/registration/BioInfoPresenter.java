@@ -1,16 +1,13 @@
 package netaq.com.zayedsons.views.registration;
 
-import java.util.UUID;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.EndPoints;
 import netaq.com.zayedsons.network.RestClient;
-import netaq.com.zayedsons.network.model.ResponseFileUpload;
-import netaq.com.zayedsons.network.model.ResponseGUID;
-import netaq.com.zayedsons.network.model.UploadFile;
+import netaq.com.zayedsons.network.model.responses.ResponseFileUpload;
+import netaq.com.zayedsons.network.model.requests.UploadFile;
 
 /**
  * Created by sabih on 01-Mar-18.
@@ -22,7 +19,7 @@ public class BioInfoPresenter {
     private BioInfoView bioInfoView;
 
     private CompositeDisposable mCompositeDisposable;
-    private UUID userID = UUID.randomUUID();;
+    //private UUID userID = UUID.randomUUID();;
 
     public BioInfoPresenter(BioInfoView bioInfoView) {
         this.bioInfoView = bioInfoView;
@@ -30,13 +27,14 @@ public class BioInfoPresenter {
 
 
 
-    public void uploadProfilePhoto(String encodedString) {
+    public void uploadProfilePhoto(String userID,String encodedString) {
+        mCompositeDisposable = new CompositeDisposable();
         bioInfoView.showPhotoUploadProgress();
 
         UploadFile uploadFile = new UploadFile();
         uploadFile.setForID(Constants.FOR_ID_FILE_UPLOAD);
         uploadFile.setFileBase64(encodedString);
-        uploadFile.setRefID(userID.toString());
+        uploadFile.setRefID(userID);
 
 
         mCompositeDisposable.add(RestClient.getAdapter().uploadPhoto(uploadFile)

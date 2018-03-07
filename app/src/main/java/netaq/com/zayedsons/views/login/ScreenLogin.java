@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
+import netaq.com.zayedsons.utils.OTPHelper;
 
 public class ScreenLogin extends AppCompatActivity {
 
@@ -33,7 +34,7 @@ public class ScreenLogin extends AppCompatActivity {
     private class RegisterLabelListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            NavigationController.showRegistrationScreen(ScreenLogin.this);
+
         }
     }
 

@@ -15,7 +15,7 @@ public class AppConfig {
         drawerItems.add("Profile");
         drawerItems.add("Events");
         drawerItems.add("Attendance");
-
+        drawerItems.add("Log out");
         return drawerItems;
     }
 }

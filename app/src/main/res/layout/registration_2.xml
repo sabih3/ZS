@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingVertical="15dp"
-            android:hint="City"
+            android:hint="City*"
             android:textColor="@color/textColorPrimary"/>
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -74,7 +74,7 @@
             android:id="@+id/field_university"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="University"
+            android:hint="University*"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:textColor="@color/textColorPrimary" />
@@ -91,7 +91,7 @@
             android:id="@+id/field_major"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Major"
+            android:hint="Major*"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:textColor="@color/textColorPrimary"/>

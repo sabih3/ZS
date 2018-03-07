@@ -1,10 +1,10 @@
-package netaq.com.zayedsons.network.model;
+package netaq.com.zayedsons.network.model.responses;
 
 /**
  * Created by sabih on 01-Mar-18.
  */
 
-public class ResponseFileUpload extends BaseResponse{
+public class ResponseFileUpload extends BaseResponse {
 
     private String ID;
     private String FileURL;

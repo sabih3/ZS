@@ -18,9 +18,10 @@
             android:id="@+id/navigation_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="0dp"
             android:layout_gravity="start"
-            android:background="@drawable/primary_gradient">
+            android:background="@drawable/primary_gradient"
+            app:headerLayout="@layout/header">
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
