@@ -82,11 +82,11 @@ public class LoginWithMobilePresenter {
                 .subscribeOn(Schedulers.io());
 
 
-        Observable<UserVerification> merged = Observable.zip(OTPResponse, existenceResponse,
-                new BiFunction<ResponseClickATellAccount, ResponseRegister, UserVerification>() {
+        Observable<UserVerification> merged = Observable.zip(existenceResponse,OTPResponse,
+                new BiFunction<ResponseRegister,ResponseClickATellAccount, UserVerification>() {
                     @Override
-                    public UserVerification apply(ResponseClickATellAccount responseClickATellAccount,
-                                                  ResponseRegister responseExistence) throws Exception {
+                    public UserVerification apply(ResponseRegister responseExistence,
+                                                  ResponseClickATellAccount responseClickATellAccount) throws Exception {
 
                         UserVerification verification = new UserVerification();
                         verification.responseExistence = responseExistence;
@@ -136,11 +136,14 @@ public class LoginWithMobilePresenter {
 
                 if(e instanceof UnknownHostException ){
                     mListener.onNetworkUnAvailable();
-                }else if(e instanceof HttpException){
-                    mListener.onError();
-                }
-                else{
-                    mListener.onSmsSentFailure();
+                }else{
+                    if(e instanceof HttpException && ((HttpException) e).code()==400 ){
+                        mListener.onSmsSentFailure();
+
+                    }
+                    else{
+                        mListener.onError();
+                    }
                 }
             }
 

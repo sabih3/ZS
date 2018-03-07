@@ -14,7 +14,7 @@
             android:id="@+id/drawer_profile_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/dummy_user"
+            android:src="@drawable/ic_person_grey"
             android:layout_gravity="center_horizontal"/>
 
 

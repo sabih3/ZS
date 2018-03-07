@@ -2,6 +2,7 @@ package netaq.com.zayedsons.views.registration;
 
 import android.content.Context;
 
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -105,8 +106,14 @@ public class RegistrationPresenter {
     }
 
 
-    private void handleError(Throwable throwable) {
+    private void handleError(Throwable t) {
         viewListener.hideProgress();
+        if(t instanceof UnknownHostException){
+            viewListener.onNetworkUnAvailable();
+        }else{
+            viewListener.onError();
+        }
+
     }
 
 

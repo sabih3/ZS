@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registration_parent_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,6 +18,13 @@
 
         </netaq.com.zayedsons.utils.CustomPager>
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

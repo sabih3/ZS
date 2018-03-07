@@ -52,35 +52,41 @@ public class ScreenOTP extends AppCompatActivity {
     private class ConfirmBtnListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            String otpString = fieldOTP.getText().toString();
-            Integer otpInteger = Integer.valueOf(otpString);
+            String otpString = fieldOTP.getText().toString().trim();
 
-            boolean isOTPValid = OTPHelper.isOTPValid(otpInteger);
+            if(!otpString.isEmpty()){
+                Integer otpInteger = Integer.valueOf(otpString);
 
-            if(isOTPValid){
+                boolean isOTPValid = OTPHelper.isOTPValid(otpInteger);
 
-                if(userExistence){
-                    UserManager.setUser(userInfo);
-                    NavigationController.showMainActivity(ScreenOTP.this);
+                if(isOTPValid){
+
+                    if(userExistence){
+                        UserManager.setUser(userInfo);
+                        NavigationController.showMainActivity(ScreenOTP.this);
+                    }else{
+                        NavigationController.showRegistrationScreen(ScreenOTP.this,recipientNumber,
+                                OTPHelper.getCachedOTP());
+                    }
                 }else{
-                    NavigationController.showRegistrationScreen(ScreenOTP.this,recipientNumber,
-                                                                OTPHelper.getCachedOTP());
+
+                    UIUtils.showMessageDialog(ScreenOTP.this, "The Code you entered is not valid",
+                            "Enter Again", "Dismiss", new UIUtils.DialogButtonListener() {
+                                @Override
+                                public void onPositiveButtonClicked() {
+
+                                }
+
+                                @Override
+                                public void onNegativeButtonClicked() {
+
+                                }
+                            });
                 }
             }else{
-
-                UIUtils.showMessageDialog(ScreenOTP.this, "The Code you entered is not valid",
-                        "Enter Again", "Dismiss", new UIUtils.DialogButtonListener() {
-                            @Override
-                            public void onPositiveButtonClicked() {
-
-                            }
-
-                            @Override
-                            public void onNegativeButtonClicked() {
-
-                            }
-                        });
+                fieldOTP.setError("Must not be empty");
             }
+
         }
     }
 }

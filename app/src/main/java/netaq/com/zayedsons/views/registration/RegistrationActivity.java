@@ -1,8 +1,11 @@
 package netaq.com.zayedsons.views.registration;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -11,6 +14,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
@@ -21,6 +25,7 @@ import netaq.com.zayedsons.eventbus.OnBackFromEducationInfo;
 import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
 import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
 import netaq.com.zayedsons.utils.CustomPager;
+import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.UserManager;
 
 public class RegistrationActivity extends AppCompatActivity implements RegistrationView{
@@ -30,8 +35,14 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     private ScreenEducationalInfo educationalInfoFragment;
     private RegistrationPresenter registerPresenter;
 
-
+    @BindView(R.id.registration_parent_coordinator)CoordinatorLayout coordinatorLayout;
     @BindView(R.id.pager)CustomPager viewPager;
+
+    @BindString(R.string.snackbar_no_network) String noNetworkMessage;
+    @BindString(R.string.action_label_retry)String labelRetry;
+    @BindString(R.string.label_something_went_wrong) String defaultErrorMessage;
+
+    @BindView(R.id.progress) ProgressBar progress;
 
     private int OTP;
     private String recipientNumber;
@@ -93,13 +104,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     //Fired from Screen EducationInfo
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onRegisterClick(RegisterButtonEvent registerEvent){
-        HashMap<String, Object> bioInfoData = bioInfoFragment.getBioInfoData();
-        HashMap<String, String> educationalData = educationalInfoFragment.getEducationalData();
-
-        bioInfoData.put("number",recipientNumber);
-        bioInfoData.put("otp",OTP);
-
-        registerPresenter.requestRegisterProfile(bioInfoData,educationalData);
+        getValuesAndRegister();
 
 
 
@@ -107,12 +112,12 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     @Override
     public void showProgress() {
-
+        progress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progress.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -133,12 +138,28 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     @Override
     public void onNetworkUnAvailable() {
-        //TODO: Handle No Network on Registration
+        UIUtils.showSnackBar(coordinatorLayout, noNetworkMessage, labelRetry, new UIUtils.SnackBarActionListener() {
+            @Override
+            public void onSnackBarAction() {
+                getValuesAndRegister();
+            }
+        });
     }
+
+
 
     @Override
     public void onError() {
-        //TODO: Handle General Error on UI
+        UIUtils.showSnackBar(coordinatorLayout,defaultErrorMessage);
     }
 
+    private void getValuesAndRegister() {
+        HashMap<String, Object> bioInfoData = bioInfoFragment.getBioInfoData();
+        HashMap<String, String> educationalData = educationalInfoFragment.getEducationalData();
+
+        bioInfoData.put("number",recipientNumber);
+        bioInfoData.put("otp",OTP);
+
+        registerPresenter.requestRegisterProfile(bioInfoData,educationalData);
+    }
 }

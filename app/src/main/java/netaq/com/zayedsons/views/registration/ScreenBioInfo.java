@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -313,8 +314,19 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     @Override
     public void onPhotoUploaded(String fileURL) {
         profilePicURL = fileURL;
-        Picasso.with(getContext()).load(fileURL).into(profilePhoto);
-        photoProgress.setVisibility(View.GONE);
+
+        Picasso.with(getContext()).load(fileURL).into(profilePhoto, new Callback() {
+            @Override
+            public void onSuccess() {
+                photoProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                photoProgress.setVisibility(View.GONE);
+            }
+        });
+
 
     }
 

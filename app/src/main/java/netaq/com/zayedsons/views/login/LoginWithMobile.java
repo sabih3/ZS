@@ -108,11 +108,17 @@ public class LoginWithMobile extends AppCompatActivity implements
 
     private void getValuesAndSendOTP(){
         String phone = fieldPhone.getText().toString();
-        countryCode = codePicker.getSelectedCountryCodeWithPlus();
-        String phoneWithCode = countryCode + phone;
 
-        int OTP = OTPHelper.getNewOTP();
+        if(!phone.isEmpty()){
+            countryCode = codePicker.getSelectedCountryCodeWithPlus();
+            String phoneWithCode = countryCode + phone;
 
-        loginPresenter.sendOTP(phoneWithCode,OTP);
+            int OTP = OTPHelper.getNewOTP();
+
+            loginPresenter.sendOTP(phoneWithCode,OTP);
+        }else{
+            fieldPhone.setError("Please provide a valid mobile number");
+        }
+
     }
 }
