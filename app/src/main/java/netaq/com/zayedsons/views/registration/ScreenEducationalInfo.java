@@ -109,6 +109,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
 
     @Override
     public void onValidationSucceeded() {
+
         EventBus.getDefault().post(new RegisterButtonEvent());
     }
 
@@ -155,7 +156,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         valuesMap.put("university",university);
         valuesMap.put("emiratesID",emiratesID);
         valuesMap.put("sponsor",sponsor);
-        valuesMap.put("city",selectedCityID);
+        valuesMap.put("city","d3de37ba-e9b5-4969-9fe7-f18ebf33d822");
 
         return valuesMap;
     }

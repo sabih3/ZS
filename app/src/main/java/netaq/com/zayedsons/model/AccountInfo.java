@@ -9,28 +9,41 @@ import java.io.Serializable;
  */
 
 public class AccountInfo implements Serializable{
+
     @SerializedName("UserID")
     private String userID;
+
     @SerializedName("UserName")
     private String userName;
+
     @SerializedName("Password")
     private String password;
+
     @SerializedName("FullName")
     private String fullName;
+
     @SerializedName("Gender")
     private int gender;
+
     @SerializedName("GenderCode")
     private String genderCode;
+
     @SerializedName("Email")
     private String email;
+
     @SerializedName("MobileNo")
     private String mobileNo;
+
     @SerializedName("IsApproved")
     private boolean isApproved;
+
     @SerializedName("UserTypeID")
     private String userTypeID;
+
+
     @SerializedName("UserType")
-    private int userType;
+    private transient int userType;
+
     @SerializedName("StrUserType")
     private String strUserType;
 

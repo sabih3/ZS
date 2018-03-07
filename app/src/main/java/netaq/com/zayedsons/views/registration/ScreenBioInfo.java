@@ -166,6 +166,8 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         fieldEmail.addTextChangedListener(new EmailTextChangeListener());
         fieldFirstName.addTextChangedListener(new NameTextChangeListener());
         fieldFatherName.addTextChangedListener(new FatherNameTextListener());
+        fieldLastName.addTextChangedListener(new LastNameTextListener());
+
         fieldPwd.addTextChangedListener(new PasswordTextListener());
         fieldRetypePwd.addTextChangedListener(new ConfirmPwdTextListener());
 
@@ -452,6 +454,23 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         }
     }
 
+    private class LastNameTextListener implements TextWatcher{
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            layout_lastName.setError(null);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    }
     private class PhoneTextListener implements TextWatcher{
 
         @Override
