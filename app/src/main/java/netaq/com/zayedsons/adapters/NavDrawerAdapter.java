@@ -12,7 +12,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.R;
 
 /**

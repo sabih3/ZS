@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
-    public static void showToast(Context context, String msg){
+    public static void showToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -38,7 +39,7 @@ public class Utils {
     }
 
 
-    public static void setLocale(Activity activity, Locale locale){
+    public static void setLocale(Activity activity, Locale locale) {
 
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -52,13 +53,13 @@ public class Utils {
 
         String realPathFromURI = "";
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             realPathFromURI = ImageUtils.getRealPathFromURI_API11to18(context, uri);
         }
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            realPathFromURI = ImageUtils.getRealPathFromURI_API19(context,uri);
+            realPathFromURI = ImageUtils.getRealPathFromURI_API19(context, uri);
         }
 
         return realPathFromURI;
@@ -66,7 +67,7 @@ public class Utils {
     }
 
     public final static boolean isValidEmail(String target) {
-        Pattern pattern = Pattern.compile(Regex.emailRegex,Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(Regex.emailRegex, Pattern.CASE_INSENSITIVE);
         if (target == null) {
             return false;
         } else {
@@ -81,5 +82,10 @@ public class Utils {
         } else {
             return pattern.matcher(target).find();
         }
+    }
+
+    public static void getDeviceID(Context context) {
+        String androidID = Settings.Secure.getString(context.getContentResolver(),
+                           Settings.Secure.ANDROID_ID);
     }
 }

@@ -1,6 +1,7 @@
 package netaq.com.zayedsons.network.model.responses;
 
 import com.google.gson.annotations.SerializedName;
+
 import netaq.com.zayedsons.model.AccountInfo;
 import netaq.com.zayedsons.model.Profile;
 

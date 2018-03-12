@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,8 @@ import butterknife.Unbinder;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.UpComingEventsAdapter;
 import netaq.com.zayedsons.core.NavigationController;
+import netaq.com.zayedsons.eventbus.UpcomingEventsData;
+import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.model.EventList;
 
 /**
@@ -43,7 +48,7 @@ public class UpComingEvents extends Fragment implements UpComingView,
 
         unbinder = ButterKnife.bind(this,view);
         upComingPresenter = new UpComingPresenter(this);
-        upComingPresenter.fetchUpComingEventsList();
+        //upComingPresenter.fetchUpComingEventsList();
         return view;
     }
 
@@ -51,6 +56,17 @@ public class UpComingEvents extends Fragment implements UpComingView,
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpComingDataFetched(UpcomingEventsData upComingEventsData){
+        List<Event> upcomingEventList = upComingEventsData.getUpcomingEventList();
+
+        if(upcomingEventList.isEmpty()){
+            //show Empty view
+        }else{
+            //show list view
+        }
     }
 
     @Override

@@ -7,10 +7,6 @@ package netaq.com.zayedsons.network;
 public class EndPoints {
     public static final String BASE_URL = "http://netaqsoft.com.accu17.com/zayedsons/";
 
-    public static final String UPCOMING_EVENT_LIST = "";
-    public static final String MY_EVENT_LIST = "";
-    public static final String FINISHED_EVENT_LIST = "";
-
     public static final String EVENT_QR = "";
 
 
@@ -35,4 +31,6 @@ public class EndPoints {
     public static final String ACCOUNT_EXISTENCE = "api/Account/Exists";
 
     public static final String ACCOUNT_CLICK_A_TELL = "https://api.clickatell.com/rest/message/";;
+
+    public static final String EVENT_LIST = "api/Event/Get";
 }

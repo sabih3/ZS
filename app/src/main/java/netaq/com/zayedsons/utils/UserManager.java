@@ -1,6 +1,5 @@
 package netaq.com.zayedsons.utils;
 
-import netaq.com.zayedsons.network.model.requests.RequestRegisterProfile;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 
 /**

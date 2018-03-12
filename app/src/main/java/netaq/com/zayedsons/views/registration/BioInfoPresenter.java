@@ -6,8 +6,8 @@ import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.EndPoints;
 import netaq.com.zayedsons.network.RestClient;
-import netaq.com.zayedsons.network.model.responses.ResponseFileUpload;
 import netaq.com.zayedsons.network.model.requests.UploadFile;
+import netaq.com.zayedsons.network.model.responses.ResponseFileUpload;
 
 /**
  * Created by sabih on 01-Mar-18.

@@ -1,7 +1,7 @@
 package netaq.com.zayedsons.views;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,6 +49,7 @@ public class ScreenOTP extends AppCompatActivity {
         btnConfirm.setOnClickListener(new ConfirmBtnListener());
     }
 
+
     private class ConfirmBtnListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -64,10 +65,14 @@ public class ScreenOTP extends AppCompatActivity {
                     if(userExistence){
                         UserManager.setUser(userInfo);
                         NavigationController.showMainActivity(ScreenOTP.this);
+
                     }else{
                         NavigationController.showRegistrationScreen(ScreenOTP.this,recipientNumber,
                                 OTPHelper.getCachedOTP());
                     }
+
+                    ScreenOTP.this.finish();
+
                 }else{
 
                     UIUtils.showMessageDialog(ScreenOTP.this, "The Code you entered is not valid",
@@ -89,4 +94,7 @@ public class ScreenOTP extends AppCompatActivity {
 
         }
     }
+
+
+
 }

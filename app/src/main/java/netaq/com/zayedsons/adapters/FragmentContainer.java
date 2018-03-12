@@ -2,8 +2,6 @@ package netaq.com.zayedsons.adapters;
 
 import android.support.v4.app.Fragment;
 
-import netaq.com.zayedsons.R;
-
 /**
  * Created by Sabih on 11-Feb-18.
  */

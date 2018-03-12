@@ -1,8 +1,8 @@
 package netaq.com.zayedsons.views.login;
 
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +57,7 @@ public class LoginWithMobile extends AppCompatActivity implements
     @Override
     public void onSmsSent(ResponseRegister userInfo, String recipient, boolean userExists) {
         NavigationController.showOTPConfirmScreen(this,userInfo,recipient,userExists);
+        this.finish();
     }
 
     @Override
@@ -110,12 +111,32 @@ public class LoginWithMobile extends AppCompatActivity implements
         String phone = fieldPhone.getText().toString();
 
         if(!phone.isEmpty()){
+            //If number entered by user is started with zero
             countryCode = codePicker.getSelectedCountryCodeWithPlus();
+
+            if(phone.startsWith("0")) {
+                phone = phone.substring(1);
+            }
+
             String phoneWithCode = countryCode + phone;
 
-            int OTP = OTPHelper.getNewOTP();
+            UIUtils.showMessageDialog(this,
+                    "Is this Number " + phoneWithCode + " correct ? ",
+                    "Confirm", "Edit",
+                    new UIUtils.DialogButtonListener() {
+                @Override
+                public void onPositiveButtonClicked() {
+                    int OTP = OTPHelper.getNewOTP();
+                    loginPresenter.sendOTP(phoneWithCode,OTP);
+                }
 
-            loginPresenter.sendOTP(phoneWithCode,OTP);
+                @Override
+                public void onNegativeButtonClicked() {
+
+                }
+            });
+
+
         }else{
             fieldPhone.setError("Please provide a valid mobile number");
         }

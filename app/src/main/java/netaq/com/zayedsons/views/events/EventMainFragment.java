@@ -5,11 +5,15 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,6 +21,11 @@ import butterknife.Unbinder;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.FragmentAdapter;
 import netaq.com.zayedsons.adapters.FragmentContainer;
+import netaq.com.zayedsons.eventbus.FinishedEventData;
+import netaq.com.zayedsons.eventbus.MyEventsData;
+import netaq.com.zayedsons.eventbus.UpcomingEventsData;
+import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.network.model.responses.ResponseEventList;
 import netaq.com.zayedsons.views.events.finished.FinishedEvents;
 import netaq.com.zayedsons.views.events.my_events.MyEvents;
 import netaq.com.zayedsons.views.events.upcoming.UpComingEvents;
@@ -24,11 +33,15 @@ import netaq.com.zayedsons.views.events.upcoming.UpComingEvents;
 /** EventList tabs controller
  *
  */
-public class EventMainFragment extends Fragment {
+public class EventMainFragment extends Fragment implements EventMainView{
 
     private Unbinder unbinder;
+
     @BindView(R.id.events_tabs) TabLayout tabLayout;
     @BindView(R.id.events_pager)ViewPager viewPager;
+    @BindView(R.id.events_swipe_refresh)SwipeRefreshLayout swipeRefreshLayout;
+
+    private EventMainPresenter mainEventPresenter;
 
     public EventMainFragment() {
         
@@ -40,16 +53,58 @@ public class EventMainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event_main, container, false);
 
         unbinder = ButterKnife.bind(this, view);
-
+        mainEventPresenter = new EventMainPresenter(this);
         setPager();
+
+        getAllEventsData();
+
         return view;
     }
-
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onEventsFetched(ResponseEventList responseEventList) {
+        List<Event> upcomingEventList = responseEventList.getUpcoming();
+        List<Event> myEventsList = responseEventList.getMyEvents();
+        List<Event> archiveEventList = responseEventList.getArchive();
+
+        EventBus.getDefault().post(new UpcomingEventsData(upcomingEventList));
+        EventBus.getDefault().post(new MyEventsData(myEventsList));
+        EventBus.getDefault().post(new FinishedEventData(archiveEventList));
+
+
+    }
+
+    @Override
+    public void onNetworkUnAvailable() {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void showProgress() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgress() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void getAllEventsData() {
+        mainEventPresenter.getEvents(getContext());
+
+        //EventBus.getDefault().post(new UpcomingEventsData(upcomingEvent));
+
     }
 
     private void setPager() {
@@ -88,4 +143,6 @@ public class EventMainFragment extends Fragment {
        }
 
     }
+
+
 }

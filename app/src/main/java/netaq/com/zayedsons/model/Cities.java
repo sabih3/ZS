@@ -1,7 +1,6 @@
 package netaq.com.zayedsons.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sabih on 20-Feb-18.

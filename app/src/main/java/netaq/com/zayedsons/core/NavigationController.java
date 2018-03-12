@@ -4,16 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 
+import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.views.MainActivity;
-import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.views.QRScanner;
 import netaq.com.zayedsons.views.ScreenOTP;
 import netaq.com.zayedsons.views.events.EventMainFragment;
 import netaq.com.zayedsons.views.events.ScreenEventQR;
 import netaq.com.zayedsons.views.events.event_detail.ScreenEventDetail;
 import netaq.com.zayedsons.views.login.LoginWithMobile;
-import netaq.com.zayedsons.views.login.ScreenLogin;
 import netaq.com.zayedsons.views.registration.RegistrationActivity;
 
 /**

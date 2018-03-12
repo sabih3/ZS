@@ -15,12 +15,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.network.model.ClickATellMessageObject;
-import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
-import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
-import netaq.com.zayedsons.network.model.requests.SMSRequest;
 import netaq.com.zayedsons.network.model.UserVerification;
+import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
+import netaq.com.zayedsons.network.model.requests.SMSRequest;
+import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
-import netaq.com.zayedsons.utils.UserManager;
 import netaq.com.zayedsons.views.BaseView;
 
 /**

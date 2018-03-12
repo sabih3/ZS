@@ -1,8 +1,8 @@
 package netaq.com.zayedsons.views;
 
 import android.app.Activity;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;

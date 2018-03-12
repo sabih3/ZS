@@ -1,7 +1,7 @@
 package netaq.com.zayedsons.views.login;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,7 +9,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
-import netaq.com.zayedsons.utils.OTPHelper;
 
 public class ScreenLogin extends AppCompatActivity {
 

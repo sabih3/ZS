@@ -26,6 +26,6 @@ public class ClickATellMessageObject {
     public ClickATellMessageObject(String text, String[] to) {
         this.text = text;
         this.to = to;
-        this.from = from;
+//        this.from = "ZayedSons";
     }
 }
