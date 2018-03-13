@@ -1,12 +1,13 @@
 package netaq.com.zayedsons.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Sabih Ahmed on 12-Mar-18.
  */
 
-public class Event {
+public class Event implements Serializable{
 
     public String ID;
 
@@ -38,9 +39,9 @@ public class Event {
 
     public String CountryName;
 
-    public int Map_Lat;
+    public double Map_Lat;
 
-    public int Map_Lng;
+    public double Map_Lng;
 
     public int Map_Zoom;
 
@@ -118,11 +119,11 @@ public class Event {
         return CountryName;
     }
 
-    public int getMap_Lat() {
+    public double getMap_Lat() {
         return Map_Lat;
     }
 
-    public int getMap_Lng() {
+    public double getMap_Lng() {
         return Map_Lng;
     }
 
@@ -158,7 +159,7 @@ public class Event {
         return Sessions;
     }
 
-    private class EventDay {
+    private class EventDay implements Serializable{
         public String Day;
         public boolean Attended;
 
@@ -171,7 +172,7 @@ public class Event {
         }
     }
 
-    private class Session {
+    private class Session implements Serializable{
         public String ID;
 
         public String Title;

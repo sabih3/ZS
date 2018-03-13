@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 
 import netaq.com.zayedsons.R;
+import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.views.QRScanner;
@@ -24,6 +25,7 @@ public class NavigationController {
     public static final String KEY_RECIPIENT = "key_recipient";
     public static final String KEY_OTP = "key_otp";
     public static final String KEY_USER_INFO = "key_user_info";
+    public static final String KEY_EVENT_OBJ = "key_event";
 
     public static void showMainEventsScreen(Context context,
                                             FragmentManager fragmentManager) {
@@ -38,8 +40,9 @@ public class NavigationController {
         context.startActivity(intent);
     }
 
-    public static void showEventDetailScreen(Context context) {
+    public static void showEventDetailScreen(Context context, Event event) {
         Intent intent = new Intent(context,ScreenEventDetail.class);
+        intent.putExtra(KEY_EVENT_OBJ,event);
         context.startActivity(intent);
 
 //        ScreenEventDetail eventMainFragment = new ScreenEventDetail();

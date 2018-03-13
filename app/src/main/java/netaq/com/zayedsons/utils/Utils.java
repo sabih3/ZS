@@ -10,6 +10,9 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -87,5 +90,36 @@ public class Utils {
     public static void getDeviceID(Context context) {
         String androidID = Settings.Secure.getString(context.getContentResolver(),
                            Settings.Secure.ANDROID_ID);
+    }
+
+    public static String getTime(String displayDateTime) {
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat requiredFormat = new SimpleDateFormat("hh:mm a");
+        String time = "";
+        try {
+            Date date = inputDateFormat.parse(displayDateTime);
+            time = requiredFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return time;
+    }
+
+    public static String getDate(String displayDateTime){
+        SimpleDateFormat inputDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat requiredDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String formattedDate = "";
+
+        try {
+            Date date = inputDateTimeFormat.parse(displayDateTime);
+            formattedDate = requiredDateFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDate;
     }
 }

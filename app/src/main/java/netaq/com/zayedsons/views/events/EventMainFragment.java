@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import netaq.com.zayedsons.eventbus.MyEventsData;
 import netaq.com.zayedsons.eventbus.UpcomingEventsData;
 import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
+import netaq.com.zayedsons.utils.Utils;
 import netaq.com.zayedsons.views.events.finished.FinishedEvents;
 import netaq.com.zayedsons.views.events.my_events.MyEvents;
 import netaq.com.zayedsons.views.events.upcoming.UpComingEvents;
@@ -54,6 +57,7 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
         unbinder = ButterKnife.bind(this, view);
         mainEventPresenter = new EventMainPresenter(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshListener());
         setPager();
 
         getAllEventsData();
@@ -69,6 +73,7 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
     @Override
     public void onEventsFetched(ResponseEventList responseEventList) {
+
         List<Event> upcomingEventList = responseEventList.getUpcoming();
         List<Event> myEventsList = responseEventList.getMyEvents();
         List<Event> archiveEventList = responseEventList.getArchive();
@@ -82,12 +87,12 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
     @Override
     public void onNetworkUnAvailable() {
-
+        //TODO: Handle on NEtwork Failure
     }
 
     @Override
     public void onError() {
-
+        //TODO: Handle Exceptions on Events Main Fragment
     }
 
     @Override
@@ -103,7 +108,6 @@ public class EventMainFragment extends Fragment implements EventMainView{
     private void getAllEventsData() {
         mainEventPresenter.getEvents(getContext());
 
-        //EventBus.getDefault().post(new UpcomingEventsData(upcomingEvent));
 
     }
 
@@ -129,12 +133,13 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
         fragmentList.add(upComing);
         fragmentList.add(myEvents);
-        fragmentList.add(finishedEvents);
+        //fragmentList.add(finishedEvents);
 
         FragmentAdapter adapter = new FragmentAdapter(getContext(),getActivity().getSupportFragmentManager(),
                                                      fragmentList);
 
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
 
         tabLayout.setupWithViewPager(viewPager);
         for(int i=0;i<adapter.getCount();i++){
@@ -145,4 +150,10 @@ public class EventMainFragment extends Fragment implements EventMainView{
     }
 
 
+    private class SwipeRefreshListener implements SwipeRefreshLayout.OnRefreshListener {
+        @Override
+        public void onRefresh() {
+            getAllEventsData();
+        }
+    }
 }

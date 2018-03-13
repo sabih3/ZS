@@ -9,21 +9,21 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import netaq.com.zayedsons.R;
-import netaq.com.zayedsons.model.EventList;
+import netaq.com.zayedsons.model.Event;
 
 /**
  * Created by sabih on 12-Feb-18.
  */
 public class UpComingEventsAdapter extends RecyclerView.Adapter<UpComingHolder> {
     private final Context context;
-    private List<EventList> items;
+    private List<Event> items;
     private EventClickListener eventClickListener;
 
     public void setEventClickListener(EventClickListener eventClickListener) {
         this.eventClickListener = eventClickListener;
     }
 
-    public UpComingEventsAdapter(List<EventList> items, Context context) {
+    public UpComingEventsAdapter(List<Event> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -38,14 +38,14 @@ public class UpComingEventsAdapter extends RecyclerView.Adapter<UpComingHolder> 
 
     @Override
     public void onBindViewHolder(UpComingHolder holder, int position) {
-//        EventList item = items.get(position);
-        //TODO Fill in your logic for binding the view.
+        Event event = items.get(position);
 
+        holder.bindData(event);
         holder.eventTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(eventClickListener != null){
-                    eventClickListener.onEventClick();
+                    eventClickListener.onEventClick(event);
                 }
 
             }
@@ -55,12 +55,12 @@ public class UpComingEventsAdapter extends RecyclerView.Adapter<UpComingHolder> 
     @Override
     public int getItemCount() {
         if (items == null) {
-            return 6;
+            return 0;
         }
         return items.size();
     }
 
     public interface EventClickListener{
-        void onEventClick();
+        void onEventClick(Event event);
     }
 }
