@@ -159,7 +159,7 @@ public class Event implements Serializable{
         return Sessions;
     }
 
-    private class EventDay implements Serializable{
+    public class EventDay implements Serializable{
         public String Day;
         public boolean Attended;
 

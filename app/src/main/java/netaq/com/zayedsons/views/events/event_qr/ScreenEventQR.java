@@ -4,10 +4,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindDrawable;
 import butterknife.BindString;
@@ -16,8 +22,9 @@ import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.utils.Utils;
 
-public class ScreenEventQR extends AppCompatActivity {
+public class ScreenEventQR extends AppCompatActivity implements EventQRView{
 
     @BindView(R.id.toolbar)@Nullable Toolbar toolbar;
 
@@ -27,8 +34,12 @@ public class ScreenEventQR extends AppCompatActivity {
 
     @BindString(R.string.screen_label_event_QR)String screenTitle;
     @BindDrawable(R.drawable.ic_arrow_back_white)Drawable backButton;
+    @BindView(R.id.qr_swipe_refresh)SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.progress)ProgressBar progress;
+    @BindView(R.id.iv_qr)ImageView qrImageView;
 
     private Event event;
+    private EventQRPresenter qrPresenter = new EventQRPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +53,15 @@ public class ScreenEventQR extends AppCompatActivity {
 
     private void initViews() {
         ButterKnife.bind(this);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshListener());
         setToolbar();
         setEventData();
+        getEventQR();
+    }
 
+    private void getEventQR() {
+        qrPresenter.requestQR(event.getRegID(),event.getEventDays().get(0).getDay());
     }
 
     private void setToolbar() {
@@ -63,5 +80,64 @@ public class ScreenEventQR extends AppCompatActivity {
 
     private void setEventData() {
         tvEventTitle.setText(event.getTitle());
+        tvStartDate.setText(Utils.getDate(event.getStartDate()
+                +" " +Utils.getTime(event.getStartDate())));
+
+        tvEndDate.setText(Utils.getDate(event.getEndDate()
+                +" " +Utils.getTime(event.getEndDate())));
+    }
+
+    @Override
+    public void onNetworkUnAvailable() {
+        swipeRefreshLayout.setRefreshing(false);
+        progress.setVisibility(View.GONE);
+        //TODO: Handle Network Unavailable
+    }
+
+    @Override
+    public void onError() {
+        swipeRefreshLayout.setRefreshing(false);
+        progress.setVisibility(View.GONE);
+        //TODO: Handle Exception
+    }
+
+    @Override
+    public void showProgress() {
+        swipeRefreshLayout.setRefreshing(true);
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        swipeRefreshLayout.setRefreshing(false);
+        progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onQRReceived(String returnedURL) {
+
+        try {
+            Picasso.with(this).load(returnedURL).into(qrImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    progress.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+                    progress.setVisibility(View.GONE);
+                }
+            });
+        }catch (Exception exc){
+            progress.setVisibility(View.GONE);
+        }
+
+    }
+
+    private class SwipeRefreshListener implements SwipeRefreshLayout.OnRefreshListener {
+        @Override
+        public void onRefresh() {
+            getEventQR();
+        }
     }
 }

@@ -35,26 +35,32 @@
         android:text="@string/dummy_description"
         style="@style/body_text_style"/>
 
+                    <!--Agenda Layout Starts-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/label_agenda"
-        style="@style/label_heading"/>
+        style="@style/label_heading"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/field_agenda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/dummy_description"
-        style="@style/body_text_style"/>
+        style="@style/body_text_style"
+        android:visibility="gone"/>
+                    <!--Agenda Layout Ends-->
 
+                    <!--Speakers Layout Starts-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/label_speakers"
-        style="@style/label_heading"/>
+        style="@style/label_heading"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/field_speakers"
@@ -62,23 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/dummy_description"
-        style="@style/body_text_style"/>
-
-    <Button
-        android:id="@+id/btn_join_event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        style="@style/maroonishButtonStyle"
-        android:text="@string/btn_event_join"
+        style="@style/body_text_style"
         android:visibility="gone"/>
+                    <!--Speakers Layout ends-->
 
-    <Button
-        android:id="@+id/btn_qr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        style="@style/greenButtonStyle"
-        android:text="@string/btn_show_qr"
-        android:visibility="gone"/>
 </LinearLayout>

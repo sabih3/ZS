@@ -8,29 +8,62 @@
         android:id="@+id/event_detail_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-            <include layout="@layout/custom_toolbar"/>
+                        <include layout="@layout/custom_toolbar"/>
 
-            <fragment
-                android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:name="com.google.android.gms.maps.MapFragment"
-                
-                />
+                        <fragment
+                            android:id="@+id/map"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:name="com.google.android.gms.maps.MapFragment"
 
-            <include layout="@layout/event_description_layout"/>
+                            />
+
+                        <include layout="@layout/event_description_layout"/>
 
 
-            </LinearLayout>
-        </ScrollView>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </android.support.v4.widget.NestedScrollView>
+                <Button
+                    android:id="@+id/btn_join_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    style="@style/maroonishButtonStyle"
+
+                    android:text="@string/btn_event_join"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btn_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_alignParentBottom="true"
+                    style="@style/greenButtonStyle"
+                    android:text="@string/btn_show_qr"
+                    android:visibility="gone"/>
+        </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -45,6 +45,7 @@ public class BioInfoPresenter {
 
     private void errorPhotoUpload(Throwable throwable) {
         bioInfoView.hidePhotoUploadProgress();
+        //TODO: Handle Network Errors
     }
 
     private void responsePhotoUpload(ResponseFileUpload responseFileUpload) {

@@ -9,12 +9,14 @@ import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
 import netaq.com.zayedsons.network.model.requests.RequestEventJoin;
 import netaq.com.zayedsons.network.model.requests.RequestEventList;
 import netaq.com.zayedsons.network.model.requests.RequestLookup;
+import netaq.com.zayedsons.network.model.requests.RequestQR;
 import netaq.com.zayedsons.network.model.requests.RequestRegisterProfile;
 import netaq.com.zayedsons.network.model.requests.SMSRequest;
 import netaq.com.zayedsons.network.model.requests.UploadFile;
 import netaq.com.zayedsons.network.model.responses.BaseResponse;
 import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
+import netaq.com.zayedsons.network.model.responses.ResponseEventQR;
 import netaq.com.zayedsons.network.model.responses.ResponseFileUpload;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.network.model.responses.ResponseSMS;
@@ -54,4 +56,7 @@ public interface Services {
 
     @POST(EndPoints.EVENT_JOIN)
     Observable<BaseResponse> requestJoinEvent(@Body RequestEventJoin requestEventJoin);
+
+    @POST(EndPoints.EVENT_QR)
+    Observable<ResponseEventQR> requestEventQR(@Body RequestQR requestQR);
 }

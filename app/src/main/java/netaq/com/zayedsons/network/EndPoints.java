@@ -7,7 +7,7 @@ package netaq.com.zayedsons.network;
 public class EndPoints {
     public static final String BASE_URL = "http://netaqsoft.com.accu17.com/zayedsons/";
 
-    public static final String EVENT_QR = "";
+    public static final String EVENT_QR = "api/Event/QR";
 
 
     public static final String GUID = "api/Util/NewGuid";
