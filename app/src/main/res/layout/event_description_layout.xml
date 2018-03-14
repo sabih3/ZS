@@ -70,7 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         style="@style/maroonishButtonStyle"
-        android:text="@string/btn_event_join"/>
+        android:text="@string/btn_event_join"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_qr"
@@ -78,5 +79,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         style="@style/greenButtonStyle"
-        android:text="@string/btn_show_qr"/>
+        android:text="@string/btn_show_qr"
+        android:visibility="gone"/>
 </LinearLayout>

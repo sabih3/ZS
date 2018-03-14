@@ -62,8 +62,9 @@ public class NavigationController {
         context.startActivity(intent);
     }
 
-    public static void showQRScreen(Context context) {
+    public static void showQRScreen(Context context, Event event) {
         Intent intent = new Intent(context,ScreenEventQR.class);
+        intent.putExtra(KEY_EVENT_OBJ,event);
         context.startActivity(intent);
     }
 

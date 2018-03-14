@@ -64,15 +64,18 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_location" />
+                        android:layout_width="15dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_location_psd" />
 
                     <TextView
                         android:id="@+id/field_location"
                         style="@style/label_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:gravity="center_vertical"
                         android:text="Dubai,UAE" />
 

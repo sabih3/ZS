@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -49,6 +50,8 @@ public class MyEvents extends Fragment implements UpComingEventsAdapter.EventCli
 
         unbinder = ButterKnife.bind(this,view);
 
+        EventBus.getDefault().register(this);
+
         return view;
     }
 
@@ -71,6 +74,7 @@ public class MyEvents extends Fragment implements UpComingEventsAdapter.EventCli
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     private void showEmptyView() {

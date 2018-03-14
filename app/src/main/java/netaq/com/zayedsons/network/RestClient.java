@@ -36,25 +36,25 @@ public class RestClient {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        URL url = null;
-
-        try {
-            url = new URL(EndPoints.API_SMS);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        SSLSocketFactory noSSLSocketFactory = null;
-        try {
-            noSSLSocketFactory = new NoSSLv3SocketFactory(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        URL url = null;
+//
+//        try {
+//            url = new URL(EndPoints.API_SMS);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        SSLSocketFactory noSSLSocketFactory = null;
+//        try {
+//            noSSLSocketFactory = new NoSSLv3SocketFactory(url);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         httpClient= new OkHttpClient.Builder();
-        httpClient.readTimeout(120, TimeUnit.SECONDS);
+        httpClient.readTimeout(180, TimeUnit.SECONDS);
         httpClient.addInterceptor(loggingInterceptor);
-        httpClient.sslSocketFactory(noSSLSocketFactory);
+        //httpClient.sslSocketFactory(noSSLSocketFactory);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(EndPoints.BASE_URL)
