@@ -11,7 +11,7 @@ import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.views.QRScanner;
 import netaq.com.zayedsons.views.ScreenOTP;
 import netaq.com.zayedsons.views.events.EventMainFragment;
-import netaq.com.zayedsons.views.events.ScreenEventQR;
+import netaq.com.zayedsons.views.events.event_qr.ScreenEventQR;
 import netaq.com.zayedsons.views.events.event_detail.ScreenEventDetail;
 import netaq.com.zayedsons.views.login.LoginWithMobile;
 import netaq.com.zayedsons.views.registration.RegistrationActivity;

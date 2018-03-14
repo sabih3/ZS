@@ -1,4 +1,4 @@
-package netaq.com.zayedsons.views.events;
+package netaq.com.zayedsons.views.events.event_qr;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindDrawable;
@@ -43,6 +44,7 @@ public class ScreenEventQR extends AppCompatActivity {
         ButterKnife.bind(this);
         setToolbar();
         setEventData();
+
     }
 
     private void setToolbar() {
@@ -50,6 +52,13 @@ public class ScreenEventQR extends AppCompatActivity {
         toolbar.setTitle(screenTitle);
         toolbar.setNavigationIcon(backButton);
         setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScreenEventQR.this.finish();
+            }
+        });
     }
 
     private void setEventData() {
