@@ -11,4 +11,5 @@
     <color name="textColorPrimary">#4d4141</color>
     <color name="textColorSecondary">#d6d6d6</color>
     <color name="hintColor">#d2d2d2</color>
+    <color name="field_validation_error">#f4511e</color>
 </resources>

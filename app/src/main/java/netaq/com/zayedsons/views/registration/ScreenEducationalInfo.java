@@ -67,7 +67,6 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     @NotEmpty
     @BindView(R.id.field_major)AppCompatEditText fieldMajor;
 
-    @NotEmpty
     @BindView(R.id.field_sponsor)AppCompatSpinner fieldSponsor;
 
     @BindView(R.id.field_emirates_id)AppCompatEditText fieldEmiratesID;
@@ -155,13 +154,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
                     layoutMajor.setErrorEnabled(true);
                     layoutMajor.setError("Please provide your majors");
                 break;
-
-
-                case R.id.field_sponsor:
-                    layoutSponsor.setErrorEnabled(true);
-                    layoutSponsor.setError("Sponsor is required to be filled");
-                break;
-
+                
             }
         }
     }

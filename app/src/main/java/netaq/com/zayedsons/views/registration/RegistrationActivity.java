@@ -123,6 +123,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     public void OnRegistrationSuccess() {
 
         NavigationController.showMainActivity(this);
+        this.finish();
     }
 
     @Override

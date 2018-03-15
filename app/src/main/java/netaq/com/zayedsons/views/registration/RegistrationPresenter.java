@@ -63,7 +63,7 @@ public class RegistrationPresenter {
         profile.setCourseMajor(major);
         profile.setUniversity(university);
         profile.seteIDNo(emiratesID);
-        profile.setSponsorID("2b99703e-43d7-4138-94e9-56dbf37e0935");
+        profile.setSponsorID("6d2b7f54-c466-40da-915b-eb73ae7519cb");
         profile.setCityID(city);
 
 
@@ -96,6 +96,9 @@ public class RegistrationPresenter {
 
                 break;
 
+                case 7:
+                    viewListener.onError();
+                break;
                 case 9:
                     viewListener.onRecordExists();
                 break;

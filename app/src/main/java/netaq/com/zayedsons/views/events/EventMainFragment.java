@@ -59,6 +59,7 @@ public class EventMainFragment extends Fragment implements EventMainView{
         View view = inflater.inflate(R.layout.fragment_event_main, container, false);
 
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         mainEventPresenter = new EventMainPresenter(this);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshListener());
         setPager();

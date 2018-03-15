@@ -18,12 +18,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
+import netaq.com.zayedsons.network.LoginWithMobilePresenter;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.utils.OTPHelper;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.UserManager;
 
-public class ScreenOTP extends AppCompatActivity {
+public class ScreenOTP extends AppCompatActivity{
 
     @BindView(R.id.tv_resend)TextView labelResend;
     @BindView(R.id.btn_confirm_otp)Button btnConfirm;
@@ -39,6 +40,7 @@ public class ScreenOTP extends AppCompatActivity {
     private static final int timeToResend = 30000;
     private static final int timeToResendInterval = 1000;
 
+    private LoginWithMobilePresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +122,7 @@ public class ScreenOTP extends AppCompatActivity {
                 applyCounter();
                 btnConfirm.setEnabled(true);
                 // sending the OTP Again to the device
-                //TODO resend code to server
+
                 Toast.makeText(ScreenOTP.this, getResources().getString(R.string.resend_pin), Toast.LENGTH_SHORT).show();
             }
         });

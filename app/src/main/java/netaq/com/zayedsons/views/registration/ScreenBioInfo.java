@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.hbb20.CountryCodePicker;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -161,9 +162,11 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     @BindView(R.id.progress)
     ProgressBar progress;
 
+    @BindView(R.id.gender_title)TextView labelGender;
+
     private BioInfoPresenter bioInfoPresenter = new BioInfoPresenter(this);
 
-    private int gender = Constants.GENDER_DEFAULT;
+    private int gender = Constants.GENDER_NOT_SELECTED;
     private String phone = "";
 
     private String userID;
@@ -463,8 +466,19 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             //setDummyValues();
             validator.validate(); //OnValidationSuccess
 
-            //OnValidationError
-            //Show error
+            validateGender();
+
+        }
+    }
+
+    private void validateGender() {
+        if(gender == Constants.GENDER_NOT_SELECTED){
+            labelGender.setTextSize(14);
+            labelGender.setTextColor(ContextCompat.getColor(getContext(),R.color.field_validation_error));
+            labelGender.setText("Gender*");
+
+        }else{
+            labelGender.setTextColor(ContextCompat.getColor(getContext(),R.color.textColorSecondary));
         }
     }
 
@@ -564,6 +578,9 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     private class GenderSelectionListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+
+            labelGender.setTextColor(ContextCompat.getColor(getContext(),R.color.textColorSecondary));
+
             switch (view.getId()) {
 
                 case R.id.btn_male:

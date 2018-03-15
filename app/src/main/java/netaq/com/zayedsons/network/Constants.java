@@ -17,7 +17,7 @@ public class Constants {
     public static final String USER_TYPE_ADMIN = "a631062f-b6df-4d94-9e76-ae39cbb24f0b";
 
 
-    public static final int GENDER_DEFAULT = 1;
+    public static final int GENDER_NOT_SELECTED = -1;
     public static final int GENDER_MALE = 10;
     public static final int GENDER_FEMALE = 20;
     public static final int GENDER_OTHER = 30;

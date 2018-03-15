@@ -182,10 +182,13 @@
                 android:id="@+id/gender_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:paddingVertical="10dp"
                 android:text="Gender*"
                 android:textColor="@color/lightGrey"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
