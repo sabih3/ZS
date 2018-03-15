@@ -33,4 +33,17 @@
     <string name="label_something_went_wrong">Something went wrong this time. Please try again</string>
     <string name="label_SMS_couldnot_sent">We were unable to deliver OTP on provided number</string>
 
+    <!-- strings for user profile fragment -->
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="full_name">Full Name</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="city">City</string>
+    <string name="university">University</string>
+    <string name="major">Major</string>
+    <string name="sponsor">Sponsor</string>
+    <string name="empty_field">NA</string>
+    <string name="my_card">My Card</string>
+    <string name="na">NA</string>
+
 </resources>

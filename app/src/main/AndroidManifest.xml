@@ -32,6 +32,9 @@
         <activity
             android:name=".views.MainActivity"
             android:windowActionBar="false" />
+        <activity
+            android:name=".views.ProfileActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".views.events.event_detail.ScreenEventDetail" />
         <activity android:name=".views.events.ScreenEventQR" />
         <activity android:name=".views.registration.RegistrationActivity" />

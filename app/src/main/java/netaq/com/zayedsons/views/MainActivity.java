@@ -1,5 +1,6 @@
 package netaq.com.zayedsons.views;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
 
         }
 
-        personName.setText(UserManager.getUser().getProfile().getFullName());
+        personName.setText(UserManager.getUser().getAccountInfo().getFullName());
     }
 
     private void setDrawerList() {
@@ -111,9 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
         NavDrawerAdapter navDrawerAdapter = new NavDrawerAdapter(this, drawerItems);
         drawerList.setAdapter(navDrawerAdapter);
         navDrawerAdapter.setItemClickListener(this);
-
-
-
     }
 
     //NavDrawerAdapter.OnItemClick
@@ -123,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
 
             case 0:
                 drawerLayout.closeDrawers();
+                showProfileActivity();
             break;
 
             case 1:
@@ -148,6 +147,14 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
 
             break;
         }
+    }
+
+    /**
+     * To display the User Profile page
+     */
+    private void showProfileActivity() {
+        Intent displayProfile = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(displayProfile);
     }
 
     private void handleLogout() {

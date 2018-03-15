@@ -84,6 +84,21 @@
         <item name="colorControlActivated">@android:color/black</item>
     </style>
 
+    <style name="TextInputThemeProfile" parent="Theme.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/hintColor</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:editTextBackground">@android:color/transparent</item>
+        <item name="android:backgroundTint">@color/lightGrey</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@android:color/black</item>
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="colorControlActivated">@android:color/black</item>
+    </style>
+
     <style name="genderDefault" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/lightGrey</item>
         <item name="android:textColor">@color/maroonish</item>

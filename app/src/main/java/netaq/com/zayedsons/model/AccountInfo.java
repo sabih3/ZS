@@ -94,4 +94,52 @@ public class AccountInfo implements Serializable{
     public void setStrUserType(String strUserType) {
         this.strUserType = strUserType;
     }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public String getGenderCode() {
+        return genderCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public String getUserTypeID() {
+        return userTypeID;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public String getStrUserType() {
+        return strUserType;
+    }
 }
