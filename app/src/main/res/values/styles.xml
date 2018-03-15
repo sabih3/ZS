@@ -108,6 +108,12 @@
     <style name="genderSelected" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/maroonish</item>
         <item name="android:textColor">@color/white</item>
-
     </style>
+
+    <style name="datePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorActionBarDark</item>
+        <item name="colorAccent">@color/maroonish</item>
+    </style>
+
 </resources>

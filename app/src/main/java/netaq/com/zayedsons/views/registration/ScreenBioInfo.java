@@ -2,6 +2,7 @@ package netaq.com.zayedsons.views.registration;
 
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -33,8 +34,11 @@ import com.squareup.picasso.Picasso;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -50,7 +54,7 @@ import netaq.com.zayedsons.utils.Utils;
 
 
 public class ScreenBioInfo extends Fragment implements Validator.ValidationListener,
-             CountryCodePicker.OnCountryChangeListener,BioInfoView {
+        CountryCodePicker.OnCountryChangeListener, BioInfoView, View.OnClickListener {
 
 
     private static final int REQUEST_SELECT_PICTURE = 100;
@@ -60,80 +64,113 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     private View view;
     private Unbinder unbinder;
 
-    @BindView(R.id.register_scroll_view)ScrollView parentScrollView;
+    @BindView(R.id.register_scroll_view)
+    ScrollView parentScrollView;
 
-    @BindView(R.id.btn_next)Button nextButton;
-    @BindView(R.id.profile_photo)CircleImageView profilePhoto;
-    @BindView(R.id.edit_photo)CircleImageView editPhoto;
+    @BindView(R.id.btn_next)
+    Button nextButton;
+    @BindView(R.id.profile_photo)
+    CircleImageView profilePhoto;
+    @BindView(R.id.edit_photo)
+    CircleImageView editPhoto;
 
-    @BindView(R.id.layout_email)TextInputLayout layoutEmail;
+    @BindView(R.id.layout_email)
+    TextInputLayout layoutEmail;
 
     @Email
     @NotEmpty
-    @BindView(R.id.field_email)EditText fieldEmail;
+    @BindView(R.id.field_email)
+    EditText fieldEmail;
 
-    @BindView(R.id.layout_pwd)TextInputLayout layoutPwd;
+    @BindView(R.id.layout_pwd)
+    TextInputLayout layoutPwd;
 
     @Password
     @NotEmpty
-    @BindView(R.id.field_pwd)EditText fieldPwd;
+    @BindView(R.id.field_pwd)
+    EditText fieldPwd;
 
 
-    @BindView(R.id.layout_retype_pwd)TextInputLayout layoutRetypePwd;
+    @BindView(R.id.layout_retype_pwd)
+    TextInputLayout layoutRetypePwd;
 
     @NotEmpty
-    @BindView(R.id.field_retype_pwd)EditText fieldRetypePwd;
-
+    @BindView(R.id.field_retype_pwd)
+    EditText fieldRetypePwd;
 
 
     /************* Names Fields & Layouts Start**********/
-    @BindView(R.id.layout_name)TextInputLayout layoutFirstName;
+    @BindView(R.id.layout_name)
+    TextInputLayout layoutFirstName;
     @NotEmpty
-    @BindView(R.id.field_name)EditText fieldFirstName;
+    @BindView(R.id.field_name)
+    EditText fieldFirstName;
 
 
-    @BindView(R.id.layout_father_name)TextInputLayout layoutFatherName;
-
-    @NotEmpty
-    @BindView(R.id.field_father_name)EditText fieldFatherName;
-
-    @BindView(R.id.field_middle_name) EditText fieldMiddleName;
-    @BindView(R.id.layout_middle_name)TextInputLayout layout_middle_name;
+    @BindView(R.id.layout_father_name)
+    TextInputLayout layoutFatherName;
 
     @NotEmpty
-    @BindView(R.id.field_last_name)EditText fieldLastName;
-    @BindView(R.id.layout_last_name)TextInputLayout layout_lastName;
+    @BindView(R.id.field_father_name)
+    EditText fieldFatherName;
+
+    @BindView(R.id.field_middle_name)
+    EditText fieldMiddleName;
+    @BindView(R.id.layout_middle_name)
+    TextInputLayout layout_middle_name;
+
+    @NotEmpty
+    @BindView(R.id.field_last_name)
+    EditText fieldLastName;
+    @BindView(R.id.layout_last_name)
+    TextInputLayout layout_lastName;
     /***********Names Fields and Layout end*********/
 
     @NotEmpty
-    @BindView(R.id.field_phone)EditText fieldPhone;
+    @BindView(R.id.field_phone)
+    EditText fieldPhone;
 
-    @BindView(R.id.layout_date)TextInputLayout layout_date;
+    @BindView(R.id.layout_date)
+    TextInputLayout layout_date;
 
-    @BindView(R.id.field_date)EditText fieldDate;
+    @BindView(R.id.field_date)
+    EditText fieldDate;
 
-    @BindView(R.id.layout_emirates_id)@Nullable TextInputLayout layout_emiratesId;
-    @BindView(R.id.field_emirates_id)@Nullable EditText fieldEmiratesID;
+    @BindView(R.id.layout_emirates_id)
+    @Nullable
+    TextInputLayout layout_emiratesId;
+    @BindView(R.id.field_emirates_id)
+    @Nullable
+    EditText fieldEmiratesID;
 
-    @BindView(R.id.btn_male)Button genderMale;
-    @BindView(R.id.btn_female)Button genderFemale;
+    @BindView(R.id.btn_male)
+    Button genderMale;
+    @BindView(R.id.btn_female)
+    Button genderFemale;
 
-    @BindView(R.id.layout_phone)TextInputLayout layout_phone;
+    @BindView(R.id.layout_phone)
+    TextInputLayout layout_phone;
 
-    @BindView(R.id.ccp)CountryCodePicker countryCodePicker;
+    @BindView(R.id.ccp)
+    CountryCodePicker countryCodePicker;
 
     private Validator validator;
 
-    @BindView(R.id.photoProgress)ProgressBar photoProgress;
-    @BindView(R.id.progress)ProgressBar progress;
+    @BindView(R.id.photoProgress)
+    ProgressBar photoProgress;
+    @BindView(R.id.progress)
+    ProgressBar progress;
 
     private BioInfoPresenter bioInfoPresenter = new BioInfoPresenter(this);
 
     private int gender = Constants.GENDER_DEFAULT;
     private String phone = "";
 
-    private String userID ;
+    private String userID;
     private String profilePicURL = "";
+
+    private Calendar myCalendar;
+    private DatePickerDialog.OnDateSetListener date;
 
     public ScreenBioInfo() {
         // Required empty public constructor
@@ -154,6 +191,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         initViews();
 
+        defineDatePickerListener();
 
         return view;
     }
@@ -179,32 +217,47 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         countryCodePicker.setOnCountryChangeListener(this);
     }
 
+    /**
+     * A picker for the Birthday Date of the user
+     */
+    private void defineDatePickerListener(){
+        // set the click listener for the DatePicker
+        fieldDate.setOnClickListener(this);
+        // define the DateSet Listener
+         date = (view, year, monthOfYear, dayOfMonth) -> {
+             myCalendar.set(Calendar.YEAR, year);
+             myCalendar.set(Calendar.MONTH, monthOfYear);
+             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+             updateLabel();
+         };
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
 
             case PERMISSION_REQUEST_STORAGE:
-                if(grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery();
-                }else{
+                } else {
 
                     //No need to handle
                 }
-            break;
+                break;
         }
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_SELECT_PICTURE && resultCode !=0){
+        if (requestCode == REQUEST_SELECT_PICTURE && resultCode != 0) {
 
             Uri imageURI = data.getData();
             //profilePhoto.setImageURI(imageURI);
             try {
                 String encodedString = ImageUtils.getEncodedString(getContext(), imageURI);
-                bioInfoPresenter.uploadProfilePhoto(userID,encodedString);
+                bioInfoPresenter.uploadProfilePhoto(userID, encodedString);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -221,11 +274,11 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         int permissionGrant = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        if(permissionGrant == PackageManager.PERMISSION_GRANTED){
+        if (permissionGrant == PackageManager.PERMISSION_GRANTED) {
             Intent galleryIntent = NavigationController.getGalleryIntent();
 
             this.startActivityForResult(galleryIntent, REQUEST_SELECT_PICTURE);
-        }else{
+        } else {
             //ask permisssion
 
             this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -240,46 +293,46 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for(ValidationError error: errors){
+        for (ValidationError error : errors) {
             View view = error.getView();
 
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.field_email:
                     layoutEmail.setErrorEnabled(true);
                     layoutEmail.setError("Email is required");
-                break;
+                    break;
 
                 case R.id.field_pwd:
                     layoutPwd.setErrorEnabled(true);
                     layoutPwd.setError("Password is required");
-                break;
+                    break;
 
                 case R.id.field_retype_pwd:
                     layout_phone.setErrorEnabled(true);
                     layoutRetypePwd.setError("Confirm password is required");
-                break;
+                    break;
 
                 case R.id.field_name:
                     layout_phone.setErrorEnabled(true);
                     layoutFirstName.setError("Name is required");
-                break;
+                    break;
 
 
                 case R.id.field_father_name:
                     layout_phone.setErrorEnabled(true);
                     layoutFatherName.setError("Father name is required");
-                break;
+                    break;
 
                 case R.id.field_last_name:
                     //layout_lastName.setErrorEnabled(true);
                     layout_lastName.setError("Last Name is required");
-                break;
+                    break;
 
                 case R.id.field_phone:
-                    parentScrollView.scrollTo(0,fieldPhone.getBottom());
+                    parentScrollView.scrollTo(0, fieldPhone.getBottom());
                     layout_phone.setErrorEnabled(true);
                     layout_phone.setError("Phone is required");
-                break;
+                    break;
 
 
             }
@@ -351,35 +404,53 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         fieldPhone.setText("123456789");
     }
 
-    public HashMap<String, Object> getBioInfoData(){
+    public HashMap<String, Object> getBioInfoData() {
 
-       String firstName = fieldFirstName.getText().toString();
+        String firstName = fieldFirstName.getText().toString();
 
-       String fatherName = fieldFatherName.getText().toString();
+        String fatherName = fieldFatherName.getText().toString();
 
-       String middleName = fieldMiddleName.getText().toString();
+        String middleName = fieldMiddleName.getText().toString();
 
-       String lastName = fieldLastName.getText().toString();
+        String lastName = fieldLastName.getText().toString();
 
-       String email = fieldEmail.getText().toString();
+        String email = fieldEmail.getText().toString();
 
-       String date = fieldDate.getText().toString();
+        String date = fieldDate.getText().toString();
 
 
-        HashMap<String,Object> valuesMap = new HashMap<>();
+        HashMap<String, Object> valuesMap = new HashMap<>();
 
-        valuesMap.put("userID",userID);
-        valuesMap.put("gender",gender);
-        valuesMap.put("email",email);
-        valuesMap.put("name1",firstName);
-        valuesMap.put("name2",fatherName);
-        valuesMap.put("name3",middleName);
-        valuesMap.put("name4",lastName);
-        valuesMap.put("profilePic",profilePicURL);
-        valuesMap.put("dob",date);
+        valuesMap.put("userID", userID);
+        valuesMap.put("gender", gender);
+        valuesMap.put("email", email);
+        valuesMap.put("name1", firstName);
+        valuesMap.put("name2", fatherName);
+        valuesMap.put("name3", middleName);
+        valuesMap.put("name4", lastName);
+        valuesMap.put("profilePic", profilePicURL);
+        valuesMap.put("dob", date);
         return valuesMap;
 
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == fieldDate) {
+            myCalendar = Calendar.getInstance();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datePicker,
+                    date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+            datePickerDialog.show();
+        }
+    }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        fieldDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     /***** Inner Classes / Interfaces **/
@@ -393,7 +464,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             validator.validate(); //OnValidationSuccess
 
             //OnValidationError
-                //Show error
+            //Show error
         }
     }
 
@@ -406,9 +477,9 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String inputData = fieldEmail.getText().toString();
-            if(!Utils.isValidEmail(inputData)){
+            if (!Utils.isValidEmail(inputData)) {
                 layoutEmail.setError(getString(R.string.validation_email_format));
-            }else{
+            } else {
                 layoutEmail.setError(null);
             }
         }
@@ -419,7 +490,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         }
     }
 
-    private class NameTextChangeListener implements TextWatcher{
+    private class NameTextChangeListener implements TextWatcher {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -454,7 +525,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         }
     }
 
-    private class LastNameTextListener implements TextWatcher{
+    private class LastNameTextListener implements TextWatcher {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -471,7 +542,8 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         }
     }
-    private class PhoneTextListener implements TextWatcher{
+
+    private class PhoneTextListener implements TextWatcher {
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -480,7 +552,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                layout_phone.setError(null);
+            layout_phone.setError(null);
         }
 
         @Override
@@ -492,29 +564,29 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     private class GenderSelectionListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
 
                 case R.id.btn_male:
-                    genderMale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_maroon_btn));
-                    genderMale.setTextColor(ContextCompat.getColor(getContext(),R.color.white));
+                    genderMale.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.shape_maroon_btn));
+                    genderMale.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
 
-                    genderFemale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_hollow_btn));
-                    genderFemale.setTextColor(ContextCompat.getColor(getContext(),R.color.maroonish));
+                    genderFemale.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.shape_hollow_btn));
+                    genderFemale.setTextColor(ContextCompat.getColor(getContext(), R.color.maroonish));
 
                     gender = Constants.GENDER_MALE;
 
-                break;
+                    break;
 
                 case R.id.btn_female:
-                    genderFemale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_maroon_btn));
-                    genderFemale.setTextColor(ContextCompat.getColor(getContext(),R.color.white));
+                    genderFemale.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.shape_maroon_btn));
+                    genderFemale.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
 
-                    genderMale.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.shape_hollow_btn));
-                    genderMale.setTextColor(ContextCompat.getColor(getContext(),R.color.maroonish));
+                    genderMale.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.shape_hollow_btn));
+                    genderMale.setTextColor(ContextCompat.getColor(getContext(), R.color.maroonish));
 
                     gender = Constants.GENDER_FEMALE;
 
-                break;
+                    break;
             }
         }
     }
@@ -538,13 +610,13 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             String confirmPwdText = charSequence.toString();
             String pwdText = fieldPwd.getText().toString();
 
-            if(!confirmPwdText.isEmpty()){
-                if(!confirmPwdText.equals(pwdText)){
+            if (!confirmPwdText.isEmpty()) {
+                if (!confirmPwdText.equals(pwdText)) {
                     layoutRetypePwd.setError("Passwords do not match");
-                }else{
+                } else {
                     layoutRetypePwd.setError("");
                 }
-            }else{
+            } else {
                 layoutRetypePwd.setError("");
             }
 
@@ -567,9 +639,9 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
             String pwdText = charSequence.toString();
             String confirmPwdText = fieldRetypePwd.getText().toString();
 
-            if(!confirmPwdText.isEmpty()){
+            if (!confirmPwdText.isEmpty()) {
 
-                if(pwdText.equals(confirmPwdText)){
+                if (pwdText.equals(confirmPwdText)) {
                     layoutRetypePwd.setError(null);
                 }
             }
