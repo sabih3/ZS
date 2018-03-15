@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +27,7 @@ import netaq.com.zayedsons.adapters.FragmentAdapter;
 import netaq.com.zayedsons.adapters.FragmentContainer;
 import netaq.com.zayedsons.eventbus.FinishedEventData;
 import netaq.com.zayedsons.eventbus.MyEventsData;
+import netaq.com.zayedsons.eventbus.ReloadAllEvents;
 import netaq.com.zayedsons.eventbus.UpcomingEventsData;
 import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
@@ -69,6 +72,12 @@ public class EventMainFragment extends Fragment implements EventMainView{
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReloadEvents(ReloadAllEvents reloadAllEvent){
+        getAllEventsData();
     }
 
     @Override

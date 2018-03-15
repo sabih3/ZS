@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -37,6 +39,7 @@ import netaq.com.zayedsons.model.Lookup;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.RestClient;
 import netaq.com.zayedsons.network.model.requests.RequestLookup;
+import netaq.com.zayedsons.utils.JSONUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,13 +68,14 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     @BindView(R.id.field_major)AppCompatEditText fieldMajor;
 
     @NotEmpty
-    @BindView(R.id.field_sponsor)AppCompatEditText fieldSponsor;
+    @BindView(R.id.field_sponsor)AppCompatSpinner fieldSponsor;
 
     @BindView(R.id.field_emirates_id)AppCompatEditText fieldEmiratesID;
 
     private Validator validator;
     private List<Lookup.Lookups> cities = new ArrayList<>();
     private String selectedCityID = "";
+    List<Lookup.Lookups> sponsorList ;
     public ScreenEducationalInfo() {
         // Required empty public constructor
     }
@@ -99,6 +103,23 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         backButton.setOnClickListener(new BackButtonListener());
         backLayout.setOnClickListener(new BackButtonListener());
         fieldCity.addTextChangedListener(new CityTextListener());
+
+        setSponsorSpinner();
+    }
+
+    private void setSponsorSpinner() {
+        String jsonString = JSONUtils.loadJSONFromAsset(getContext(),"sponsors.json");
+
+        Gson gson = new Gson();
+        Lookup sponsorLookup = gson.fromJson(jsonString,Lookup.class);
+
+        sponsorList = sponsorLookup.getLookups();
+
+        ArrayAdapter<Lookup.Lookups> spinnerAdapter = new ArrayAdapter<>(getContext(),
+                             R.layout.row_city_name,sponsorList);
+
+        fieldSponsor.setAdapter(spinnerAdapter);
+
     }
 
     @Override
@@ -149,13 +170,13 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         String major = fieldMajor.getText().toString();
         String university = fieldUniversity.getText().toString();
         String emiratesID = fieldEmiratesID.getText().toString();
-        String sponsor = fieldSponsor.getText().toString();
+
 
         HashMap<String,String> valuesMap = new HashMap<>();
         valuesMap.put("major",major);
         valuesMap.put("university",university);
         valuesMap.put("emiratesID",emiratesID);
-        valuesMap.put("sponsor",sponsor);
+        valuesMap.put("sponsor","6d2b7f54-c466-40da-915b-eb73ae7519cb");
         valuesMap.put("city","d3de37ba-e9b5-4969-9fe7-f18ebf33d822");
 
         return valuesMap;

@@ -41,7 +41,7 @@ public class UpComingEventsAdapter extends RecyclerView.Adapter<UpComingHolder> 
         Event event = items.get(position);
 
         holder.bindData(event);
-        holder.eventTitle.setOnClickListener(new View.OnClickListener() {
+        holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(eventClickListener != null){

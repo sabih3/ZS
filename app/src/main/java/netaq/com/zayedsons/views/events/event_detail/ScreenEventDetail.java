@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,12 +20,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindDrawable;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
+import netaq.com.zayedsons.eventbus.ReloadAllEvents;
 import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.Utils;
@@ -71,15 +76,23 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
         ButterKnife.bind(this);
         setToolbar();
         handleEventButtons();
+        setEventDescription();
         btnShowQR.setOnClickListener(new showQRListener());
 
         tvEventTitle.setText(event.getTitle());
         tvStartDate.setText(Utils.getDate(event.getStartDate())+ " "+ Utils.getTime(event.getStartDate()));
         tvEndDate.setText(Utils.getDate(event.getEndDate())+ " "+ Utils.getTime(event.getEndDate()));
-        tvEventDesc.setText(event.getDetails());
+
+
 
         btnJoinEvent.setOnClickListener(new JoinEventListener());
         pullToRefresh.setOnRefreshListener(new SwipeRefreshListener());
+    }
+
+    private void setEventDescription() {
+        Spanned htmlSpanned = Html.fromHtml(event.getDetails());
+
+        tvEventDesc.setText(htmlSpanned);
     }
 
     private void handleEventButtons() {
@@ -92,7 +105,7 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
             if(!registrationApproved){
                 btnJoinEvent.setVisibility(View.VISIBLE);
                 btnJoinEvent.setEnabled(false);
-                btnJoinEvent.setText("Request under processing");
+                btnJoinEvent.setText("Waiting for approval");
             }else{
                 btnJoinEvent.setVisibility(View.GONE);
                 btnShowQR.setVisibility(View.VISIBLE);
@@ -157,16 +170,21 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onJoinRequestSubmitted() {
+        btnJoinEvent.setEnabled(false);
+        btnJoinEvent.setText("Waiting for approval");
+
         UIUtils.showMessageDialog(this, msgJoinRequested, actionStayHere,
                 actionGoBack, new UIUtils.DialogButtonListener() {
             @Override
             public void onPositiveButtonClicked() {
-
+                //Stay here
             }
 
             @Override
             public void onNegativeButtonClicked() {
+                //Fire an event to EventMainFragment to reload
                 ScreenEventDetail.this.finish();
+                EventBus.getDefault().post(new ReloadAllEvents());
             }
         });
     }

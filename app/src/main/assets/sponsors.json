@@ -1,0 +1,60 @@
+{
+  "Lookups": [
+    {
+      "ID": "00fa78ba-05aa-4ca5-b5c9-85bb8ba42447",
+      "IntID": 3,
+      "Code": "",
+      "Title": "Select Sponsor",
+      "GroupName": ""
+    },
+    {
+      "ID": "00fa78ba-05aa-4ca5-b5c9-85bb8ba42447",
+      "IntID": 3,
+      "Code": "",
+      "Title": "Abu Dhabi School of Management",
+      "GroupName": ""
+    },
+    {
+      "ID": "6d2b7f54-c466-40da-915b-eb73ae7519cb",
+      "IntID": 4,
+      "Code": "",
+      "Title": "Abu Dhabi University",
+      "GroupName": ""
+    },
+    {
+      "ID": "5c2a7a16-49d5-40be-ab73-690fa2a83882",
+      "IntID": 5,
+      "Code": "",
+      "Title": "Ajman University",
+      "GroupName": ""
+    },
+    {
+      "ID": "0578488a-b27a-410f-a638-13e6e6f82840",
+      "IntID": 6,
+      "Code": "",
+      "Title": "Al Ain University of Science and Technology",
+      "GroupName": ""
+    },
+    {
+      "ID": "7a17aa36-ed6e-41f1-b63a-80ae81f66c79",
+      "IntID": 7,
+      "Code": "",
+      "Title": "Zayed University",
+      "GroupName": ""
+    },
+    {
+      "ID": "e8dd5414-c79c-4c11-9eb4-4d6beeb046da",
+      "IntID": 8,
+      "Code": "",
+      "Title": "United Arab Emirates University",
+      "GroupName": ""
+    },
+    {
+      "ID": "1cb9f4de-23c2-479b-9514-430f0942e78c",
+      "IntID": 9,
+      "Code": "",
+      "Title": "Khalifa University",
+      "GroupName": ""
+    }
+  ]
+}

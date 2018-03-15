@@ -78,6 +78,7 @@ public class MyEvents extends Fragment implements UpComingEventsAdapter.EventCli
     }
 
     private void showEmptyView() {
+        emptyView.setVisibility(View.VISIBLE);
         myEventsListView.setVisibility(View.GONE);
 
 

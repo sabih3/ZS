@@ -58,10 +58,10 @@ public class LoginWithMobilePresenter {
 
         to[0]= recipient;
 
-       SMSRequest request = new SMSRequest("Welcome to Zayed Sons. Your OTP is :"+otp, to);
 
-       ClickATellMessageObject messageObj = new ClickATellMessageObject("Welcome to Zayed Sons. Your OTP is :"+otp,
-                               new String[]{recipient});
+       ClickATellMessageObject messageObj = new ClickATellMessageObject(
+                                            "Welcome to Zayed Sons. Your OTP is :"+" "+otp,
+                                             new String[]{recipient});
 
 
         RequestAccountExistence accountExistence = new RequestAccountExistence();
@@ -85,7 +85,8 @@ public class LoginWithMobilePresenter {
                 new BiFunction<ResponseRegister,ResponseClickATellAccount, UserVerification>() {
                     @Override
                     public UserVerification apply(ResponseRegister responseExistence,
-                                                  ResponseClickATellAccount responseClickATellAccount) throws Exception {
+                                                  ResponseClickATellAccount responseClickATellAccount)
+                                                  throws Exception {
 
                         UserVerification verification = new UserVerification();
                         verification.responseExistence = responseExistence;

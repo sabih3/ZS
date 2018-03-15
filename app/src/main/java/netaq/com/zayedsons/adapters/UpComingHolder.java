@@ -1,5 +1,6 @@
 package netaq.com.zayedsons.adapters;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import netaq.com.zayedsons.utils.Utils;
  */
 
 class UpComingHolder extends RecyclerView.ViewHolder{
+    @BindView(R.id.row_parent)CardView parent;
     @BindView(R.id.field_start_date)TextView startDate;
     @BindView(R.id.field_end_date)TextView endDate;
     @BindView(R.id.field_event_title)TextView eventTitle;
