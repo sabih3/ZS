@@ -8,8 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,7 +22,8 @@ import butterknife.Unbinder;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.UpComingEventsAdapter;
 import netaq.com.zayedsons.core.NavigationController;
-import netaq.com.zayedsons.model.EventList;
+import netaq.com.zayedsons.eventbus.UpcomingEventsData;
+import netaq.com.zayedsons.model.Event;
 
 /**
  *  Created by Sabih Ahmed on 11th Feb 2018
@@ -30,6 +35,7 @@ public class UpComingEvents extends Fragment implements UpComingView,
     private View view;
     private UpComingPresenter upComingPresenter;
     @BindView(R.id.listing_upcoming_events)RecyclerView upcomingEventList;
+    @BindView(R.id.empty_view)LinearLayout emptyView;
     public UpComingEvents() {
         // Required empty public constructor
     }
@@ -43,7 +49,9 @@ public class UpComingEvents extends Fragment implements UpComingView,
 
         unbinder = ButterKnife.bind(this,view);
         upComingPresenter = new UpComingPresenter(this);
-        upComingPresenter.fetchUpComingEventsList();
+
+        EventBus.getDefault().register(this);
+        //upComingPresenter.fetchUpComingEventsList();
         return view;
     }
 
@@ -51,21 +59,46 @@ public class UpComingEvents extends Fragment implements UpComingView,
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpComingDataFetched(UpcomingEventsData upComingEventsData){
+        List<Event> upcomingEventList = upComingEventsData.getUpcomingEventList();
+
+        if(upcomingEventList.isEmpty()){
+            showEmptyView();
+        }else{
+            //show list view
+            setEventList(upcomingEventList);
+        }
     }
 
     @Override
     public void onUpComingEventsFetched() {
-        List<EventList> events = new ArrayList<>();
-        UpComingEventsAdapter upComingAdapter = new UpComingEventsAdapter(null,getContext());
-        upComingAdapter.setEventClickListener(this);
-        upcomingEventList.setLayoutManager(new LinearLayoutManager(getContext()));
-        upcomingEventList.setAdapter(upComingAdapter);
+        //List<Event> events = new ArrayList<>();
+
 
     }
 
     //UpComingEventsAdapter.EventClickListener
     @Override
-    public void onEventClick() {
-        NavigationController.showEventDetailScreen(getContext());
+    public void onEventClick(Event event) {
+        NavigationController.showEventDetailScreen(getContext(),event);
+    }
+
+    private void showEmptyView() {
+        upcomingEventList.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+
+    }
+    private void setEventList(List<Event> eventList){
+        emptyView.setVisibility(View.GONE);
+        upcomingEventList.setVisibility(View.VISIBLE);
+        UpComingEventsAdapter upComingAdapter = new UpComingEventsAdapter(eventList,getContext());
+        upComingAdapter.setEventClickListener(this);
+        upcomingEventList.setLayoutManager(new LinearLayoutManager(getContext()));
+        upcomingEventList.setAdapter(upComingAdapter);
     }
 }

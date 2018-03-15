@@ -32,6 +32,9 @@
     <string name="action_label_retry">Retry</string>
     <string name="label_something_went_wrong">Something went wrong this time. Please try again</string>
     <string name="label_SMS_couldnot_sent">We were unable to deliver OTP on provided number</string>
+    <string name="msg_join_requested">Thank You \n Your application has been submitted. You will be notified once it gets approved.</string>
+    <string name="action_label_stay_here">Stay here</string>
+    <string name="action_go_back">Go Back</string>
 
     <!-- strings for user profile fragment -->
     <string name="email">Email</string>

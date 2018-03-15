@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +64,7 @@ public class ScreenOTP extends AppCompatActivity {
         addResendListener();
     }
 
+
     private class ConfirmBtnListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -82,6 +84,9 @@ public class ScreenOTP extends AppCompatActivity {
                         NavigationController.showRegistrationScreen(ScreenOTP.this,recipientNumber,
                                 OTPHelper.getCachedOTP());
                     }
+
+                    ScreenOTP.this.finish();
+
                 }else{
 
                     UIUtils.showMessageDialog(ScreenOTP.this, "The Code you entered is not valid",

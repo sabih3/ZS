@@ -47,6 +47,7 @@ public class AccountInfo implements Serializable{
     @SerializedName("StrUserType")
     private String strUserType;
 
+
     public void setUserID(String userID) {
         this.userID = userID;
     }

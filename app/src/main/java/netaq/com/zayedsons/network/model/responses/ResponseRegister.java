@@ -2,8 +2,8 @@ package netaq.com.zayedsons.network.model.responses;
 
 import java.io.Serializable;
 
-import netaq.com.zayedsons.model.Profile;
 import netaq.com.zayedsons.model.AccountInfo;
+import netaq.com.zayedsons.model.Profile;
 
 /**
  * Created by sabih on 06-Mar-18.

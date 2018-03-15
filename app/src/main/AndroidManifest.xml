@@ -2,9 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="netaq.com.zayedsons">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:name=".core.AppController"
@@ -14,9 +17,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCP8OKE8rDdBvw90zzbF5YoT2ZVTIm8-SI" />
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".gcm.GCMListener"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".gcm.InstanceIDListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".gcm.RegistrationIntentService"
+            android:exported="false">
+        </service>
+
 
         <activity
             android:name=".views.ScreenSplash"
@@ -36,7 +72,7 @@
             android:name=".views.ProfileActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".views.events.event_detail.ScreenEventDetail" />
-        <activity android:name=".views.events.ScreenEventQR" />
+        <activity android:name=".views.events.event_qr.ScreenEventQR" />
         <activity android:name=".views.registration.RegistrationActivity" />
         <activity android:name=".views.login.ScreenLogin" />
         <activity android:name=".views.QRScanner" />

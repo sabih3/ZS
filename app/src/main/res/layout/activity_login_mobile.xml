@@ -75,7 +75,7 @@
                         android:id="@+id/field_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter your Mobile Number"
+                        android:hint="55 1234567"
                         android:layout_gravity="center_vertical"
                         android:textAlignment="center"
                         android:paddingVertical="10dp"

@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class BaseResponse implements Serializable{
 
+    private String Lang;
     private boolean Success;
     private int StatusCode = -1 ;
     private String StatusText;
@@ -23,5 +24,9 @@ public class BaseResponse implements Serializable{
 
     public String getStatusText() {
         return StatusText;
+    }
+
+    public String getLang() {
+        return Lang;
     }
 }

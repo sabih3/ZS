@@ -2,33 +2,68 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:map="http://schemas.android.com/apk/res-auto">
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/event_detail_swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-        <include layout="@layout/custom_toolbar"/>
+                        <include layout="@layout/custom_toolbar"/>
 
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:name="com.google.android.gms.maps.MapFragment"
-            map:cameraTargetLat="24.498"
-            map:cameraTargetLng="54.370"
-            map:cameraZoom="13" />
+                        <fragment
+                            android:id="@+id/map"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:name="com.google.android.gms.maps.MapFragment"
 
-        <include layout="@layout/event_description_layout"/>
+                            />
+
+                        <include layout="@layout/event_description_layout"/>
 
 
-        </LinearLayout>
-    </ScrollView>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_join_event"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_alignParentBottom="true"
+                        style="@style/maroonishButtonStyle"
+                        android:text="@string/btn_event_join"
+                        android:visibility="gone"/>
+
+                    <Button
+                        android:id="@+id/btn_qr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_alignParentBottom="true"
+                        style="@style/greenButtonStyle"
+                        android:text="@string/btn_show_qr"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

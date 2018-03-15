@@ -1,5 +1,6 @@
 package netaq.com.zayedsons.views;
 
+import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -7,7 +8,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.NavDrawerAdapter;
 import netaq.com.zayedsons.core.NavigationController;
+import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.utils.AppConfig;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.UserManager;
@@ -117,7 +118,9 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
     //NavDrawerAdapter.OnItemClick
     @Override
     public void onListItemClick(int position) {
+        handler = new Handler();
         switch (position){
+
 
             case 0:
                 drawerLayout.closeDrawers();
@@ -128,16 +131,36 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
                 drawerLayout.closeDrawers();
             break;
 
+
             case 2:
                 drawerLayout.closeDrawers();
-                //NavigationController.showScannerScreen(MainActivity.this);
+
+                if(UserManager.getUser().getAccountInfo().getUserTypeID()
+                                                         .equals(Constants.USER_TYPE_POWER)){
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            NavigationController.showScannerScreen(MainActivity.this);
+                        }
+                    },300);
+
+                }else{
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            handleLogout();
+                        }
+                    },300);
+                }
+
+
 
             break;
 
             case 3:
                 drawerLayout.closeDrawers();
 
-                handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

@@ -12,7 +12,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.R;
 
 /**
@@ -38,13 +37,18 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.NavD
                                               int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_nav_drawer, parent, false);
+
+
         return new NavDrawerHolder(v);
     }
 
     @Override
     public void onBindViewHolder(NavDrawerHolder holder, final int position) {
+
         String item = items.get(position);
+
         holder.itemTitle.setText(item);
+
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "662400567695",
+    "firebase_url": "https://zayed-sons.firebaseio.com",
+    "project_id": "zayed-sons",
+    "storage_bucket": "zayed-sons.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662400567695:android:ed2e58eccf70b59c",
+        "android_client_info": {
+          "package_name": "netaq.com.zayedsons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662400567695-h7jp4tpt2dhcs938js654r6e5mv554og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "netaq.com.zayedsons",
+            "certificate_hash": "871e5b9b7bf70e063ecdee6a3e5e1852d26ccea3"
+          }
+        },
+        {
+          "client_id": "662400567695-4gcqfch19qh668jueer7v21gut9jtbg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsHK3lwWiKralbz3H0dDSPwwl7s0YxJsM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662400567695-4gcqfch19qh668jueer7v21gut9jtbg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

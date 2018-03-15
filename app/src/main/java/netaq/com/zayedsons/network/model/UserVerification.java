@@ -1,7 +1,6 @@
 package netaq.com.zayedsons.network.model;
 
 import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
-import netaq.com.zayedsons.network.model.responses.ResponseExistence;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 
 /**

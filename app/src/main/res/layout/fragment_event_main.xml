@@ -22,19 +22,24 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:tabTextColor="@color/lightGrey"
-            app:tabMode="scrollable"
+            app:tabGravity="center"
+            app:tabMode="fixed"
             app:tabIndicatorHeight="0dp"
             android:background="@android:color/white">
 
         </android.support.design.widget.TabLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/events_swipe_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/events_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/events_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </android.support.v4.view.ViewPager>
-
+            </android.support.v4.view.ViewPager>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

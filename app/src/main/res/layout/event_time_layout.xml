@@ -43,7 +43,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:id="@+id/field_start_date"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:text="12/2/2018 - 3:PM" />
+                android:text="12/2/2018 - 3:00 PM" />
 
 
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="12/2/2017- 6 PM" />
+                android:text="12/2/2017- 6:00 PM" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
