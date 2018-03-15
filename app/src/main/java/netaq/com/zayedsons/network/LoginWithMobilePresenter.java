@@ -15,12 +15,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.network.model.ClickATellMessageObject;
-import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
-import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
-import netaq.com.zayedsons.network.model.requests.SMSRequest;
 import netaq.com.zayedsons.network.model.UserVerification;
+import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
+import netaq.com.zayedsons.network.model.requests.SMSRequest;
+import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
-import netaq.com.zayedsons.utils.UserManager;
 import netaq.com.zayedsons.views.BaseView;
 
 /**
@@ -39,36 +38,35 @@ public class LoginWithMobilePresenter {
         mCompositeDisposable = new CompositeDisposable();
     }
 
-    public static HashMap<String, String> getClickATellHeadersForPlatformAccount(){
+    public static HashMap<String, String> getClickATellHeadersForPlatformAccount() {
 
         HashMap<String, String> headerMap = new HashMap<>();
 
-        headerMap.put("Authorization","LAL0g4lpR5WJS6Avb0buZw==");
-        headerMap.put("Content-Type","application/json");
-        headerMap.put("Accept","application/json");
+        headerMap.put("Authorization", "LAL0g4lpR5WJS6Avb0buZw==");
+        headerMap.put("Content-Type", "application/json");
+        headerMap.put("Accept", "application/json");
         //headerMap.put("X-Version","1");
 
         return headerMap;
 
     }
 
-    public void sendOTP(final String recipient, int OTP){
+    public void sendOTP(final String recipient, int OTP) {
         int otp = OTP;
 
         String[] to = new String[1];
 
-        to[0]= recipient;
+        to[0] = recipient;
 
-       SMSRequest request = new SMSRequest("Welcome to Zayed Sons. Your OTP is :"+otp, to);
+        SMSRequest request = new SMSRequest("Welcome to Zayed Sons. Your OTP is :" + otp, to);
 
-       ClickATellMessageObject messageObj = new ClickATellMessageObject("Welcome to Zayed Sons. Your OTP is :"+otp,
-                               new String[]{recipient});
+        ClickATellMessageObject messageObj = new ClickATellMessageObject("Welcome to Zayed Sons. Your OTP is :" + otp,
+                new String[]{recipient});
 
 
         RequestAccountExistence accountExistence = new RequestAccountExistence();
         accountExistence.setId(recipient);
         accountExistence.setDevID("123");
-
 
 
         Observable<ResponseClickATellAccount> OTPResponse = ClickATellClient.getAdapter()
@@ -82,8 +80,8 @@ public class LoginWithMobilePresenter {
                 .subscribeOn(Schedulers.io());
 
 
-        Observable<UserVerification> merged = Observable.zip(existenceResponse,OTPResponse,
-                new BiFunction<ResponseRegister,ResponseClickATellAccount, UserVerification>() {
+        Observable<UserVerification> merged = Observable.zip(existenceResponse, OTPResponse,
+                new BiFunction<ResponseRegister, ResponseClickATellAccount, UserVerification>() {
                     @Override
                     public UserVerification apply(ResponseRegister responseExistence,
                                                   ResponseClickATellAccount responseClickATellAccount) throws Exception {
@@ -95,23 +93,21 @@ public class LoginWithMobilePresenter {
                         mListener.hideProgress();
                         boolean userExists = false;
 
-                        if(responseClickATellAccount.data.getMessage()!=null){
-                            if(responseClickATellAccount.data.getMessage().get(0).isAccepted()){
+                        if (responseClickATellAccount.data.getMessage() != null) {
+                            if (responseClickATellAccount.data.getMessage().get(0).isAccepted()) {
 
-                                if(responseExistence.isSuccess()){
-                                    if(responseExistence.getStatusCode()==1){
+                                if (responseExistence.isSuccess()) {
+                                    if (responseExistence.getStatusCode() == 1) {
                                         userExists = true;
-                                    }
-
-                                    else if(responseExistence.getStatusCode()==8){
+                                    } else if (responseExistence.getStatusCode() == 8) {
                                         userExists = false;
                                     }
                                 }
 
 
-                                mListener.onSmsSent(responseExistence,recipient, userExists);
+                                mListener.onSmsSent(responseExistence, recipient, userExists);
                             }
-                        }else{
+                        } else {
                             mListener.onSmsSentFailure();
                         }
 
@@ -134,14 +130,13 @@ public class LoginWithMobilePresenter {
             public void onError(Throwable e) {
                 mListener.hideProgress();
 
-                if(e instanceof UnknownHostException ){
+                if (e instanceof UnknownHostException) {
                     mListener.onNetworkUnAvailable();
-                }else{
-                    if(e instanceof HttpException && ((HttpException) e).code()==400 ){
+                } else {
+                    if (e instanceof HttpException && ((HttpException) e).code() == 400) {
                         mListener.onSmsSentFailure();
 
-                    }
-                    else{
+                    } else {
                         mListener.onError();
                     }
                 }
@@ -159,9 +154,10 @@ public class LoginWithMobilePresenter {
     }
 
 
-    public interface LoginMobileView extends BaseView{
+    public interface LoginMobileView extends BaseView {
 
         void onSmsSent(ResponseRegister responseExistence, String recipient, boolean userExists);
+
         void onSmsSentFailure();
 
     }
