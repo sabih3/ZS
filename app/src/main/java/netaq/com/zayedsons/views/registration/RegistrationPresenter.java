@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.model.AccountInfo;
 import netaq.com.zayedsons.model.Profile;
 import netaq.com.zayedsons.network.Constants;
+import netaq.com.zayedsons.network.NetworkErrorResolver;
 import netaq.com.zayedsons.network.RestClient;
 import netaq.com.zayedsons.network.model.requests.RequestRegisterProfile;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
@@ -83,28 +84,15 @@ public class RegistrationPresenter {
 
     private void handleResponse(ResponseRegister responseRegister) {
         viewListener.hideProgress();
+
+
         if(responseRegister.isSuccess()){
+            UserManager.setUser(responseRegister);
+            viewListener.OnRegistrationSuccess();
 
-            switch (responseRegister.getStatusCode()){
-
-                case 1:
-                    UserManager.setUser(responseRegister);
-                    viewListener.OnRegistrationSuccess();
-                break;
-
-                case 2:
-
-                break;
-
-                case 7:
-                    viewListener.onError();
-                break;
-                case 9:
-                    viewListener.onRecordExists();
-                break;
-
-            }
-
+        }else{
+            String resolvedError = NetworkErrorResolver.resolveError(mContext, responseRegister);
+            viewListener.onError(resolvedError);
         }
     }
 
@@ -114,7 +102,7 @@ public class RegistrationPresenter {
         if(t instanceof UnknownHostException){
             viewListener.onNetworkUnAvailable();
         }else{
-            viewListener.onError();
+            viewListener.onError(NetworkErrorResolver.getAllPurposeError(mContext));
         }
 
     }

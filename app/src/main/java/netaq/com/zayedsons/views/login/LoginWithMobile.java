@@ -76,7 +76,7 @@ public class LoginWithMobile extends AppCompatActivity implements
     }
 
     @Override
-    public void onError() {
+    public void onError(String resolvedError) {
         UIUtils.showSnackBar(coordinatorLayout,defaultErrorMessage);
     }
 

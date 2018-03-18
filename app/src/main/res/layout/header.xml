@@ -26,7 +26,8 @@
         android:layout_margin="15dp"
         app:srcCompat="@drawable/ic_settings"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/drawer_back_icon"
@@ -45,6 +46,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="Abdulla Mohamed"
-        style="@style/label_heading_bold"
+        style="@style/label_heading"
         />
 </RelativeLayout>

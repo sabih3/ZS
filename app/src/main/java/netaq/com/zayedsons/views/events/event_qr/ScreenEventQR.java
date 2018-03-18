@@ -3,6 +3,7 @@ package netaq.com.zayedsons.views.events.event_qr;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +23,14 @@ import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.Utils;
 
 public class ScreenEventQR extends AppCompatActivity implements EventQRView{
 
-    @BindView(R.id.toolbar)@Nullable Toolbar toolbar;
+    @BindView(R.id.coordinator)CoordinatorLayout coordinatorLayout;
 
+    @BindView(R.id.toolbar)@Nullable Toolbar toolbar;
     @BindView(R.id.field_event_title)TextView tvEventTitle;
     @BindView(R.id.field_start_date)TextView tvStartDate;
     @BindView(R.id.field_end_date)TextView tvEndDate;
@@ -38,8 +41,11 @@ public class ScreenEventQR extends AppCompatActivity implements EventQRView{
     @BindView(R.id.progress)ProgressBar progress;
     @BindView(R.id.iv_qr)ImageView qrImageView;
 
+    @BindString(R.string.snackbar_no_network) String noNetworkMessage;
+    @BindString(R.string.action_label_retry)String labelRetry;
+
     private Event event;
-    private EventQRPresenter qrPresenter = new EventQRPresenter(this);
+    private EventQRPresenter qrPresenter = new EventQRPresenter(this,this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +97,19 @@ public class ScreenEventQR extends AppCompatActivity implements EventQRView{
     public void onNetworkUnAvailable() {
         swipeRefreshLayout.setRefreshing(false);
         progress.setVisibility(View.GONE);
-        //TODO: Handle Network Unavailable
+        UIUtils.showSnackBar(coordinatorLayout, noNetworkMessage, labelRetry, new UIUtils.SnackBarActionListener() {
+            @Override
+            public void onSnackBarAction() {
+                getEventQR();
+            }
+        });
     }
 
     @Override
-    public void onError() {
+    public void onError(String resolvedError) {
         swipeRefreshLayout.setRefreshing(false);
         progress.setVisibility(View.GONE);
-        //TODO: Handle Exception
+        UIUtils.showSnackBar(coordinatorLayout, resolvedError);
     }
 
     @Override

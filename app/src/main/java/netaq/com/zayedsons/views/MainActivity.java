@@ -122,16 +122,27 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
         switch (position){
 
 
+            //Profile
             case 0:
                 drawerLayout.closeDrawers();
-                showProfileActivity();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showProfileActivity();
+                    }
+                },300);
+
             break;
 
+            //Events
             case 1:
                 drawerLayout.closeDrawers();
             break;
 
-
+            //Conditional
+            //in case of attendee, it show log out dialog
+            //in case of organizer user i.e. user = power
+            //it will open QR Scanner screen
             case 2:
                 drawerLayout.closeDrawers();
 

@@ -11,7 +11,7 @@
         android:id="@+id/menu_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/label_heading_bold"
+        style="@style/label_heading"
         android:text="Events"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

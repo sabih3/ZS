@@ -24,14 +24,8 @@ public class RegistrationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
-        InstanceID instanceID = InstanceID.getInstance(this);
 
-        try {
-            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-                           GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String stringExtra = intent.getStringExtra(InstanceIDListener.KEY_TOKEN);
     }
 
 

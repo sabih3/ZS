@@ -20,23 +20,21 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCP8OKE8rDdBvw90zzbF5YoT2ZVTIm8-SI" />
+            android:value="AIzaSyBup--jz1TbyMirQkzmb4TipB-qQ8rKulM" />
 
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.example.gcm" />
-            </intent-filter>
-        </receiver>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@android:drawable/ic_delete" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message.(https://goo.gl/6BKBk7) . -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
 
         <service
-            android:name=".gcm.GCMListener"
-            android:exported="false" >
+            android:name=".gcm.MessageHandlingService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
@@ -44,7 +42,7 @@
             android:name=".gcm.InstanceIDListener"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 

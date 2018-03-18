@@ -1,8 +1,13 @@
 package netaq.com.zayedsons.views.events.event_detail;
 
+import android.content.Context;
+
+import java.net.UnknownHostException;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import netaq.com.zayedsons.network.NetworkErrorResolver;
 import netaq.com.zayedsons.network.RestClient;
 import netaq.com.zayedsons.network.model.requests.RequestEventJoin;
 import netaq.com.zayedsons.network.model.responses.BaseResponse;
@@ -14,9 +19,11 @@ import netaq.com.zayedsons.utils.UserManager;
 
 public class EventDetailPresenter {
 
+    private Context mContext;
     private EventDetailView viewListener;
 
-    public EventDetailPresenter(EventDetailView viewListener) {
+    public EventDetailPresenter(Context context , EventDetailView viewListener) {
+        this.mContext = context;
         this.viewListener = viewListener;
     }
 
@@ -41,15 +48,19 @@ public class EventDetailPresenter {
     }
 
     private void handleResponse(BaseResponse baseResponse) {
-        if(baseResponse.getStatusCode()==1){
+        if(baseResponse.isSuccess()){
             viewListener.onJoinRequestSubmitted();
-        }else{
-            //Todo: Extract Error code from Resolver
+        } else{
+            NetworkErrorResolver.resolveError(mContext,baseResponse);
         }
     }
 
-    private void handleError(Throwable throwable) {
-
+    private void handleError(Throwable t) {
+        if(t instanceof UnknownHostException){
+            viewListener.onNetworkUnAvailable();
+        }else{
+            viewListener.onError(NetworkErrorResolver.getAllPurposeError(mContext));
+        }
 
     }
 

@@ -2,10 +2,13 @@ package netaq.com.zayedsons.views.events;
 
 import android.content.Context;
 
+import java.net.UnknownHostException;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.network.ErrorResolver;
+import netaq.com.zayedsons.network.NetworkErrorResolver;
 import netaq.com.zayedsons.network.RestClient;
 import netaq.com.zayedsons.network.model.requests.RequestEventList;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
@@ -60,7 +63,12 @@ public class EventMainPresenter {
 
     }
 
-    private void handleError(Throwable throwable) {
+    private void handleError(Throwable t) {
         viewListener.hideProgress();
+        if(t instanceof UnknownHostException){
+            viewListener.onNetworkUnAvailable();
+        }else{
+            viewListener.onError(NetworkErrorResolver.getAllPurposeError(context));
+        }
     }
 }

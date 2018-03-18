@@ -7,7 +7,7 @@ package netaq.com.zayedsons.views;
 public interface BaseView {
 
     void onNetworkUnAvailable();
-    void onError();
+    void onError(String resolvedError);
     void showProgress();
     void hideProgress();
 }

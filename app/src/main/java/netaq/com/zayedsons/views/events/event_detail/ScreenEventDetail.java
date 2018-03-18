@@ -3,6 +3,7 @@ package netaq.com.zayedsons.views.events.event_detail;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -36,6 +37,8 @@ import netaq.com.zayedsons.utils.Utils;
 public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCallback, EventDetailView {
 
     private final int DEFAULT_MAP_ZOOM = 15;
+    @BindView(R.id.event_detail_coordinator)CoordinatorLayout coordinatorLayout;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindString(R.string.screen_label_event_detail)String screenTitle;
     @BindDrawable(R.drawable.ic_arrow_back_black_24px)Drawable backArrow;
@@ -49,15 +52,19 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
     @BindView(R.id.field_description)TextView tvEventDesc;
     @BindView(R.id.event_detail_swipe) SwipeRefreshLayout pullToRefresh;
 
+    @BindString(R.string.snackbar_no_network) String noNetworkMessage;
+    @BindString(R.string.action_label_retry)String labelRetry;
     @BindString(R.string.msg_join_requested)String msgJoinRequested;
     @BindString(R.string.action_label_stay_here)String actionStayHere;
     @BindString(R.string.action_go_back)String actionGoBack;
     private Event event;
-    private EventDetailPresenter presenter = new EventDetailPresenter(this);
+    private EventDetailPresenter presenter ;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_screen_event_detail);
+        presenter = new EventDetailPresenter(this,this);
 
         event = (Event)getIntent().getSerializableExtra(NavigationController.KEY_EVENT_OBJ);
 
@@ -150,12 +157,17 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onNetworkUnAvailable() {
-
+        UIUtils.showSnackBar(coordinatorLayout, noNetworkMessage, labelRetry, new UIUtils.SnackBarActionListener() {
+            @Override
+            public void onSnackBarAction() {
+                submitJoinRequest();
+            }
+        });
     }
 
     @Override
-    public void onError() {
-
+    public void onError(String resolvedError) {
+        UIUtils.showSnackBar(coordinatorLayout,resolvedError);
     }
 
     @Override
@@ -189,6 +201,9 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
+    private void submitJoinRequest(){
+        presenter.sendEventJoinRequest(event.getID());
+    }
     private class showQRListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -199,7 +214,7 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
     private class JoinEventListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            presenter.sendEventJoinRequest(event.getID());
+            submitJoinRequest();
         }
     }
 

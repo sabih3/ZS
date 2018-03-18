@@ -61,7 +61,9 @@ dependencies {
     implementation 'info.guardianproject.netcipher:netcipher:1.2'
 
 
-    compile 'com.google.android.gms:play-services-gcm:11.8.0'
+    implementation 'com.google.android.gms:play-services-gcm:11.8.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -143,7 +143,7 @@ public class LoginWithMobilePresenter {
 
                     }
                     else{
-                        mListener.onError();
+                        mListener.onError(NetworkErrorResolver.getAllPurposeError(mContext));
                     }
                 }
             }

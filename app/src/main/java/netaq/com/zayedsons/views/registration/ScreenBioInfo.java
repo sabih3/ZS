@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -51,11 +53,12 @@ import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.OnNextFromBioScreen;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.utils.ImageUtils;
+import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.Utils;
 
 
 public class ScreenBioInfo extends Fragment implements Validator.ValidationListener,
-        CountryCodePicker.OnCountryChangeListener, BioInfoView, View.OnClickListener {
+        CountryCodePicker.OnCountryChangeListener, BioInfoView{
 
 
     private static final int REQUEST_SELECT_PICTURE = 100;
@@ -64,6 +67,8 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     private View view;
     private Unbinder unbinder;
+
+    @BindView(R.id.coordinator)CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.register_scroll_view)
     ScrollView parentScrollView;
@@ -164,7 +169,11 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     @BindView(R.id.gender_title)TextView labelGender;
 
-    private BioInfoPresenter bioInfoPresenter = new BioInfoPresenter(this);
+    @BindString(R.string.snackbar_no_network) String noNetworkMessage;
+    @BindString(R.string.action_label_retry)String labelRetry;
+    @BindString(R.string.label_something_went_wrong) String defaultErrorMessage;
+
+    private BioInfoPresenter bioInfoPresenter = new BioInfoPresenter(getContext(),this);
 
     private int gender = Constants.GENDER_NOT_SELECTED;
     private String phone = "";
@@ -194,7 +203,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         initViews();
 
-        defineDatePickerListener();
+        setDatePicker();
 
         return view;
     }
@@ -223,15 +232,15 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
     /**
      * A picker for the Birthday Date of the user
      */
-    private void defineDatePickerListener(){
+    private void setDatePicker(){
         // set the click listener for the DatePicker
-        fieldDate.setOnClickListener(this);
+        fieldDate.setOnClickListener(new DatePickerListener());
         // define the DateSet Listener
          date = (view, year, monthOfYear, dayOfMonth) -> {
              myCalendar.set(Calendar.YEAR, year);
              myCalendar.set(Calendar.MONTH, monthOfYear);
              myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-             updateLabel();
+             setChosenDateInDateField();
          };
     }
 
@@ -350,12 +359,18 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     @Override
     public void onNetworkUnAvailable() {
-        //TODO: Handle No network in Photo Upload
+        // Handle No network in Photo Upload
+        UIUtils.showSnackBar(coordinatorLayout, noNetworkMessage, labelRetry, new UIUtils.SnackBarActionListener() {
+            @Override
+            public void onSnackBarAction() {
+                openGallery();
+            }
+        });
     }
 
     @Override
-    public void onError() {
-
+    public void onError(String resolvedError) {
+        UIUtils.showSnackBar(coordinatorLayout,defaultErrorMessage);
     }
 
     @Override
@@ -438,20 +453,9 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == fieldDate) {
-            myCalendar = Calendar.getInstance();
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datePicker,
-                    date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
-            datePickerDialog.show();
-        }
-    }
 
-    private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+    private void setChosenDateInDateField() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         fieldDate.setText(sdf.format(myCalendar.getTime()));
     }
@@ -667,6 +671,20 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
         @Override
         public void afterTextChanged(Editable editable) {
+
+        }
+    }
+
+    private class DatePickerListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+
+            myCalendar = Calendar.getInstance();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), R.style.datePicker,
+                    date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+            datePickerDialog.show();
 
         }
     }

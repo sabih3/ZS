@@ -59,7 +59,7 @@ public class UIUtils {
     public static void showSnackBar(CoordinatorLayout coordinatorLayout,
                                     String message) {
 
-        Snackbar snackBar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
+        Snackbar snackBar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE);
         View view = snackBar.getView();
         TextView tv = view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);

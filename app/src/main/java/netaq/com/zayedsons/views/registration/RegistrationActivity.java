@@ -127,16 +127,6 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     }
 
     @Override
-    public void onRegistrationError() {
-        //TODO: Handle Registration Error On UI
-    }
-
-    @Override
-    public void onRecordExists(){
-        //TODO: Handle Record Exists on UI
-    }
-
-    @Override
     public void onNetworkUnAvailable() {
         UIUtils.showSnackBar(coordinatorLayout, noNetworkMessage, labelRetry, new UIUtils.SnackBarActionListener() {
             @Override
@@ -149,8 +139,8 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
 
     @Override
-    public void onError() {
-        UIUtils.showSnackBar(coordinatorLayout,defaultErrorMessage);
+    public void onError(String resolvedError) {
+        UIUtils.showSnackBar(coordinatorLayout,resolvedError);
     }
 
     private void getValuesAndRegister() {

@@ -2,6 +2,7 @@ package netaq.com.zayedsons.views.events;
 
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,11 +15,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -31,7 +31,7 @@ import netaq.com.zayedsons.eventbus.ReloadAllEvents;
 import netaq.com.zayedsons.eventbus.UpcomingEventsData;
 import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
-import netaq.com.zayedsons.utils.Utils;
+import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.views.events.finished.FinishedEvents;
 import netaq.com.zayedsons.views.events.my_events.MyEvents;
 import netaq.com.zayedsons.views.events.upcoming.UpComingEvents;
@@ -46,6 +46,10 @@ public class EventMainFragment extends Fragment implements EventMainView{
     @BindView(R.id.events_tabs) TabLayout tabLayout;
     @BindView(R.id.events_pager)ViewPager viewPager;
     @BindView(R.id.events_swipe_refresh)SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.event_list_coordinator)CoordinatorLayout coordinatorLayout;
+
+    @BindString(R.string.snackbar_no_network) String noNetworkMessage;
+    @BindString(R.string.action_label_retry)String labelRetry;
 
     private EventMainPresenter mainEventPresenter;
 
@@ -97,12 +101,24 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
     @Override
     public void onNetworkUnAvailable() {
-        //TODO: Handle on NEtwork Failure
+        UIUtils.showMessageDialog(getContext(), noNetworkMessage, labelRetry,
+                "Cancel", new UIUtils.DialogButtonListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+                getAllEventsData();
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+
+            }
+        });
+
     }
 
     @Override
-    public void onError() {
-        //TODO: Handle Exceptions on Events Main Fragment
+    public void onError(String resolvedError) {
+        UIUtils.showSnackBar(coordinatorLayout, resolvedError);
     }
 
     @Override
