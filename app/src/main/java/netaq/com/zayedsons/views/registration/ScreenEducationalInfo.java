@@ -119,6 +119,21 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
 
         fieldSponsor.setAdapter(spinnerAdapter);
 
+        fieldSponsor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                if(position>0){
+                    sponsorList.get(position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     @Override
