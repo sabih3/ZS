@@ -4,19 +4,15 @@ package netaq.com.zayedsons.views.registration;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatSpinner;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -24,6 +20,8 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +31,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import netaq.com.zayedsons.R;
+import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.OnBackFromEducationInfo;
+import netaq.com.zayedsons.eventbus.CitySelectEvent;
 import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
+import netaq.com.zayedsons.eventbus.SponsorSelectEvent;
 import netaq.com.zayedsons.model.Lookup;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.RestClient;
@@ -59,7 +60,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     @BindView(R.id.sponsor_layout)TextInputLayout layoutSponsor;
 
     @NotEmpty
-    @BindView(R.id.search_city)AppCompatAutoCompleteTextView fieldCity;
+    @BindView(R.id.search_city)AppCompatEditText fieldCity;
 
     @NotEmpty
     @BindView(R.id.field_university)AppCompatEditText fieldUniversity;
@@ -67,13 +68,17 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     @NotEmpty
     @BindView(R.id.field_major)AppCompatEditText fieldMajor;
 
-    @BindView(R.id.field_sponsor)AppCompatSpinner fieldSponsor;
+    @NotEmpty
+    @BindView(R.id.field_sponsor)TextView fieldSponsor;
 
     @BindView(R.id.field_emirates_id)AppCompatEditText fieldEmiratesID;
 
+    private String selectedSponsor = "";
+    private String selectedCity = "";
+
     private Validator validator;
-    private List<Lookup.Lookups> cities = new ArrayList<>();
-    private String selectedCityID = "";
+    //private List<Lookup.Lookups> cities = new ArrayList<>();
+    //private String selectedCityID = "";
     List<Lookup.Lookups> sponsorList ;
     public ScreenEducationalInfo() {
         // Required empty public constructor
@@ -86,9 +91,9 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         view = inflater.inflate(R.layout.registration_2, container, false);
 
 
+        EventBus.getDefault().register(this);
+
         initViews();
-
-
 
         return view;
     }
@@ -101,9 +106,11 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         registerButton.setOnClickListener(new RegisterButtonListener());
         backButton.setOnClickListener(new BackButtonListener());
         backLayout.setOnClickListener(new BackButtonListener());
-        fieldCity.addTextChangedListener(new CityTextListener());
 
-        setSponsorSpinner();
+        fieldCity.setOnClickListener(new CityClickListener());
+        fieldSponsor.setOnClickListener(new CityClickListener());
+
+
     }
 
     private void setSponsorSpinner() {
@@ -117,22 +124,22 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         ArrayAdapter<Lookup.Lookups> spinnerAdapter = new ArrayAdapter<>(getContext(),
                              R.layout.row_city_name,sponsorList);
 
-        fieldSponsor.setAdapter(spinnerAdapter);
-
-        fieldSponsor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-
-                if(position>0){
-                    sponsorList.get(position);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        fieldSponsor.setAdapter(spinnerAdapter);
+//
+//        fieldSponsor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//
+//                if(position>0){
+//                    sponsorList.get(position);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
     }
 
@@ -144,10 +151,36 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
 
     @Override
     public void onValidationSucceeded() {
-
         EventBus.getDefault().post(new RegisterButtonEvent());
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCitySelected(CitySelectEvent citySelectEvent){
+        String  cityName = citySelectEvent.getItem().getTitle();
+        fieldCity.setText(cityName);
+
+        if(citySelectEvent.getItem().getID().equals(Constants.EMPTY_GUID)){
+            selectedCity = citySelectEvent.getItem().getIntID();
+        }else{
+            selectedCity = citySelectEvent.getItem().getID();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSponsorSelected(SponsorSelectEvent sponsorSelectEvent){
+        String sponsorName = sponsorSelectEvent.getItem().getTitle();
+
+        fieldSponsor.setText(sponsorName);
+
+        if(sponsorSelectEvent.getItem().getID().equals(Constants.EMPTY_GUID)){
+
+            selectedSponsor = sponsorSelectEvent.getItem().getIntID();
+
+        }else{
+            selectedSponsor = sponsorSelectEvent.getItem().getID();
+        }
+
+    }
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for(ValidationError error:errors){
@@ -157,7 +190,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
 
                 case R.id.search_city:
                     layoutCity.setErrorEnabled(true);
-                    layoutCity.setError("City is mandatory");
+                    layoutCity.setError("Please choose your city");
                 break;
 
                 case R.id.field_university:
@@ -168,6 +201,10 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
                 case R.id.field_major:
                     layoutMajor.setErrorEnabled(true);
                     layoutMajor.setError("Please provide your majors");
+                break;
+
+                case R.id.field_sponsor:
+                    layoutSponsor.setError("Please choose your sponsor");
                 break;
                 
             }
@@ -184,8 +221,8 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
         valuesMap.put("major",major);
         valuesMap.put("university",university);
         valuesMap.put("emiratesID",emiratesID);
-        valuesMap.put("sponsor","6d2b7f54-c466-40da-915b-eb73ae7519cb");
-        valuesMap.put("city","d3de37ba-e9b5-4969-9fe7-f18ebf33d822");
+        valuesMap.put("sponsor",selectedSponsor);
+        valuesMap.put("city",selectedCity);
 
         return valuesMap;
     }
@@ -193,39 +230,14 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     private class RegisterButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            validator.validate();
-        }
+            validator.validate();}
     }
+
 
     private class BackButtonListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
             EventBus.getDefault().post(new OnBackFromEducationInfo());
-        }
-    }
-
-    private class CityTextListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            String query = fieldCity.getText().toString();
-            if(query.length() >= 3){
-                //issue a background call with query
-                // get the names
-                //and set the adapter
-
-                checkQueryFromServer();
-            }
         }
     }
 
@@ -242,25 +254,13 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
                     if(response.body()!=null){
                         Lookup body = response.body();
 
-                        cities = body.getLookups();
-                        ArrayAdapter<Lookup.Lookups> adapter =
-                        new ArrayAdapter<>(getContext(),
-                                R.layout.row_city_name,cities);
+//                        cities = body.getLookups();
+//                        ArrayAdapter<Lookup.Lookups> adapter =
+//                        new ArrayAdapter<>(getContext(),
+//                                R.layout.row_city_name,cities);
+//                        fieldCity.setAdapter(adapter);
 
-//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-//                                simple_dropdown_item_1line, cities.toArray());
-//                        CityAdapter cityAdapter = new CityAdapter(getContext(),cities);
-                        //fieldCity.setAdapter(cityAdapter);
-                        fieldCity.setAdapter(adapter);
 
-                        fieldCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                                Lookup.Lookups city = cities.get(i);
-                                selectedCityID = city.getID();
-                            }
-                        });
                     }
                 }
 
@@ -274,4 +274,22 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     }
 
 
+    private class CityClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            int caller = 0;
+            switch (view.getId()){
+                case R.id.search_city:
+
+                    caller = Constants.CALLER_CITY;
+
+                break;
+
+                case R.id.field_sponsor:
+                    caller = Constants.CALLER_SPONSOR;
+                break;
+            }
+            NavigationController.showCityListScreen(getContext(),caller);
+        }
+    }
 }

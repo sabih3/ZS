@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="netaq.com.zayedsons.views.ScreenSearchableList">
+
+    <RelativeLayout
+        android:id="@+id/city_list_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/city_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:searchIcon="@drawable/ic_search_24px">
+
+        </android.support.v7.widget.SearchView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/city_list"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/city_search_view">
+
+        </android.support.v7.widget.RecyclerView>
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/searchable_screen_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:visibility="visible"/>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

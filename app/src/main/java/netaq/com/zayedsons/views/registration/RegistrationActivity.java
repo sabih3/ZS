@@ -86,6 +86,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
         educationalInfoFragment = (ScreenEducationalInfo)adapter.getItem(1);
 
+
     }
 
     //Fired from ScreenBioInfo.NextButtonListener

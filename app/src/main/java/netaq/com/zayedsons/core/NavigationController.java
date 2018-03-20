@@ -9,6 +9,7 @@ import netaq.com.zayedsons.model.Event;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.views.QRScanner;
+import netaq.com.zayedsons.views.ScreenSearchableList;
 import netaq.com.zayedsons.views.ScreenOTP;
 import netaq.com.zayedsons.views.events.EventMainFragment;
 import netaq.com.zayedsons.views.events.event_qr.ScreenEventQR;
@@ -26,6 +27,7 @@ public class NavigationController {
     public static final String KEY_OTP = "key_otp";
     public static final String KEY_USER_INFO = "key_user_info";
     public static final String KEY_EVENT_OBJ = "key_event";
+    public static final String KEY_CALLER_SEARCHABLE_LIST = "key_caller";
 
     public static void showMainEventsScreen(Context context,
                                             FragmentManager fragmentManager) {
@@ -89,6 +91,12 @@ public class NavigationController {
         intent.putExtra(KEY_USER_INFO,userInfo);
         intent.putExtra(KEY_RECIPIENT,recipient);
         intent.putExtra(KEY_USER_EXISTENCE,userExists);
+        context.startActivity(intent);
+    }
+
+    public static void showCityListScreen(Context context, int caller) {
+        Intent intent = new Intent(context, ScreenSearchableList.class);
+        intent.putExtra(KEY_CALLER_SEARCHABLE_LIST,caller);
         context.startActivity(intent);
     }
 }

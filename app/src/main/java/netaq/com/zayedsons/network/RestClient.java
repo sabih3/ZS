@@ -1,5 +1,7 @@
 package netaq.com.zayedsons.network;
 
+import android.util.Log;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLSocketFactory;
 
+import netaq.com.zayedsons.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -33,28 +36,16 @@ public class RestClient {
 
 
     private static void setUpRestClient() {
-
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        URL url = null;
-//
-//        try {
-//            url = new URL(EndPoints.API_SMS);
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        SSLSocketFactory noSSLSocketFactory = null;
-//        try {
-//            noSSLSocketFactory = new NoSSLv3SocketFactory(url);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         httpClient= new OkHttpClient.Builder();
         httpClient.readTimeout(180, TimeUnit.SECONDS);
-        httpClient.addInterceptor(loggingInterceptor);
-        //httpClient.sslSocketFactory(noSSLSocketFactory);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+
+        if(BuildConfig.DEBUG){
+
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClient.addInterceptor(loggingInterceptor);
+
+        }
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(EndPoints.BASE_URL)

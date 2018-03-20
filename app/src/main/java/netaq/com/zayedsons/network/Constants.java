@@ -22,4 +22,8 @@ public class Constants {
     public static final int GENDER_FEMALE = 20;
     public static final int GENDER_OTHER = 30;
 
+    public static final int CALLER_CITY = 111;
+    public static final int CALLER_SPONSOR = 222;
+
+    public static final String EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
 }

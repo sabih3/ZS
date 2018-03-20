@@ -53,10 +53,12 @@
         android:layout_marginTop="10dp"
         app:errorEnabled="true"
         android:theme="@style/TextInputTheme">
-        <android.support.v7.widget.AppCompatAutoCompleteTextView
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/search_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:clickable="true"
             android:layout_marginTop="10dp"
             android:paddingVertical="15dp"
             android:hint="City*"
@@ -104,11 +106,13 @@
         app:errorEnabled="true"
         android:theme="@style/TextInputTheme">
 
-        <android.support.v7.widget.AppCompatSpinner
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/field_sponsor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Sponsor"
+            android:hint="Sponsor*"
+            android:focusableInTouchMode="false"
+            android:clickable="true"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:textColor="@color/textColorPrimary"/>

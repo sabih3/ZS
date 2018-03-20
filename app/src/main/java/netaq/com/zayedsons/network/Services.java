@@ -59,4 +59,7 @@ public interface Services {
 
     @POST(EndPoints.EVENT_QR)
     Observable<ResponseEventQR> requestEventQR(@Body RequestQR requestQR);
+
+    @POST(EndPoints.LOOKUP_SPONSOR)
+    Call<Lookup> getSponsors();
 }

@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="netaq.com.zayedsons">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
 
     <application
         android:name=".core.AppController"
@@ -17,52 +16,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBup--jz1TbyMirQkzmb4TipB-qQ8rKulM" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@android:drawable/ic_delete" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message.(https://goo.gl/6BKBk7) . -->
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message.(https://goo.gl/6BKBk7) .
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
 
-        <service
-            android:name=".gcm.MessageHandlingService">
+        <service android:name=".gcm.MessageHandlingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".gcm.InstanceIDListener"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".gcm.RegistrationIntentService"
-            android:exported="false">
-        </service>
-
+            android:exported="false"></service>
 
         <activity
             android:name=".views.ScreenSplash"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".views.MainActivity"
@@ -72,36 +64,43 @@
             android:name=".views.ProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity android:name=".views.events.event_detail.ScreenEventDetail"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.events.event_qr.ScreenEventQR"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.registration.RegistrationActivity"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.login.ScreenLogin"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".views.QRScanner"
-                  android:screenOrientation="portrait"/>
-
         <activity
-            android:name=".views.login.LoginWithMobile"
-            android:theme="@style/Theme.FullScreen"
-            android:screenOrientation="portrait">
+            android:name=".views.events.event_detail.ScreenEventDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.events.event_qr.ScreenEventQR"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.registration.RegistrationActivity"
+            android:screenOrientation="portrait" >
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".views.ScreenOTP"
-                  android:screenOrientation="portrait">
+
+        <activity
+            android:name=".views.login.ScreenLogin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.QRScanner"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginWithMobile"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.FullScreen">
 
         </activity>
+        <activity
+            android:name=".views.ScreenOTP"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".views.ScreenSearchableList"
+                  android:theme="@style/Theme.AppCompat.Light.Dialog">
+
+        </activity>
+
     </application>
 
 </manifest>
