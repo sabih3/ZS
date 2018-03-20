@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ZayedSons</string>
+    <string name="app_name">عيال زايد</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -46,7 +46,7 @@
     <string name="major">Major</string>
     <string name="sponsor">Sponsor</string>
     <string name="empty_field">NA</string>
-    <string name="my_card">My Card</string>
+    <string name="my_card">Profile</string>
     <string name="na">NA</string>
 
     <!-- for OTP Screen -->

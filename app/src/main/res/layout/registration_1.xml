@@ -191,7 +191,7 @@
                     android:layout_marginStart="5dp"
                     android:paddingVertical="10dp"
                     android:text="Gender*"
-                    android:textColor="@color/lightGrey"
+                    android:textColor="@color/textColorSecondary"
                     android:textSize="16sp"
                     />
 
@@ -286,12 +286,11 @@
                         android:id="@+id/field_date"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/lightGrey"
                         android:clickable="true"
                         android:drawableEnd="@drawable/ic_date_black_24px"
                         android:drawableRight="@drawable/ic_date_black_24px"
                         android:focusable="false"
-                        android:hint="DOB - dd/mm/yyyy"
+                        android:hint="Date of birth"
                         android:inputType="date"
                         android:layoutDirection="ltr"
                         android:maxLines="1"

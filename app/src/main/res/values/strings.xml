@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZayedSons</string>
+    <string name="app_name">Eyal Zayed</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -42,7 +42,7 @@
     <string name="major">Major</string>
     <string name="sponsor">Sponsor</string>
     <string name="empty_field">NA</string>
-    <string name="my_card">My Card</string>
+    <string name="my_card">Profile</string>
     <string name="na">NA</string>
 
     <!-- for OTP Screen -->
