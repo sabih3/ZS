@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class BaseModel implements Serializable{
 
-    private String Lang;
+    private String Lang = "en-US";
 
     public void setLang(String lang) {
         Lang = lang;

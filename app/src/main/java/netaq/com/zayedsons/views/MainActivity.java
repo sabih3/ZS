@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
                     public void onPositiveButtonClicked() {
                         UserManager.clearUserData();
                         NavigationController.showLoginScreen(MainActivity.this);
+                        MainActivity.this.finish();
                     }
 
                     @Override

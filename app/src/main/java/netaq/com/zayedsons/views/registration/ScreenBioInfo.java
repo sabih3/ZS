@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -236,6 +237,14 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
         // set the click listener for the DatePicker
         fieldDate.setOnClickListener(new DatePickerListener());
         // define the DateSet Listener
+
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+            }
+        };
+
          date = (view, year, monthOfYear, dayOfMonth) -> {
              myCalendar.set(Calendar.YEAR, year);
              myCalendar.set(Calendar.MONTH, monthOfYear);
