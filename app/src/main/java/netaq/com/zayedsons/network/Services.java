@@ -62,4 +62,7 @@ public interface Services {
 
     @POST(EndPoints.LOOKUP_SPONSOR)
     Call<Lookup> getSponsors();
+
+    @POST(EndPoints.USER_UPDATE_PROFILE)
+    Observable<ResponseRegister> updateProfile(@Body RequestRegisterProfile updateRequest);
 }

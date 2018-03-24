@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_profile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:titleTextColor="@color/textColorPrimary"
+    app:layout_scrollFlags="enterAlways">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/my_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/my_card"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textColor="@color/textColorPrimary"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/profile_edit_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBottom="@id/my_card"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/my_card"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_mode_edit_black_24px"
+            />
+
+        <ImageView
+            android:id="@+id/btn_done"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBottom="@id/my_card"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/my_card"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_done_black_24px"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

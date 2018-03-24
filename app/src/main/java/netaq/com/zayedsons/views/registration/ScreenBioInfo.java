@@ -335,7 +335,7 @@ public class ScreenBioInfo extends Fragment implements Validator.ValidationListe
 
                 case R.id.field_name:
                     layout_phone.setErrorEnabled(true);
-                    layoutFirstName.setError("Name is required");
+                    layoutFirstName.setError("First Name is required");
                     break;
 
 

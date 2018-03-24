@@ -8,4 +8,5 @@
     app:titleTextColor="@color/textColorPrimary"
     app:layout_scrollFlags="enterAlways">
 
+
 </android.support.v7.widget.Toolbar>

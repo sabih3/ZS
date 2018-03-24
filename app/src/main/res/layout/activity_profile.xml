@@ -1,378 +1,372 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:paddingTop="20dp">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
 
-        <LinearLayout
+        <include layout="@layout/toolbar_profile_screen"/>
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_below="@id/toolbar_profile"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:scrollbars="none">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/circle_maroon_solid_nopadding"
+                        android:src="@drawable/ic_person_white_24px" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/edit_photo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/circle_white_solid"
+                        android:src="@drawable/ic_mode_edit_black_24px"
+                        android:visibility="gone"/>
+
+                    <ProgressBar
+                        android:id="@+id/photoProgress"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="invisible" />
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/my_card"
+                    android:id="@+id/profile_full_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/my_card"
-                    android:textAppearance="@android:style/TextAppearance.Medium"
-                    android:textColor="@color/textColorPrimary"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/exit"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignBottom="@id/my_card"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/my_card"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_mode_edit_black_24px"
-                    />
-
-                <ImageView
-                    android:id="@+id/btn_done"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignBottom="@id/my_card"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/my_card"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_done_black_24px"
-                    android:visibility="gone"
-                    />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_photo"
-                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/circle_maroon_solid_nopadding"
-                    android:src="@drawable/ic_person_white_24px" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/edit_photo"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/circle_white_solid"
-                    android:src="@drawable/ic_mode_edit_black_24px"
-                    android:visibility="gone"/>
-
-                <ProgressBar
-                    android:id="@+id/photoProgress"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/profile_full_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:maxLines="2"
-                android:textSize="18sp"
-                android:theme="@style/TextInputThemeProfile"
-                android:text="Sabih Ahmed Bashir Ahmed Huwaireb"/>
-
-            <EditText
-                android:id="@+id/space_holder"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:enabled="false"
-                android:hint=""
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:theme="@style/TextInputThemeProfile" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_email_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:maxLines="2"
+                    android:textSize="18sp"
+                    android:theme="@style/TextInputThemeProfile"
+                    android:text="Sabih Ahmed Bashir Ahmed Huwaireb"/>
 
                 <EditText
-                    android:id="@+id/profile_email"
+                    android:id="@+id/space_holder"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="5dp"
                     android:enabled="false"
-                    android:hint="@string/email"
+                    android:hint=""
                     android:inputType="textEmailAddress"
-                    android:layoutDirection="ltr"
                     android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
+                    android:theme="@style/TextInputThemeProfile" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:theme="@style/TextInputThemeProfile"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="227dp"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                    app:errorEnabled="true">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_mobile_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
+                    <EditText
+                        android:id="@+id/profile_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="227dp"
+                        />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/profile_mobile"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/update_profile_mobile_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="@string/phone"
-                    android:inputType="phone"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
+                    android:layout_height="wrap_content"
                     android:theme="@style/TextInputThemeProfile"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                    app:errorEnabled="true">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_person_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
+                    <EditText
+                        android:id="@+id/profile_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="@string/phone"
+                        android:inputType="phone"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <EditText
+                        android:id="@+id/profile_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="First Name"
+                        android:inputType="textPersonName"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_father_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <EditText
+                        android:id="@+id/father_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="Father's Name"
+                        android:inputType="textPersonName"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/update_profile_middle_name_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <EditText
+                        android:id="@+id/middle_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="Middle Name"
+                        android:text="Din"
+                        android:inputType="textPersonName"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <EditText
+                        android:id="@+id/last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="Last Name"
+                        android:inputType="textPersonName"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile" />
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/update_profile_gender_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
 
                 <EditText
-                    android:id="@+id/profile_first_name"
+                    android:id="@+id/gender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="First Name"
-                    android:inputType="textPersonName"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_father_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/father_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="Father's Name"
-                    android:inputType="textPersonName"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_middle_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/middle_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="Middle Name"
-                    android:text="Din"
-                    android:inputType="textPersonName"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_last_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/last_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="Last Name"
-                    android:inputType="textPersonName"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile" />
-
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_gender_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-            <EditText
-                android:id="@+id/gender"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:enabled="false"
-                android:hint="Gender"
-                android:text="Male"
-                android:inputType="textPersonName"
-                android:layoutDirection="ltr"
-                android:maxLines="1"
-                android:textColor="@color/textColorPrimary"
-                android:theme="@style/TextInputThemeProfile" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_dob_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/profile_dob"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/dob"
-                    android:inputType="date"
-                    android:clickable="true"
                     android:focusable="false"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_city_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="City"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/profile_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:clickable="true"
-                    android:focusable="false"
-                    android:hint="@string/city"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_university_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/profile_university"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="@string/university"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_major_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/profile_major"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:hint="@string/major"
-                    android:inputType="text"
+                    android:hint="Gender"
+                    android:text="Male"
+                    android:inputType="textPersonName"
                     android:layoutDirection="ltr"
                     android:maxLines="1"
                     android:textColor="@color/textColorPrimary"
-                    android:theme="@style/TextInputThemeProfile"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                    android:theme="@style/TextInputThemeProfile" />
+                </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/update_profile_sponsor_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextInputThemeProfile"
-                app:errorEnabled="true">
-
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/profile_sponsor"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_eID"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/sponsor"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:inputType="text"
-                    android:layoutDirection="ltr"
-                    android:maxLines="1"
-                    android:textColor="@color/textColorPrimary"
+                    android:layout_height="wrap_content"
                     android:theme="@style/TextInputThemeProfile"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                    app:errorEnabled="true">
 
-        </LinearLayout>
-    </ScrollView>
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/profile_EID"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Emirates ID"
+                        android:inputType="date"
+                        android:enabled="false"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
 
-</RelativeLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/update_profile_dob_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/profile_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/dob"
+                        android:inputType="date"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/update_profile_city_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/profile_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="@string/city"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_university"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <EditText
+                        android:id="@+id/profile_university"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="@string/university"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_layout_major"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <EditText
+                        android:id="@+id/profile_major"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="false"
+                        android:hint="@string/major"
+                        android:inputType="text"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/update_profile_sponsor_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextInputThemeProfile"
+                    app:errorEnabled="true">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/profile_sponsor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/sponsor"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:inputType="text"
+                        android:layoutDirection="ltr"
+                        android:maxLines="1"
+                        android:textColor="@color/textColorPrimary"
+                        android:theme="@style/TextInputThemeProfile"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
