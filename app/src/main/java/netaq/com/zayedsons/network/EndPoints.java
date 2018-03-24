@@ -37,4 +37,7 @@ public class EndPoints {
     public static final String EVENT_JOIN = "api/Event/Join";
 
     public static final String USER_UPDATE_PROFILE = "api/Account/Update";
+
+    public static final String EVENT_GALLERY = "api/Gallery/Get";
+
 }

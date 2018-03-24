@@ -10,9 +10,9 @@ public class RequestAccountExistence extends BaseModel {
 
     public String id;
     public String token;
-    public String devID;
-    public String devName;
-    public String devDetail;
+//    public String devID;
+//    public String devName;
+//    public String devDetail;
 
 
     public void setId(String id) {
@@ -23,17 +23,17 @@ public class RequestAccountExistence extends BaseModel {
         this.token = token;
     }
 
-    public void setDevID(String devID) {
-        this.devID = devID;
-    }
-
-    public void setDevName(String devName) {
-        this.devName = devName;
-    }
-
-    public void setDevDetail(String devDetail) {
-        this.devDetail = devDetail;
-    }
+//    public void setDevID(String devID) {
+//        this.devID = devID;
+//    }
+//
+//    public void setDevName(String devName) {
+//        this.devName = devName;
+//    }
+//
+//    public void setDevDetail(String devDetail) {
+//        this.devDetail = devDetail;
+//    }
 
 
 }

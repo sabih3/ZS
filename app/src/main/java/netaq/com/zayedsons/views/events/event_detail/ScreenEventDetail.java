@@ -90,10 +90,10 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
         tvStartDate.setText(Utils.getDate(event.getStartDate())+ " "+ Utils.getTime(event.getStartDate()));
         tvEndDate.setText(Utils.getDate(event.getEndDate())+ " "+ Utils.getTime(event.getEndDate()));
 
-
-
         btnJoinEvent.setOnClickListener(new JoinEventListener());
         pullToRefresh.setOnRefreshListener(new SwipeRefreshListener());
+
+        presenter.getEventGallery(event.getID());
     }
 
     private void setEventDescription() {

@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import netaq.com.zayedsons.model.Lookup;
 import netaq.com.zayedsons.network.model.ClickATellMessageObject;
 import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
+import netaq.com.zayedsons.network.model.requests.RequestEventGallery;
 import netaq.com.zayedsons.network.model.requests.RequestEventJoin;
 import netaq.com.zayedsons.network.model.requests.RequestEventList;
 import netaq.com.zayedsons.network.model.requests.RequestLookup;
@@ -15,6 +16,7 @@ import netaq.com.zayedsons.network.model.requests.SMSRequest;
 import netaq.com.zayedsons.network.model.requests.UploadFile;
 import netaq.com.zayedsons.network.model.responses.BaseResponse;
 import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
+import netaq.com.zayedsons.network.model.responses.ResponseEventGallery;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
 import netaq.com.zayedsons.network.model.responses.ResponseEventQR;
 import netaq.com.zayedsons.network.model.responses.ResponseFileUpload;
@@ -65,4 +67,7 @@ public interface Services {
 
     @POST(EndPoints.USER_UPDATE_PROFILE)
     Observable<ResponseRegister> updateProfile(@Body RequestRegisterProfile updateRequest);
+
+    @POST(EndPoints.EVENT_GALLERY)
+    Observable<ResponseEventGallery> getEventGallery(@Body RequestEventGallery eventGalleryRequest);
 }

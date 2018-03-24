@@ -1,5 +1,7 @@
 package netaq.com.zayedsons.network.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -14,10 +16,13 @@ public class BaseModel implements Serializable{
         Lang = lang;
     }
 
+    @SerializedName("devID")
     private String DeviceID;
 
+    @SerializedName("devName")
     private String DeviceName;
 
+    @SerializedName("devDetail")
     private String DeviceDetail;
 
     public void setDeviceID(String deviceID) {

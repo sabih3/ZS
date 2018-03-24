@@ -20,6 +20,7 @@ import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
 import netaq.com.zayedsons.network.model.requests.SMSRequest;
 import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
+import netaq.com.zayedsons.utils.UserManager;
 import netaq.com.zayedsons.views.BaseView;
 
 /**
@@ -67,7 +68,7 @@ public class LoginWithMobilePresenter {
 
         RequestAccountExistence accountExistence = new RequestAccountExistence();
         accountExistence.setId(recipient);
-        accountExistence.setDevID("123");
+        accountExistence.setDeviceID(UserManager.getDeviceID());
 
 
 

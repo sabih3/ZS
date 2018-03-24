@@ -62,7 +62,8 @@ import netaq.com.zayedsons.utils.UserManager;
  * Created by M.Refaat on 3/14/2018.
  */
 
-public class ProfileActivity extends AppCompatActivity implements UpdateProfileView,Validator.ValidationListener{
+public class ProfileActivity extends AppCompatActivity implements
+             UpdateProfileView,Validator.ValidationListener{
 
     private static final int REQUEST_SELECT_PICTURE = 131;
     private static final int PERMISSION_REQUEST_STORAGE = 132;
@@ -283,8 +284,7 @@ public class ProfileActivity extends AppCompatActivity implements UpdateProfileV
 
         RequestRegisterProfile updateRequest = new RequestRegisterProfile();
         updateRequest.setToken(UserManager.getUser().getAuthToken());
-        updateRequest.setDeviceID("123");
-
+        updateRequest.setDeviceID(UserManager.getDeviceID());
 
 
         userEmail = email.getText().toString();
@@ -629,8 +629,6 @@ public class ProfileActivity extends AppCompatActivity implements UpdateProfileV
             university.setEnabled(true);
 
             major.setEnabled(true);
-
-
 
             sponsor.setEnabled(true);
 

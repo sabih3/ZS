@@ -3,14 +3,19 @@ package netaq.com.zayedsons.views.events.event_detail;
 import android.content.Context;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import netaq.com.zayedsons.network.NetworkErrorResolver;
 import netaq.com.zayedsons.network.RestClient;
+import netaq.com.zayedsons.network.model.requests.RequestEventGallery;
 import netaq.com.zayedsons.network.model.requests.RequestEventJoin;
 import netaq.com.zayedsons.network.model.responses.BaseResponse;
+import netaq.com.zayedsons.network.model.responses.ResponseEventGallery;
 import netaq.com.zayedsons.utils.UserManager;
 
 /**
@@ -61,6 +66,49 @@ public class EventDetailPresenter {
         }else{
             viewListener.onError(NetworkErrorResolver.getAllPurposeError(mContext));
         }
+
+    }
+
+    public void getEventGallery(String eventID){
+        CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+        RequestEventGallery eventGalleryRequest = new RequestEventGallery();
+        eventGalleryRequest.setToken(UserManager.getUser().getAuthToken());
+        eventGalleryRequest.setDeviceID(UserManager.getDeviceID());
+        eventGalleryRequest.setRefID(eventID);
+        eventGalleryRequest.setUsr(UserManager.getUser().getAccountInfo().getUserID());
+
+        Observable<ResponseEventGallery> eventGallery = RestClient.getAdapter().
+                                                        getEventGallery(eventGalleryRequest);
+
+
+
+        mCompositeDisposable.add(eventGallery
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(this::handleGalleryResponse,this::handleGalleryResponse));
+
+
+    }
+
+
+    private void handleGalleryResponse(ResponseEventGallery responseEventGallery) {
+        if(responseEventGallery.isSuccess()){
+            List<ResponseEventGallery.Albums.Gallery> galleryList =
+                                            responseEventGallery.getAlbums().get(0).getGallery();
+
+
+        }else{
+
+            String resolvedError = NetworkErrorResolver.
+                                  resolveError(mContext, responseEventGallery);
+
+            viewListener.onError(resolvedError);
+        }
+
+    }
+
+    private void handleGalleryResponse(Throwable t) {
 
     }
 

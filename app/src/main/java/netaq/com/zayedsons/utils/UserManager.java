@@ -22,4 +22,9 @@ public class UserManager {
         DevicePreferences.getInstance().setUser(userInfo);
         DevicePreferences.getInstance().setOTP(0);
     }
+
+    public static String getDeviceID() {
+
+        return "123";
+    }
 }
