@@ -86,7 +86,7 @@ public class EventDetailPresenter {
         mCompositeDisposable.add(eventGallery
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
-                            .subscribe(this::handleGalleryResponse,this::handleGalleryResponse));
+                            .subscribe(this::handleGalleryResponse,this::handleGalleryError));
 
 
     }
@@ -94,8 +94,16 @@ public class EventDetailPresenter {
 
     private void handleGalleryResponse(ResponseEventGallery responseEventGallery) {
         if(responseEventGallery.isSuccess()){
-            List<ResponseEventGallery.Albums.Gallery> galleryList =
-                                            responseEventGallery.getAlbums().get(0).getGallery();
+
+            if(responseEventGallery.getAlbums() == null){
+                viewListener.onEmptyGallery();
+            }else{
+                List<ResponseEventGallery.Albums.Gallery> galleryList =
+                        responseEventGallery.getAlbums().get(0).getGallery();
+
+                viewListener.onGalleryFetched(galleryList);
+
+            }
 
 
         }else{
@@ -108,7 +116,7 @@ public class EventDetailPresenter {
 
     }
 
-    private void handleGalleryResponse(Throwable t) {
+    private void handleGalleryError(Throwable t) {
 
     }
 

@@ -72,4 +72,29 @@
         android:visibility="gone"/>
                     <!--Speakers Layout ends-->
 
+    <LinearLayout
+        android:id="@+id/layout_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/label_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Event Gallery"
+            style="@style/label_heading"
+            android:visibility="visible"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/stripe_gallery_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="2dp"
+                android:paddingHorizontal="2dp"
+                android:orientation="horizontal">
+
+            </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 </LinearLayout>

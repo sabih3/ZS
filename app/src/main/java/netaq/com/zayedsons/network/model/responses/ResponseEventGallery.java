@@ -28,7 +28,7 @@ public class ResponseEventGallery extends BaseResponse {
 
         public int TotalItems;
 
-        public List<Gallery> gallery;
+        public List<Gallery> Gallery;
 
         public String getID() {
             return ID;
@@ -55,7 +55,7 @@ public class ResponseEventGallery extends BaseResponse {
         }
 
         public List<Gallery> getGallery() {
-            return gallery;
+            return Gallery;
         }
 
         public class Gallery {

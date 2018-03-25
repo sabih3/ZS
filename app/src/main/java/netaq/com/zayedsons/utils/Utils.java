@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import netaq.com.zayedsons.network.EndPoints;
+
 
 /**
  * Created by Sabih on 19/design_login_mobile/2018.
@@ -121,5 +123,14 @@ public class Utils {
         }
 
         return formattedDate;
+    }
+
+    public static String getResolvedURL(String inputURL) {
+        String resolvedURL = "";
+
+
+        String substring = inputURL.substring(2);
+        resolvedURL = EndPoints.BASE_URL + substring;
+        return resolvedURL;
     }
 }

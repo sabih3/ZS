@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -20,21 +23,29 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mzelzoghbi.zgallery.ZGallery;
+import com.mzelzoghbi.zgallery.entities.ZColor;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindDrawable;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
+import netaq.com.zayedsons.adapters.StripeGalleryAdapter;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.ReloadAllEvents;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.network.model.responses.ResponseEventGallery;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.Utils;
 
-public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCallback, EventDetailView {
+public class ScreenEventDetail extends AppCompatActivity implements
+        OnMapReadyCallback, EventDetailView, StripeGalleryAdapter.OnGalleryItemClickListener {
 
     private final int DEFAULT_MAP_ZOOM = 15;
     @BindView(R.id.event_detail_coordinator)CoordinatorLayout coordinatorLayout;
@@ -57,8 +68,14 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
     @BindString(R.string.msg_join_requested)String msgJoinRequested;
     @BindString(R.string.action_label_stay_here)String actionStayHere;
     @BindString(R.string.action_go_back)String actionGoBack;
+    @BindView(R.id.layout_gallery)LinearLayout galleryLayout;
+    @BindView(R.id.stripe_gallery_list)RecyclerView stripeGalleryView;
+
     private Event event;
-    private EventDetailPresenter presenter ;
+    private EventDetailPresenter presenter;
+    private StripeGalleryAdapter galleryAdapter;
+    private ArrayList<String> stringURLsList;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +99,11 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
     private void initViews() {
         ButterKnife.bind(this);
         setToolbar();
-        handleEventButtons();
+
+        if(!event.isArchived()){
+            handleEventButtons();
+        }
+
         setEventDescription();
         btnShowQR.setOnClickListener(new showQRListener());
 
@@ -93,6 +114,14 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
         btnJoinEvent.setOnClickListener(new JoinEventListener());
         pullToRefresh.setOnRefreshListener(new SwipeRefreshListener());
 
+        if(event.isArchived()){
+            fetchEventGallery();
+        }
+
+
+    }
+
+    private void fetchEventGallery() {
         presenter.getEventGallery(event.getID());
     }
 
@@ -201,9 +230,50 @@ public class ScreenEventDetail extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
+    @Override
+    public void onEmptyGallery() {
+        if(event.isArchived()){
+            //Handle empty Gallery if event is Archived
+        }
+
+    }
+
+    @Override
+    public void onGalleryFetched(List<ResponseEventGallery.Albums.Gallery> galleryList) {
+        if(event.isArchived()){
+            //Handle Gallery If event is Archived
+            stringURLsList = new ArrayList<>();
+
+            for(ResponseEventGallery.Albums.Gallery eachGalleryItem: galleryList){
+
+                String resolvedURL = Utils.getResolvedURL(eachGalleryItem.getFileURL());
+                stringURLsList.add(resolvedURL);
+
+            }
+            galleryAdapter = new StripeGalleryAdapter(this,galleryList);
+            stripeGalleryView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,
+                                              false));
+            stripeGalleryView.setAdapter(galleryAdapter);
+
+            galleryAdapter.setGalleryClickListener(this);
+        }
+
+    }
+
     private void submitJoinRequest(){
         presenter.sendEventJoinRequest(event.getID());
     }
+
+    @Override
+    public void onGalleryItemClicked(int position) {
+        ZGallery.with(this, stringURLsList/*your string arraylist of image urls*/)
+                .setToolbarTitleColor(ZColor.WHITE) // toolbar title color
+                .setGalleryBackgroundColor(ZColor.BLACK) // activity background color
+                .setToolbarColorResId(R.color.colorPrimary) // toolbar color
+                .setTitle(event.getTitle()) // toolbar title
+                .show();
+    }
+
     private class showQRListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {

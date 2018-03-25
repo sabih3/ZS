@@ -1,5 +1,8 @@
 package netaq.com.zayedsons.views.events.event_detail;
 
+import java.util.List;
+
+import netaq.com.zayedsons.network.model.responses.ResponseEventGallery;
 import netaq.com.zayedsons.views.BaseView;
 
 /**
@@ -9,4 +12,8 @@ import netaq.com.zayedsons.views.BaseView;
 public interface EventDetailView extends BaseView{
 
     void onJoinRequestSubmitted();
+
+    void onEmptyGallery();
+
+    void onGalleryFetched(List<ResponseEventGallery.Albums.Gallery> galleryList);
 }

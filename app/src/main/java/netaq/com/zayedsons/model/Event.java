@@ -59,6 +59,8 @@ public class Event implements Serializable{
 
     public List<Session> Sessions;
 
+    private boolean isArchived ;
+
     public String getID() {
         return ID;
     }
@@ -157,6 +159,14 @@ public class Event implements Serializable{
 
     public List<Session> getSessions() {
         return Sessions;
+    }
+
+    public void setArchived(boolean isArchived) {
+        this.isArchived = isArchived;
+    }
+
+    public boolean isArchived() {
+        return this.isArchived;
     }
 
     public class EventDay implements Serializable{

@@ -159,7 +159,7 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
         fragmentList.add(upComing);
         fragmentList.add(myEvents);
-        //fragmentList.add(finishedEvents);
+        fragmentList.add(finishedEvents);
 
         FragmentAdapter adapter = new FragmentAdapter(getContext(),getActivity().getSupportFragmentManager(),
                                                      fragmentList);
