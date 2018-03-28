@@ -6,6 +6,8 @@ import io.reactivex.Observable;
 import netaq.com.zayedsons.model.Lookup;
 import netaq.com.zayedsons.network.model.ClickATellMessageObject;
 import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
+import netaq.com.zayedsons.network.model.requests.RequestAttendance;
+import netaq.com.zayedsons.network.model.requests.RequestAttendeeInfo;
 import netaq.com.zayedsons.network.model.requests.RequestEventGallery;
 import netaq.com.zayedsons.network.model.requests.RequestEventJoin;
 import netaq.com.zayedsons.network.model.requests.RequestEventList;
@@ -15,6 +17,8 @@ import netaq.com.zayedsons.network.model.requests.RequestRegisterProfile;
 import netaq.com.zayedsons.network.model.requests.SMSRequest;
 import netaq.com.zayedsons.network.model.requests.UploadFile;
 import netaq.com.zayedsons.network.model.responses.BaseResponse;
+import netaq.com.zayedsons.network.model.responses.ResponseAttendance;
+import netaq.com.zayedsons.network.model.responses.ResponseAttendeeInfo;
 import netaq.com.zayedsons.network.model.responses.ResponseClickATellAccount;
 import netaq.com.zayedsons.network.model.responses.ResponseEventGallery;
 import netaq.com.zayedsons.network.model.responses.ResponseEventList;
@@ -70,4 +74,11 @@ public interface Services {
 
     @POST(EndPoints.EVENT_GALLERY)
     Observable<ResponseEventGallery> getEventGallery(@Body RequestEventGallery eventGalleryRequest);
+
+    @POST(EndPoints.ATTENDEE_INFO)
+    Observable<ResponseAttendeeInfo> getAttendeeInfo(@Body RequestAttendeeInfo attendeeInfo);
+
+
+    @POST(EndPoints.ATTENDANCE)
+    Observable<ResponseAttendance> markAttendance(@Body RequestAttendance attendance);
 }

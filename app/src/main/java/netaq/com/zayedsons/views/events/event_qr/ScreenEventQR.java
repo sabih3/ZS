@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindDrawable;
@@ -128,7 +129,7 @@ public class ScreenEventQR extends AppCompatActivity implements EventQRView{
     public void onQRReceived(String returnedURL) {
 
         try {
-            Picasso.with(this).load(returnedURL).into(qrImageView, new Callback() {
+            Picasso.with(this).load(returnedURL).networkPolicy(NetworkPolicy.NO_CACHE).into(qrImageView, new Callback() {
                 @Override
                 public void onSuccess() {
                     progress.setVisibility(View.GONE);

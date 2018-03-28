@@ -21,6 +21,8 @@ import netaq.com.zayedsons.R;
 
 public class UIUtils {
 
+    protected static ProgressDialog progressDialog;
+
     /**Method used to show / hide progress
      *
      * @param rootView
@@ -48,9 +50,9 @@ public class UIUtils {
         dialog.show();
     }
 
-    public static void hideProgressDialog(ProgressDialog dialog){
-        dialog.hide();
-    }
+//    public static void hideProgressDialog(ProgressDialog dialog){
+//        dialog.hide();
+//    }
     /**Method for showing Snack bar
      *
      * @param coordinatorLayout
@@ -141,10 +143,38 @@ public class UIUtils {
 */
     }
 
+    public static void showCancelableProgressDialog( Context context,
+                                                     String title,
+                                                    final ProgressDialogCancelListener progressDialogCancelListener) {
+        try {
+            progressDialog = ProgressDialog.show(context, title, "Please wait", true,
+                    true, new DialogInterface.OnCancelListener(){
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    progressDialogCancelListener.onCancelClicked();
+                }
+            });
+            progressDialog.setCanceledOnTouchOutside(false);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    public static void hideProgressDialog() {
+        try {
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     public interface DialogButtonListener {
         void onPositiveButtonClicked();
         void onNegativeButtonClicked();
+    }
+
+    public interface ProgressDialogCancelListener{
+        void onCancelClicked();
     }
 
 }

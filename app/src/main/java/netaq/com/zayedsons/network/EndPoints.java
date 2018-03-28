@@ -40,4 +40,7 @@ public class EndPoints {
 
     public static final String EVENT_GALLERY = "api/Gallery/Get";
 
+    public static final String ATTENDEE_INFO = "api/Event/RegInfo";
+
+    public static final String ATTENDANCE = "api/Event/Attend";
 }

@@ -32,8 +32,9 @@
 
     <style name="label_heading_bold" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/poppins</item>
     </style>
 
     <style name="label_heading_maroon" parent="TextAppearance.AppCompat">

@@ -10,6 +10,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import java.io.IOException;
 
 import netaq.com.zayedsons.R;
+import netaq.com.zayedsons.utils.UserManager;
 
 /**
  * Created by sabih on 12-Mar-18.
@@ -27,6 +28,7 @@ public class InstanceIDListener extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         super.onTokenRefresh();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        UserManager.setDeviceID(refreshedToken);
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
         Intent intent = new Intent(this, RegistrationIntentService.class);

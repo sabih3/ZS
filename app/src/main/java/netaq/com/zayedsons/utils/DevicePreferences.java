@@ -17,12 +17,14 @@ public class DevicePreferences {
     private static final String KEY_ARABIC_LOCALE = "key_locale";
     private static final String KEY_CACHED_OTP = "key_otp";
     private static final String KEY_USER_INFO = "key_user_info";
+    private static final String KEY_FCM_TOKEN = "key_fcm_token";
 
 
     private static DevicePreferences instance;
     private static SharedPreferences prefs;
 
     private Context mContext;
+
 
     private DevicePreferences() {
 
@@ -103,5 +105,19 @@ public class DevicePreferences {
 
         return userInfo;
 
+    }
+
+    public void setFCMToken(String FCMToken) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_FCM_TOKEN,FCMToken);
+        editor.commit();
+
+    }
+
+    public String getFCMToken() {
+        String fcmToken = "";
+
+        fcmToken = prefs.getString(KEY_FCM_TOKEN,fcmToken);
+        return fcmToken;
     }
 }

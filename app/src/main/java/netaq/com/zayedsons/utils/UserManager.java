@@ -24,7 +24,12 @@ public class UserManager {
     }
 
     public static String getDeviceID() {
-
+        //DevicePreferences.getInstance().getFCMToken()
         return "123";
+    }
+
+    public static void setDeviceID(String deviceID) {
+        DevicePreferences.getInstance().setFCMToken(deviceID);
+
     }
 }

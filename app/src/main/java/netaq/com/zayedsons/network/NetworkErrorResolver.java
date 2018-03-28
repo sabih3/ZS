@@ -14,7 +14,7 @@ public class NetworkErrorResolver {
     public static String resolveError(Context mContext, BaseResponse response) {
 
         String resolvedMessage = mContext.getString(R.string.label_something_went_wrong);
-        String statusText = response.getStatusText();
+        String statusText = response.getStatusText()+" \n ";
         String supportContactMessage = "Please contact support for assistance";
 
         int statusCode = response.getStatusCode();
@@ -27,8 +27,8 @@ public class NetworkErrorResolver {
 
         }
 
-        resolvedMessage = statusText + "Error code : "+stringStatusCode +". "+ supportContactMessage;
-
+        resolvedMessage = statusText + "Error code : "+stringStatusCode +". \n"+
+                          supportContactMessage;
 
 
         return resolvedMessage;

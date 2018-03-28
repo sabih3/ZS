@@ -54,8 +54,8 @@
                                 android:layout_height="wrap_content">
                             <ImageView
                                 android:id="@+id/iv_qr"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="150dp"
+                                android:layout_height="150dp"
                                 android:layout_gravity="center_horizontal"/>
 
                                 <ProgressBar
@@ -68,11 +68,12 @@
                             <ImageView
                                 android:layout_width="200dp"
                                 android:layout_height="140dp"
-                                android:layout_marginTop="20dp"
+                                android:layout_marginTop="40dp"
                                 android:src="@drawable/pic_n_name"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
-                                android:scaleType="centerInside"/>
+                                android:scaleType="centerInside"
+                                android:visibility="gone"/>
 
                     </RelativeLayout>
                     </LinearLayout>

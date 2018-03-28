@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 
 import netaq.com.zayedsons.R;
+import netaq.com.zayedsons.ScreenAttendance;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.network.model.responses.ResponseAttendeeInfo;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.views.MainActivity;
 import netaq.com.zayedsons.views.QRScanner;
@@ -28,6 +30,7 @@ public class NavigationController {
     public static final String KEY_USER_INFO = "key_user_info";
     public static final String KEY_EVENT_OBJ = "key_event";
     public static final String KEY_CALLER_SEARCHABLE_LIST = "key_caller";
+    public static final String KEY_ATTENDEE_INFO = "key_attendee_info";
 
     public static void showMainEventsScreen(Context context,
                                             FragmentManager fragmentManager) {
@@ -86,7 +89,9 @@ public class NavigationController {
         context.startActivity(intent);
     }
 
-    public static void showOTPConfirmScreen(Context context, ResponseRegister userInfo, String recipient, boolean userExists){
+    public static void showOTPConfirmScreen(Context context,
+                                            ResponseRegister userInfo,
+                                            String recipient, boolean userExists){
         Intent intent = new Intent(context,ScreenOTP.class);
         intent.putExtra(KEY_USER_INFO,userInfo);
         intent.putExtra(KEY_RECIPIENT,recipient);
@@ -98,5 +103,12 @@ public class NavigationController {
         Intent intent = new Intent(context, ScreenSearchableList.class);
         intent.putExtra(KEY_CALLER_SEARCHABLE_LIST,caller);
         context.startActivity(intent);
+    }
+
+    public static void showAttendanceScreen(Context context, ResponseAttendeeInfo attendanceInfo){
+        Intent intent = new Intent(context, ScreenAttendance.class);
+        intent.putExtra(KEY_ATTENDEE_INFO,attendanceInfo);
+        context.startActivity(intent);
+
     }
 }

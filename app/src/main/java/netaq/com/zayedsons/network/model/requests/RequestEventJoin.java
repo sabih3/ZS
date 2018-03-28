@@ -1,14 +1,15 @@
 package netaq.com.zayedsons.network.model.requests;
 
+import netaq.com.zayedsons.network.model.BaseModel;
+
 /**
  * Created by sabih on 13-Mar-18.
  */
 
-public class RequestEventJoin {
+public class RequestEventJoin extends BaseModel{
 
     private String token;
     private String usr;
-    private String devID;
     private String id;
 
 
@@ -20,9 +21,6 @@ public class RequestEventJoin {
         this.usr = usr;
     }
 
-    public void setDevID(String devID) {
-        this.devID = devID;
-    }
 
     public void setId(String id) {
         this.id = id;
