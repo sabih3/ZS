@@ -2,6 +2,7 @@ package netaq.com.zayedsons.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 
 import com.google.gson.Gson;
 
@@ -119,5 +120,12 @@ public class DevicePreferences {
 
         fcmToken = prefs.getString(KEY_FCM_TOKEN,fcmToken);
         return fcmToken;
+    }
+
+    public String getAndroidID(){
+        String androidID = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+        return androidID;
     }
 }

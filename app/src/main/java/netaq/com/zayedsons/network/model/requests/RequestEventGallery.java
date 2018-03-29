@@ -8,19 +8,19 @@ import netaq.com.zayedsons.network.model.BaseModel;
 
 public class RequestEventGallery extends BaseModel{
 
-    private String token;
-
-    private String usr;
+//    private String token;
+//
+//    private String usr;
 
     private String refID;
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setUsr(String usr) {
-        this.usr = usr;
-    }
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
+//
+//    public void setUsr(String usr) {
+//        this.usr = usr;
+//    }
 
 
 

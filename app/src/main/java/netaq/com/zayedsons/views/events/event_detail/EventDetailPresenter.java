@@ -36,7 +36,7 @@ public class EventDetailPresenter {
         CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
         RequestEventJoin requestEventJoin = new RequestEventJoin();
-        requestEventJoin.setDeviceID(UserManager.getDeviceID());
+//        requestEventJoin.setDeviceID(UserManager.getDeviceID());
         requestEventJoin.setId(eventID);
         requestEventJoin.setUsr(UserManager.getUser().getAccountInfo().getUserID());
         requestEventJoin.setToken(UserManager.getUser().getAuthToken());
@@ -74,7 +74,7 @@ public class EventDetailPresenter {
 
         RequestEventGallery eventGalleryRequest = new RequestEventGallery();
         eventGalleryRequest.setToken(UserManager.getUser().getAuthToken());
-        eventGalleryRequest.setDeviceID(UserManager.getDeviceID());
+//        eventGalleryRequest.setDeviceID(UserManager.getDeviceID());
         eventGalleryRequest.setRefID(eventID);
         eventGalleryRequest.setUsr(UserManager.getUser().getAccountInfo().getUserID());
 

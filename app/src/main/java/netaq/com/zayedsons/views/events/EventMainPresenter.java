@@ -37,7 +37,7 @@ public class EventMainPresenter {
         CompositeDisposable compositeDisposable = new CompositeDisposable();
 
         RequestEventList eventsRequest = new RequestEventList();
-        eventsRequest.setDeviID("123");
+//        eventsRequest.setDeviceID("123");
         eventsRequest.setToken(UserManager.getUser().getAuthToken());
         eventsRequest.setUsr(UserManager.getUser().getAccountInfo().getUserID());
 
@@ -52,13 +52,14 @@ public class EventMainPresenter {
 
     private void handleResponse(ResponseEventList responseEventList) {
         viewListener.hideProgress();
-        if(responseEventList.getStatusCode()==1){
+        if(responseEventList.isSuccess()){
 
             viewListener.onEventsFetched(responseEventList);
 
-
         }else{
-            ErrorResolver.getResolvedError(context,responseEventList.getStatusCode());
+            String resolvedError = NetworkErrorResolver.resolveError(context, responseEventList);
+
+            viewListener.onError(resolvedError);
         }
 
     }

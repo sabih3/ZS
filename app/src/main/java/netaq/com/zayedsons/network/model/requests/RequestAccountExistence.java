@@ -9,19 +9,16 @@ import netaq.com.zayedsons.network.model.BaseModel;
 public class RequestAccountExistence extends BaseModel {
 
     public String id;
-    public String token;
-//    public String devID;
-//    public String devName;
-//    public String devDetail;
+
 
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
 
 //    public void setDevID(String devID) {
 //        this.devID = devID;

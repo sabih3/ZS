@@ -1,5 +1,6 @@
 package netaq.com.zayedsons;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,7 @@ import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.views.MarkAttendancePresenter;
 import netaq.com.zayedsons.views.MarkAttendanceView;
 
-public class ScreenAttendance extends AppCompatActivity implements MarkAttendanceView{
+public class ScreenAttendance extends Activity implements MarkAttendanceView{
 
     private ResponseAttendeeInfo attendeeInfo;
     @BindView(R.id.attendance_event_name)TextView tvEventName;
@@ -95,9 +96,24 @@ public class ScreenAttendance extends AppCompatActivity implements MarkAttendanc
     public void onError(String resolvedError) {
 
         actionLayout.setVisibility(View.GONE);
-        resultLayout.setVisibility(View.VISIBLE);
+        //resultLayout.setVisibility(View.VISIBLE);
 
-        attendanceResultView.setText(resolvedError);
+        //attendanceResultView.setText(resolvedError);
+
+        UIUtils.showMessageDialog(this, resolvedError,
+                "Dismiss",
+                "", new UIUtils.DialogButtonListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+
+                ScreenAttendance.this.finish();
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+
+            }
+        });
 
     }
 

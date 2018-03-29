@@ -38,7 +38,7 @@ public class EventQRPresenter {
         RequestQR requestQR = new RequestQR();
 
         requestQR.setToken(UserManager.getUser().getAuthToken());
-        requestQR.setDevID("123");
+//        requestQR.setDeviceID("123");
         requestQR.setRegistrationID(registrationID);
         requestQR.setDay(day);
         requestQR.setUsr(UserManager.getUser().getAccountInfo().getUserID());

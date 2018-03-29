@@ -284,7 +284,7 @@ public class ProfileActivity extends AppCompatActivity implements
 
         RequestRegisterProfile updateRequest = new RequestRegisterProfile();
         updateRequest.setToken(UserManager.getUser().getAuthToken());
-        updateRequest.setDeviceID(UserManager.getDeviceID());
+//        updateRequest.setDeviceID(UserManager.getDeviceID());
 
 
         userEmail = email.getText().toString();

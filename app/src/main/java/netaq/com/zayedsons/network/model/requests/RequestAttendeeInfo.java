@@ -11,22 +11,22 @@ import netaq.com.zayedsons.network.model.BaseModel;
 public class RequestAttendeeInfo extends BaseModel {
 
 
-    private String token;
-
-    @SerializedName("usr")
-    private String userID;
+//    private String token;
+//
+//    @SerializedName("usr")
+//    private String userID;
 
     @SerializedName("id")
     private String registrationID;
 
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
+//    public void setUserID(String userID) {
+//        this.userID = userID;
+//    }
 
     public void setEventID(String eventID) {
         this.registrationID = eventID;

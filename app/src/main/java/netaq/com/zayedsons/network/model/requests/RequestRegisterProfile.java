@@ -12,15 +12,15 @@ import netaq.com.zayedsons.network.model.BaseModel;
 
 public class RequestRegisterProfile extends BaseModel implements Serializable{
 
-    public String Token;
+//    public String Token;
 
     public AccountInfo accountInfo;
 
     public Profile profile;
 
-    public void setToken(String token) {
-        Token = token;
-    }
+//    public void setToken(String token) {
+//        Token = token;
+//    }
 
     public void setAccountInfo(AccountInfo accountInfo) {
         this.accountInfo = accountInfo;

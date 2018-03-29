@@ -118,7 +118,19 @@ public class EventMainFragment extends Fragment implements EventMainView{
 
     @Override
     public void onError(String resolvedError) {
-        UIUtils.showSnackBar(coordinatorLayout, resolvedError);
+        UIUtils.showMessageDialog(getContext(), resolvedError, labelRetry,
+                "Exit", new UIUtils.DialogButtonListener() {
+                    @Override
+                    public void onPositiveButtonClicked() {
+                        getAllEventsData();
+                    }
+
+                    @Override
+                    public void onNegativeButtonClicked() {
+
+                    }
+                });
+        //UIUtils.showSnackBar(coordinatorLayout, resolvedError);
     }
 
     @Override

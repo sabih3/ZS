@@ -38,8 +38,8 @@ public class AttendancePresenter {
         RequestAttendeeInfo attendeeInfo = new RequestAttendeeInfo();
         attendeeInfo.setEventID(eventRegistrationID);
         attendeeInfo.setToken(UserManager.getUser().getAuthToken());
-        attendeeInfo.setUserID(UserManager.getUser().getAccountInfo().getUserID());
-        attendeeInfo.setDeviceID(UserManager.getDeviceID());
+        attendeeInfo.setUsr(UserManager.getUser().getAccountInfo().getUserID());
+//        attendeeInfo.setDeviceID(UserManager.getDeviceID());
 
         Observable<ResponseAttendeeInfo> attendeeInfoRequest =
                                          RestClient.getAdapter().getAttendeeInfo(attendeeInfo);

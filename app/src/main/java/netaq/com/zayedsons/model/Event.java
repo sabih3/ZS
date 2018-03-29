@@ -1,5 +1,7 @@
 package netaq.com.zayedsons.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -59,6 +61,7 @@ public class Event implements Serializable{
 
     public List<Session> Sessions;
 
+    @SerializedName("IsPast")
     private boolean isArchived ;
 
     public String getID() {

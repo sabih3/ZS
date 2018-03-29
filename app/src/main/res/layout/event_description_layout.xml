@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="20dp">
     <TextView
@@ -22,19 +23,31 @@
     <include layout="@layout/event_time_layout"/>
 
     <TextView
+        android:id="@+id/label_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/label_description"
-        style="@style/label_heading"/>
-    <TextView
-        android:id="@+id/field_description"
+        android:paddingVertical="10dp"
+        style="@style/label_heading"
+        android:drawableRight="@drawable/ic_arrow_forward_24px"
+        android:drawableEnd="@drawable/ic_arrow_forward_24px"/>
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/dummy_description"
-        style="@style/body_text_style"/>
-
+        app:el_duration="1000"
+        app:el_expanded="false"
+        app:el_parallax="0.5">
+        <TextView
+            android:id="@+id/field_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/dummy_description"
+            style="@style/body_text_style"/>
+    </net.cachapa.expandablelayout.ExpandableLayout>
                     <!--Agenda Layout Starts-->
     <TextView
         android:layout_width="match_parent"
@@ -72,29 +85,40 @@
         android:visibility="gone"/>
                     <!--Speakers Layout ends-->
 
-    <LinearLayout
-        android:id="@+id/layout_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/label_gallery"
+
+        <LinearLayout
+            android:id="@+id/layout_gallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Event Gallery"
-            style="@style/label_heading"
-            android:visibility="visible"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/stripe_gallery_list"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/label_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="2dp"
-                android:paddingHorizontal="2dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="20dp"
+                android:text="Event Gallery"
+                android:paddingVertical="10dp"
+                style="@style/label_heading"
+                android:drawableEnd="@drawable/ic_arrow_forward_24px"
+                android:drawableRight="@drawable/ic_arrow_forward_24px"/>
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/stripe_gallery_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="2dp"
+                    android:orientation="horizontal">
 
-            </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+                </android.support.v7.widget.RecyclerView>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+        </LinearLayout>
 
 </LinearLayout>

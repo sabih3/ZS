@@ -8,18 +8,18 @@ import netaq.com.zayedsons.network.model.BaseModel;
 
 public class RequestEventJoin extends BaseModel{
 
-    private String token;
-    private String usr;
+//    private String token;
+//    private String usr;
     private String id;
 
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setUsr(String usr) {
-        this.usr = usr;
-    }
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
+//
+//    public void setUsr(String usr) {
+//        this.usr = usr;
+//    }
 
 
     public void setId(String id) {

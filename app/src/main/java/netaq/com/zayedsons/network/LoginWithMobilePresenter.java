@@ -68,7 +68,7 @@ public class LoginWithMobilePresenter {
 
         RequestAccountExistence accountExistence = new RequestAccountExistence();
         accountExistence.setId(recipient);
-        accountExistence.setDeviceID(UserManager.getDeviceID());
+//        accountExistence.setDeviceID(UserManager.getDeviceID());
 
 
 

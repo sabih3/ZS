@@ -16,7 +16,8 @@ public class NotificationHelper {
         mBuilder = new Notification.Builder(context);
         NotificationManager mNotifyManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new Notification.Builder(context);
+
+
         mBuilder.setContentTitle(title)
                 .setContentText(desc)
                 .setSmallIcon(android.R.drawable.stat_notify_error)
@@ -25,7 +26,7 @@ public class NotificationHelper {
         // Issues the notification
         //int intID = Integer.parseInt(notificationID);
 
-        int intID = 1;
+        int intID = OTPGenerator.generateRandomNumber();
 
         mNotifyManager.notify(intID, mBuilder.build());
     }

@@ -37,7 +37,7 @@ public class MarkAttendancePresenter {
         RequestAttendance attendanceRequest = new RequestAttendance();
         attendanceRequest.setToken(UserManager.getUser().getAuthToken());
         attendanceRequest.setUsr(UserManager.getUser().getAccountInfo().getUserID());
-        attendanceRequest.setDeviceID(UserManager.getDeviceID());
+//        attendanceRequest.setDeviceID(UserManager.getDeviceID());
         attendanceRequest.setRegistrationID(eventID);
         attendanceRequest.setEd(eventDay);
         attendanceRequest.setEx(eventTime);

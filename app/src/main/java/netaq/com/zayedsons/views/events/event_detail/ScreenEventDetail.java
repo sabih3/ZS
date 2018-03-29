@@ -26,6 +26,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.mzelzoghbi.zgallery.ZGallery;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -71,10 +73,16 @@ public class ScreenEventDetail extends AppCompatActivity implements
     @BindView(R.id.layout_gallery)LinearLayout galleryLayout;
     @BindView(R.id.stripe_gallery_list)RecyclerView stripeGalleryView;
 
+    @BindView(R.id.label_description)TextView labelDescription;
+    @BindView(R.id.expandable_layout)ExpandableLayout expandableLayout;
+    @BindView(R.id.expandable_layout_gallery)ExpandableLayout expandableGalleryLayout;
+    @BindView(R.id.label_gallery)TextView labelGallery;
+
     private Event event;
     private EventDetailPresenter presenter;
     private StripeGalleryAdapter galleryAdapter;
     private ArrayList<String> stringURLsList;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +100,8 @@ public class ScreenEventDetail extends AppCompatActivity implements
 
 
         mapFragment.getMapAsync(this);
+
+        labelDescription.setOnClickListener(new DiscriptionClickListener());
 
     }
 
@@ -114,6 +124,7 @@ public class ScreenEventDetail extends AppCompatActivity implements
         btnJoinEvent.setOnClickListener(new JoinEventListener());
         pullToRefresh.setOnRefreshListener(new SwipeRefreshListener());
 
+        labelGallery.setOnClickListener(new GalleryLayoutClickListener());
         if(event.isArchived()){
             fetchEventGallery();
         }
@@ -122,6 +133,7 @@ public class ScreenEventDetail extends AppCompatActivity implements
     }
 
     private void fetchEventGallery() {
+        galleryLayout.setVisibility(View.VISIBLE);
         presenter.getEventGallery(event.getID());
     }
 
@@ -143,8 +155,16 @@ public class ScreenEventDetail extends AppCompatActivity implements
                 btnJoinEvent.setEnabled(false);
                 btnJoinEvent.setText("Waiting for approval");
             }else{
-                btnJoinEvent.setVisibility(View.GONE);
-                btnShowQR.setVisibility(View.VISIBLE);
+
+                if(event.getEventDays().get(0).isAttended()){
+                    btnJoinEvent.setVisibility(View.VISIBLE);
+                    btnJoinEvent.setText("You have already attended this event");
+                    btnJoinEvent.setEnabled(false);
+                }else{
+                    btnJoinEvent.setVisibility(View.GONE);
+                    btnShowQR.setVisibility(View.VISIBLE);
+                }
+
             }
         }
 
@@ -234,6 +254,7 @@ public class ScreenEventDetail extends AppCompatActivity implements
     public void onEmptyGallery() {
         if(event.isArchived()){
             //Handle empty Gallery if event is Archived
+            galleryLayout.setVisibility(View.GONE);
         }
 
     }
@@ -267,10 +288,11 @@ public class ScreenEventDetail extends AppCompatActivity implements
     @Override
     public void onGalleryItemClicked(int position) {
         ZGallery.with(this, stringURLsList/*your string arraylist of image urls*/)
-                .setToolbarTitleColor(ZColor.WHITE) // toolbar title color
+                .setToolbarTitleColor(ZColor.BLACK) // toolbar title color
                 .setGalleryBackgroundColor(ZColor.BLACK) // activity background color
                 .setToolbarColorResId(R.color.colorPrimary) // toolbar color
-                .setTitle(event.getTitle()) // toolbar title
+                .setTitle("Event Gallery")// toolbar title
+                .setSelectedImgPosition(position)
                 .show();
     }
 
@@ -292,6 +314,20 @@ public class ScreenEventDetail extends AppCompatActivity implements
         @Override
         public void onRefresh() {
             pullToRefresh.setRefreshing(false);
+        }
+    }
+
+    private class DiscriptionClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            expandableLayout.toggle();
+        }
+    }
+
+    private class GalleryLayoutClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            expandableGalleryLayout.toggle();
         }
     }
 }

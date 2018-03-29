@@ -72,7 +72,7 @@ public class RegistrationPresenter {
         registerRequest.setAccountInfo(accountInfo);
         registerRequest.setProfile(profile);
 
-        registerRequest.setDeviceID(UserManager.getDeviceID());
+//        registerRequest.setDeviceID(UserManager.getDeviceID());
 
         mCompositeDisposable.add(RestClient.getAdapter().registerProfile(registerRequest)
                              .observeOn(AndroidSchedulers.mainThread())

@@ -10,10 +10,6 @@ import netaq.com.zayedsons.network.model.BaseModel;
 
 public class RequestAttendance extends BaseModel{
 
-    private String token;
-
-    @SerializedName("usr")
-    private String usr;
 
     @SerializedName("id")
     private String registrationID;
@@ -23,13 +19,13 @@ public class RequestAttendance extends BaseModel{
     private String ex;
 
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
 
-    public void setUsr(String usr) {
-        this.usr = usr;
-    }
+//    public void setUsr(String usr) {
+//        this.usr = usr;
+//    }
 
     public void setRegistrationID(String registrationID) {
         this.registrationID = registrationID;

@@ -91,8 +91,8 @@ public class FinishedEvents extends Fragment implements UpComingEventsAdapter.Ev
 
     @Override
     public void onEventClick(Event event) {
-        event.setArchived(true);
-        event.setArchived(true);
+//        event.setArchived(true);
+//        event.setArchived(true);
         NavigationController.showEventDetailScreen(getContext(),event);
     }
 }
