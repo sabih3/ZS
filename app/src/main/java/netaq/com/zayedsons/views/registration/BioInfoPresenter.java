@@ -54,8 +54,6 @@ public class BioInfoPresenter {
         bioInfoView.hidePhotoUploadProgress();
         if(t instanceof UnknownHostException){
             bioInfoView.onNetworkUnAvailable();
-        }else{
-            bioInfoView.onError(NetworkErrorResolver.getAllPurposeError(mContext));
         }
     }
 
@@ -68,7 +66,10 @@ public class BioInfoPresenter {
 
             bioInfoView.onPhotoUploaded(fileURL);
         } else{
-            bioInfoView.onError(NetworkErrorResolver.resolveError(mContext,responseFileUpload));
+
+            String resolvedError = NetworkErrorResolver.resolveError(mContext, responseFileUpload);
+
+            bioInfoView.onError(resolvedError);
         }
 
 

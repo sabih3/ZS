@@ -211,6 +211,8 @@ public class ProfileActivity extends AppCompatActivity implements
         }else{
             selectedSponsorID = sponsorSelectEvent.getItem().getID();
         }
+
+        sponsor.setText(selectedSponsorString);
     }
 
 
@@ -594,8 +596,8 @@ public class ProfileActivity extends AppCompatActivity implements
 
     @Override
     public void onProfileUpdatedSuccessfully(ResponseRegister responseRegister) {
-        resetEditMode();
         UserManager.setUser(responseRegister);
+        resetEditMode();
         setProfileValues();
     }
 

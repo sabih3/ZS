@@ -58,13 +58,13 @@ public class RegistrationPresenter {
         String major = educationalData.get("major");
         String university = educationalData.get("university");
         String emiratesID = educationalData.get("emiratesID");
-        String sponsor = educationalData.get("sponsor");
         String city = educationalData.get("city");
+        String sponsorID = educationalData.get("sponsor");
 
         profile.setCourseMajor(major);
         profile.setUniversity(university);
         profile.seteIDNo(emiratesID);
-        profile.setSponsorID("6d2b7f54-c466-40da-915b-eb73ae7519cb");
+        profile.setSponsorID(sponsorID);
         profile.setCityID(city);
 
 
