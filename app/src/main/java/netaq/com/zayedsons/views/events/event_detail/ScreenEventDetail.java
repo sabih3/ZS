@@ -42,6 +42,7 @@ import netaq.com.zayedsons.adapters.StripeGalleryAdapter;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.ReloadAllEvents;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.model.responses.ResponseEventGallery;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.Utils;
@@ -118,8 +119,8 @@ public class ScreenEventDetail extends AppCompatActivity implements
         btnShowQR.setOnClickListener(new showQRListener());
 
         tvEventTitle.setText(event.getTitle());
-        tvStartDate.setText(Utils.getDate(event.getStartDate())+ " "+ Utils.getTime(event.getStartDate()));
-        tvEndDate.setText(Utils.getDate(event.getEndDate())+ " "+ Utils.getTime(event.getEndDate()));
+        tvStartDate.setText(Utils.getDate(event.getStartDate(), Constants.DATE_FORMAT_UI)+ " "+ Utils.getTime(event.getStartDate()));
+        tvEndDate.setText(Utils.getDate(event.getEndDate(),Constants.DATE_FORMAT_UI)+ " "+ Utils.getTime(event.getEndDate()));
 
         btnJoinEvent.setOnClickListener(new JoinEventListener());
         pullToRefresh.setOnRefreshListener(new SwipeRefreshListener());

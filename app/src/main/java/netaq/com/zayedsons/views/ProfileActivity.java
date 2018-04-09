@@ -35,8 +35,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.CitySelectEvent;
+import netaq.com.zayedsons.eventbus.GenderSelectEvent;
 import netaq.com.zayedsons.eventbus.SponsorSelectEvent;
 import netaq.com.zayedsons.model.AccountInfo;
 import netaq.com.zayedsons.model.Profile;
@@ -57,6 +60,7 @@ import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 import netaq.com.zayedsons.utils.ImageUtils;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.UserManager;
+import netaq.com.zayedsons.utils.Utils;
 
 /**
  * Created by M.Refaat on 3/14/2018.
@@ -147,7 +151,7 @@ public class ProfileActivity extends AppCompatActivity implements
     private String userMiddleName = "";
     private String userLastName = "";
     private String userGenderString = "";
-    private String selectedGenderID = "";
+    private String selectedGenderID = "10";
     private String selectedCityString = "";
     private String selectedSponsorString = "";
     private String userUniversity = "";
@@ -181,7 +185,6 @@ public class ProfileActivity extends AppCompatActivity implements
         setDoneButtonListener();
         setCityClickListener();
         setSponsorClickListener();
-        setDOBClickListener();
         setGenderClickListener();
         setPhotoEditClickListener();
 
@@ -215,6 +218,15 @@ public class ProfileActivity extends AppCompatActivity implements
         sponsor.setText(selectedSponsorString);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGenderSelect(GenderSelectEvent genderSelectEvent){
+        userGenderString = genderSelectEvent.getItem().getTitle();
+
+        selectedGenderID = genderSelectEvent.getItem().getID();
+
+        fieldGender.setText(userGenderString);
+    }
 
     private void handleEditProfileIcon() {
         //Hide in case of UserType==Organizer
@@ -286,7 +298,6 @@ public class ProfileActivity extends AppCompatActivity implements
 
         RequestRegisterProfile updateRequest = new RequestRegisterProfile();
         updateRequest.setToken(UserManager.getUser().getAuthToken());
-//        updateRequest.setDeviceID(UserManager.getDeviceID());
 
 
         userEmail = email.getText().toString();
@@ -303,7 +314,7 @@ public class ProfileActivity extends AppCompatActivity implements
         accountInfo.setUserID(UserManager.getUser().getAccountInfo().getUserID());
         accountInfo.setUserName(UserManager.getUser().getAccountInfo().getUserName());
         accountInfo.setPassword(UserManager.getUser().getAccountInfo().getPassword());
-        accountInfo.setGender(Constants.GENDER_MALE);
+        accountInfo.setGender(Integer.parseInt(selectedGenderID));
         accountInfo.setEmail(userEmail);
         accountInfo.setMobileNo(UserManager.getUser().getAccountInfo().getMobileNo());
         accountInfo.setUserTypeID(Constants.USER_TYPE_NORMAL);
@@ -443,7 +454,12 @@ public class ProfileActivity extends AppCompatActivity implements
 
         selectedSponsorID = userProfile.getSponsorID();
         selectedCityID = userProfile.getCityID();
-        userDOB = userProfile.getdOB();
+
+        try {
+            userDOB = Utils.getDate(userProfile.getdOB(),Constants.DATE_FORMAT_BACKEND);
+        }catch (Exception exc){
+
+        }
 
         profilePhotoURL = userProfile.getProfilePic();
         emiratesID = userProfile.geteIDNo();
@@ -536,7 +552,7 @@ public class ProfileActivity extends AppCompatActivity implements
 
         sponsor.setEnabled(false);
 
-
+        dob.setOnClickListener(null);
     }
 
     @Override
@@ -624,6 +640,8 @@ public class ProfileActivity extends AppCompatActivity implements
 
             fieldEmiratesID.setEnabled(true);
 
+            setDOBClickListener();
+
             dob.setEnabled(true);
 
             city.setEnabled(true);
@@ -638,19 +656,39 @@ public class ProfileActivity extends AppCompatActivity implements
     }
 
     private void setGenderClickListener() {
-
+        fieldGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavigationController.showCityListScreen(ProfileActivity.this,Constants.CALLER_GENDER);
+            }
+        });
 
     }
 
     private void setDOBClickListener() {
         calendarInstance = Calendar.getInstance();
 
+        String dateString = dob.getText().toString();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        Date parsedDate = null;
+        try {
+            parsedDate = sdf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //long time = parsedDate.getTime();
+
+        calendarInstance.setTime(parsedDate);
+
         dob.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(ProfileActivity.this,
                     R.style.datePicker,dateSetListener,
-                    calendarInstance.get(Calendar.YEAR),
-                    calendarInstance.get(Calendar.MONTH),
-                    calendarInstance.get(Calendar.DAY_OF_MONTH));
+                    calendarInstance.get(calendarInstance.YEAR),
+                    calendarInstance.get(calendarInstance.MONTH),
+                    calendarInstance.get(calendarInstance.DAY_OF_MONTH));
 
             datePickerDialog.show();
         });
@@ -669,9 +707,16 @@ public class ProfileActivity extends AppCompatActivity implements
     private void setChosenDateInDateField() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        dob.setText(sdf.format(calendarInstance.getTime()));
 
-        userDOB = calendarInstance.getTime().toString();
+        String UXFormattedDate = sdf.format(calendarInstance.getTime());
+
+        dob.setText(UXFormattedDate);
+
+        //dob.setText(Utils.getDate(UXFormattedDate,Constants.DATE_FORMAT_UI));
+
+        userDOB = UXFormattedDate;
+
+
     }
 
     private void setSponsorClickListener() {

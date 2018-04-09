@@ -18,6 +18,9 @@ import java.util.regex.Pattern;
 
 import netaq.com.zayedsons.network.EndPoints;
 
+import static netaq.com.zayedsons.network.Constants.DATE_FORMAT_BACKEND;
+import static netaq.com.zayedsons.network.Constants.DATE_FORMAT_UI;
+
 
 /**
  * Created by Sabih on 19/design_login_mobile/2018.
@@ -109,9 +112,9 @@ public class Utils {
         return time;
     }
 
-    public static String getDate(String displayDateTime){
-        SimpleDateFormat inputDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat requiredDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    public static String getDate(String displayDateTime,String requiredFormat){
+        SimpleDateFormat inputDateTimeFormat = new SimpleDateFormat(DATE_FORMAT_BACKEND);
+        SimpleDateFormat requiredDateFormat = new SimpleDateFormat(requiredFormat);
 
         String formattedDate = "";
 

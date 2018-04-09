@@ -81,6 +81,7 @@ public class UpdateProfilePresenter {
                             .subscribeOn(Schedulers.io())
                             .subscribe(this::updateProfileResponse,this::updateProfileError));
 
+
     }
 
     private void updateProfileError(Throwable t) {

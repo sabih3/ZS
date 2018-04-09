@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,8 +22,9 @@ import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.SearchableListAdapter;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.eventbus.CitySelectEvent;
+import netaq.com.zayedsons.eventbus.GenderSelectEvent;
 import netaq.com.zayedsons.eventbus.SponsorSelectEvent;
-import netaq.com.zayedsons.model.Lookup;
+import netaq.com.zayedsons.model.Lookups;
 import netaq.com.zayedsons.network.Constants;
 
 public class ScreenSearchableList extends Activity implements LookupListView,
@@ -52,7 +54,33 @@ public class ScreenSearchableList extends Activity implements LookupListView,
 
          caller = getIntent().getIntExtra(NavigationController.KEY_CALLER_SEARCHABLE_LIST, 0);
 
-        searchableListPresenter.getDataFromNetwork(caller);
+         if(caller != Constants.CALLER_GENDER){
+             searchableListPresenter.getDataFromNetwork(caller);
+         }
+
+         else{
+             searchField.setVisibility(View.GONE);
+
+             Lookups lookupMale = new Lookups();
+             Lookups lookupFemale = new Lookups();
+             Lookups lookupOther = new Lookups();
+
+             lookupMale.setTitle("M");
+             lookupMale.setID("10");
+
+             lookupFemale.setTitle("F");
+             lookupFemale.setID("20");
+
+             lookupOther.setTitle("Other");
+             lookupOther.setID("30");
+
+             List <Lookups> lookups = new ArrayList<>();
+             lookups.add(lookupMale);
+             lookups.add(lookupFemale);
+             lookups.add(lookupOther);
+
+             setListView(lookups);
+         }
 
     }
 
@@ -78,7 +106,7 @@ public class ScreenSearchableList extends Activity implements LookupListView,
     }
 
     @Override
-    public void onLookupDataFetched(List < Lookup.Lookups > lookups) {
+    public void onLookupDataFetched(List <Lookups> lookups) {
         setListView(lookups);
         searchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -106,7 +134,7 @@ public class ScreenSearchableList extends Activity implements LookupListView,
     }
 
 
-    private void setListView (List < Lookup.Lookups > lookups) {
+    private void setListView (List <Lookups> lookups) {
         cityListView.setLayoutManager(new LinearLayoutManager(this));
         cityAdapter = new SearchableListAdapter(this, lookups);
         cityListView.setAdapter(cityAdapter);
@@ -115,12 +143,14 @@ public class ScreenSearchableList extends Activity implements LookupListView,
     }
 
     @Override
-    public void onDataSelect(Lookup.Lookups item) {
+    public void onDataSelect(Lookups item) {
 
         if(caller == Constants.CALLER_CITY){
             EventBus.getDefault().post(new CitySelectEvent(item));
         }else if(caller == Constants.CALLER_SPONSOR){
             EventBus.getDefault().post(new SponsorSelectEvent(item));
+        }else if (caller == Constants.CALLER_GENDER){
+            EventBus.getDefault().post(new GenderSelectEvent(item));
         }
 
         this.finish();

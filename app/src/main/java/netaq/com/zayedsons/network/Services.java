@@ -4,6 +4,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import netaq.com.zayedsons.model.Lookup;
+import netaq.com.zayedsons.network.model.BaseModel;
 import netaq.com.zayedsons.network.model.ClickATellMessageObject;
 import netaq.com.zayedsons.network.model.requests.RequestAccountExistence;
 import netaq.com.zayedsons.network.model.requests.RequestAttendance;
@@ -81,4 +82,7 @@ public interface Services {
 
     @POST(EndPoints.ATTENDANCE)
     Observable<ResponseAttendance> markAttendance(@Body RequestAttendance attendance);
+
+    @POST(EndPoints.ACCOUNT_LOGOUT)
+    Observable<BaseResponse> userLogOut(@Body BaseModel base);
 }

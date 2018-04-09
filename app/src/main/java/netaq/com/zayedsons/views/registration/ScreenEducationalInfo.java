@@ -23,7 +23,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +36,7 @@ import netaq.com.zayedsons.eventbus.CitySelectEvent;
 import netaq.com.zayedsons.eventbus.RegisterButtonEvent;
 import netaq.com.zayedsons.eventbus.SponsorSelectEvent;
 import netaq.com.zayedsons.model.Lookup;
+import netaq.com.zayedsons.model.Lookups;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.RestClient;
 import netaq.com.zayedsons.network.model.requests.RequestLookup;
@@ -79,7 +79,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
     private Validator validator;
     //private List<Lookup.Lookups> cities = new ArrayList<>();
     //private String selectedCityID = "";
-    List<Lookup.Lookups> sponsorList ;
+    List<Lookups> sponsorList ;
     public ScreenEducationalInfo() {
         // Required empty public constructor
     }
@@ -121,7 +121,7 @@ public class ScreenEducationalInfo extends Fragment implements Validator.Validat
 
         sponsorList = sponsorLookup.getLookups();
 
-        ArrayAdapter<Lookup.Lookups> spinnerAdapter = new ArrayAdapter<>(getContext(),
+        ArrayAdapter<Lookups> spinnerAdapter = new ArrayAdapter<>(getContext(),
                              R.layout.row_city_name,sponsorList);
 
 //        fieldSponsor.setAdapter(spinnerAdapter);

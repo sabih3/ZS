@@ -1,7 +1,9 @@
 package netaq.com.zayedsons.utils;
 
 import android.provider.Settings;
+import android.util.Log;
 
+import netaq.com.zayedsons.BuildConfig;
 import netaq.com.zayedsons.network.model.responses.ResponseRegister;
 
 import static android.provider.Settings.*;
@@ -30,6 +32,9 @@ public class UserManager {
 
     public static String getDeviceID() {
 
+        if(BuildConfig.DEBUG){
+            Log.d("AndroidID",DevicePreferences.getInstance().getAndroidID());
+        }
         return DevicePreferences.getInstance().getAndroidID();
     }
 

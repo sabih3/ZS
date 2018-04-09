@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.Utils;
 
@@ -87,10 +88,10 @@ public class ScreenEventQR extends AppCompatActivity implements EventQRView{
 
     private void setEventData() {
         tvEventTitle.setText(event.getTitle());
-        tvStartDate.setText(Utils.getDate(event.getStartDate()
+        tvStartDate.setText(Utils.getDate(event.getStartDate(), Constants.DATE_FORMAT_UI
                 +" " +Utils.getTime(event.getStartDate())));
 
-        tvEndDate.setText(Utils.getDate(event.getEndDate()
+        tvEndDate.setText(Utils.getDate(event.getEndDate(),Constants.DATE_FORMAT_UI
                 +" " +Utils.getTime(event.getEndDate())));
     }
 

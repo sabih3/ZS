@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import netaq.com.zayedsons.model.Lookup;
+import netaq.com.zayedsons.model.Lookups;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.network.NetworkErrorResolver;
 import netaq.com.zayedsons.network.RestClient;
@@ -49,7 +50,7 @@ public class SearchableListPresenter {
                 viewListener.hideProgress();
 
                 if(response.isSuccessful()){
-                    List<Lookup.Lookups> lookups = response.body().getLookups();
+                    List<Lookups> lookups = response.body().getLookups();
                     viewListener.onLookupDataFetched(lookups);
 
                 }else{

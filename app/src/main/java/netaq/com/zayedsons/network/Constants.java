@@ -16,6 +16,9 @@ public class Constants {
 
     public static final String USER_TYPE_ADMIN = "a631062f-b6df-4d94-9e76-ae39cbb24f0b";
 
+    public static final String DATE_FORMAT_UI= "dd-MM-yyyy";
+
+    public static final String DATE_FORMAT_BACKEND = "yyyy-MM-dd";
 
     public static final int GENDER_NOT_SELECTED = -1;
     public static final int GENDER_MALE = 10;
@@ -24,6 +27,7 @@ public class Constants {
 
     public static final int CALLER_CITY = 111;
     public static final int CALLER_SPONSOR = 222;
+    public static final int CALLER_GENDER = 333;
 
     public static final String EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
 

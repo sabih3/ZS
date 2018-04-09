@@ -7,7 +7,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
-import netaq.com.zayedsons.model.Lookup;
+import netaq.com.zayedsons.model.Lookups;
 
 /**
  * Created by sabih on 20-Mar-18.
@@ -23,7 +23,7 @@ class SearchAbleListHolder extends RecyclerView.ViewHolder{
         ButterKnife.bind(this,itemView);
     }
 
-    public void bindData(Lookup.Lookups item) {
+    public void bindData(Lookups item) {
         cityTextView.setText(item.getTitle());
     }
 }

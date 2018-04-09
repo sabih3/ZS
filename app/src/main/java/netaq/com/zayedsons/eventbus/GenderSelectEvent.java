@@ -3,15 +3,13 @@ package netaq.com.zayedsons.eventbus;
 import netaq.com.zayedsons.model.Lookups;
 
 /**
- * Created by sabih on 20-Mar-18.
+ * Created by sabih on 09-Apr-18.
  */
 
-public class CitySelectEvent {
+public class GenderSelectEvent {
+    private final Lookups item;
 
-    private Lookups item;
-
-    public CitySelectEvent(Lookups item) {
-
+    public GenderSelectEvent(Lookups item) {
         this.item = item;
     }
 
@@ -19,5 +17,3 @@ public class CitySelectEvent {
         return item;
     }
 }
-
-

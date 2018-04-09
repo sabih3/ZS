@@ -1,5 +1,6 @@
 package netaq.com.zayedsons.views;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -23,16 +25,20 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import netaq.com.zayedsons.BuildConfig;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.adapters.NavDrawerAdapter;
 import netaq.com.zayedsons.core.NavigationController;
 import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.utils.AppConfig;
+import netaq.com.zayedsons.utils.DevicePreferences;
 import netaq.com.zayedsons.utils.UIUtils;
 import netaq.com.zayedsons.utils.UserManager;
 
-public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.onItemClickListener{
+public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.onItemClickListener,
+             MainActivityView{
 
+    private static final String TAG = "Token";
     @BindView(R.id.toolbar)@Nullable Toolbar mainToolbar;
     @BindView(R.id.main_content)@Nullable FrameLayout mainContent;
     @BindString(R.string.screen_label_home) @Nullable String screenLabel;
@@ -40,8 +46,11 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
     @BindView(R.id.drawer_layout)DrawerLayout drawerLayout;
     @BindView(R.id.navigation_view)NavigationView navigationView;
     @BindView(R.id.nav_drawer_list)RecyclerView drawerList;
-
+    private MainActivityPresenter mainActivityPresenter;
     private Handler handler;
+
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +61,14 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
         NavigationController.showMainEventsScreen(MainActivity.this,
                 getSupportFragmentManager());
 
+        if(BuildConfig.DEBUG){
+            Log.d(TAG, "Refreshed token: " + UserManager.getPushToken());
+        }
+
     }
 
     private void initViews() {
+        mainActivityPresenter = new MainActivityPresenter(this,this);
         ButterKnife.bind(this);
         setToolbar();
         setDrawer();
@@ -197,9 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
                 new UIUtils.DialogButtonListener() {
                     @Override
                     public void onPositiveButtonClicked() {
-                        UserManager.clearUserData();
-                        NavigationController.showLoginScreen(MainActivity.this);
-                        MainActivity.this.finish();
+                        mainActivityPresenter.requestLogOut();
                     }
 
                     @Override
@@ -207,5 +219,58 @@ public class MainActivity extends AppCompatActivity implements NavDrawerAdapter.
 
                     }
                 });
+    }
+
+    @Override
+    public void onNetworkUnAvailable() {
+       UIUtils.showMessageDialog(this, getResources().getString(R.string.snackbar_no_network),
+               getResources().getString(R.string.action_label_retry),
+               getResources().getString(R.string.action_label_cancel), new UIUtils.DialogButtonListener() {
+                   @Override
+                   public void onPositiveButtonClicked() {
+                       mainActivityPresenter.requestLogOut();
+                   }
+
+                   @Override
+                   public void onNegativeButtonClicked() {
+
+                   }
+               });
+    }
+
+    @Override
+    public void onError(String resolvedError) {
+        UIUtils.showMessageDialog(this, resolvedError, "OK", "", new UIUtils.DialogButtonListener() {
+            @Override
+            public void onPositiveButtonClicked() {
+
+            }
+
+            @Override
+            public void onNegativeButtonClicked() {
+
+            }
+        });
+    }
+
+    @Override
+    public void showProgress() {
+
+        progressDialog = new ProgressDialog(this);
+
+        UIUtils.showProgressDialog(this,"Logging out",progressDialog);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressDialog.dismiss();
+    }
+
+
+    @Override
+    public void onLogOutSuccess() {
+        UserManager.clearUserData();
+        NavigationController.showLoginScreen(MainActivity.this);
+        MainActivity.this.finish();
     }
 }

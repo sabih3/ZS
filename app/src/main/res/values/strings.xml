@@ -54,4 +54,5 @@
     <string name="msg_join_requested">Thank You \nYour application has been submitted. You will be notified once it gets approved.</string>
     <string name="action_label_stay_here">Stay here</string>
     <string name="action_go_back">Go Back</string>
+    <string name="action_label_cancel">Cancel</string>
 </resources>

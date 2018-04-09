@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import netaq.com.zayedsons.R;
 import netaq.com.zayedsons.model.Event;
+import netaq.com.zayedsons.network.Constants;
 import netaq.com.zayedsons.utils.Utils;
 
 /**
@@ -29,8 +30,8 @@ class UpComingHolder extends RecyclerView.ViewHolder{
 
     public void bindData(Event event) {
         eventTitle.setText(event.getTitle());
-        startDate.setText(Utils.getDate(event.getStartDate()));
-        endDate.setText(Utils.getDate(event.getEndDate()));
+        startDate.setText(Utils.getDate(event.getStartDate(), Constants.DATE_FORMAT_UI));
+        endDate.setText(Utils.getDate(event.getEndDate(),Constants.DATE_FORMAT_UI));
         eventLocation.setText(event.getVenue()+" - "+event.getCtrShortName());
 
     }

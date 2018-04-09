@@ -54,5 +54,6 @@
     <string name="counter"> To resend the code</string> <!-- to till use the time remaining to resend the code -->
     <string name="resend_pin"><u>Resend now</u></string>
     <string name="code_resent">Code Re-sent</string>
+    <string name="action_label_cancel">Cancel</string>
 
 </resources>
